@@ -14,6 +14,8 @@
   --animate-gradient-border: gradient-border 4s ease infinite;
   --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-scan: scan 3s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
 
   @keyframes gradient-border {
 
@@ -45,7 +47,29 @@
     }
 
     100% {
-      transform: translateY(100%);
+      transform: translateY(400%);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
     }
   }
 }
@@ -61,16 +85,6 @@ body {
 /* Custom Icon Stroke Width */
 .iconify {
   stroke-width: 1.5px !important;
-}
-
-/* Card Hover Effects */
-.card:hover .card__content {
-  opacity: 1;
-}
-
-.card:hover .card__image {
-  transform: scale(1.1);
-  opacity: 0.3;
 }
 
 .animate-gradient-border {

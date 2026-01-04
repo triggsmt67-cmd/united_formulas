@@ -81,18 +81,23 @@ export default function AboutPage() {
                     </div>
 
                     {/* Guarantee Section */}
-                    <section className="bg-slate-900 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden">
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
+                    <section className="bg-[#1E3A8A] rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl">
+                        {/* Ambient Light Blobs */}
+                        <div className="absolute inset-0 z-0">
+                            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full animate-pulse"></div>
+                            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                        </div>
+
                         <div className="relative z-10 max-w-3xl mx-auto">
                             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-8">100% Satisfaction Guarantee</h2>
-                            <p className="text-xl text-slate-400 leading-relaxed mb-12">
+                            <p className="text-xl text-slate-300 leading-relaxed mb-12">
                                 Our customer commitment is backed up by our guarantee. We will take back any product that does not meet your needs and either exchange it for an alternative product or refund your money – whichever you prefer.
                             </p>
                             <p className="text-lg text-cyan-400 font-medium italic">
                                 We will work hard to earn your trust and to see that you become a regular member of our Montana family.
                             </p>
                             <div className="mt-12">
-                                <Link href="/contact" className="inline-flex items-center justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-10 py-5 rounded-2xl transition-all shadow-xl shadow-cyan-900/40 active:scale-95 uppercase tracking-widest text-sm">
+                                <Link href="/contact" className="inline-flex items-center justify-center bg-[#15803D] hover:bg-[#166534] text-white font-bold px-10 py-5 rounded-2xl transition-all shadow-xl shadow-green-900/20 active:scale-95 uppercase tracking-widest text-sm">
                                     Join the Family
                                 </Link>
                             </div>

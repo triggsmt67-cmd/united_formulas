@@ -61,20 +61,29 @@ export default async function CategoryPage({
 
             <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
                 {/* Header Section */}
-                <div className="mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-medium mb-8">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                        Chemical Solutions Array
+                <div className="mb-24">
+                    <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-6">
+                        <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
+                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-[0.25em]">
+                                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                                Chemical Solutions Array
+                            </span>
+                        </div>
+
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1] opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
+                            {category.name}
+                        </h1>
+
+                        <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-sm" style={{ animationDelay: '300ms' }}></div>
+
+                        {category.description && (
+                            <div
+                                className="text-xl text-slate-600 leading-relaxed max-w-2xl opacity-0 animate-fade-up prose prose-slate"
+                                style={{ animationDelay: '400ms' }}
+                                dangerouslySetInnerHTML={{ __html: category.description }}
+                            />
+                        )}
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-6">
-                        {category.name}
-                    </h1>
-                    {category.description && (
-                        <div
-                            className="text-xl text-slate-600 leading-relaxed max-w-2xl prose prose-slate"
-                            dangerouslySetInnerHTML={{ __html: category.description }}
-                        />
-                    )}
                 </div>
 
                 {/* Product Grid */}
@@ -86,7 +95,9 @@ export default async function CategoryPage({
                     {products.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {products.map((product: any, idx: number) => (
-                                <ProductCard key={product.id} product={product} delay={idx} />
+                                <div key={product.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 100)}ms` }}>
+                                    <ProductCard product={product} delay={idx * 0.1} />
+                                </div>
                             ))}
                         </div>
                     ) : (

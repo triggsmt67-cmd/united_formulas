@@ -36,6 +36,7 @@ const GET_HOME_DATA = gql`
         description
         image {
           sourceUrl
+          altText
         }
       }
     }
@@ -126,7 +127,7 @@ export default async function Home() {
                 time.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <button className="group inline-flex items-center justify-center bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-cyan-600/20 active:scale-95">
+                <button className="group inline-flex items-center justify-center bg-[#15803D] hover:bg-[#166534] text-white text-sm font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-green-700/20 active:scale-95">
                   Stop Wasting Labor
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -210,41 +211,61 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="relative h-[500px] w-full rounded-2xl shadow-2xl overflow-hidden hidden lg:block group">
-              <Image
-                src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=2070&auto=format&fit=crop"
-                alt="Advanced Chemical Formulation"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-1000"
-              />
-              <div className="absolute inset-0 bg-slate-900/10 mix-blend-multiply"></div>
-              <div className="absolute bottom-8 left-8 bg-white/95 backdrop-blur border border-slate-200 p-4 rounded-lg shadow-xl max-w-xs z-10">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-1.5 bg-cyan-100 rounded text-cyan-700">
+            <div className="relative h-[600px] w-full rounded-[2.5rem] shadow-2xl overflow-hidden hidden lg:block group border border-slate-200/50 bg-slate-950">
+              {/* Floating Image Container with extra padding to prevent gaps during animation */}
+              <div className="absolute -inset-4 animate-float">
+                <Image
+                  src="https://ufbackend.com/wp-content/uploads/2026/01/the-graphic-space-kLZs4yoR0uU-unsplash.jpg"
+                  alt="Precision Industrial Formulation"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-[3000ms] ease-out opacity-90"
+                  priority
+                />
+              </div>
+
+              {/* Technical Scan Animation - Layered above image but below data cards */}
+              <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+                <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:30px_30px]"></div>
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
+              </div>
+
+              {/* Sophisticated Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/60 via-transparent to-transparent mix-blend-multiply z-10"></div>
+
+              {/* Data Badges - Highest Layer */}
+              <div className="absolute top-8 right-8 bg-slate-900/90 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full z-20 flex items-center gap-2 shadow-2xl">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">System Active: Formulation Verified</span>
+              </div>
+
+              <div className="absolute bottom-10 left-10 bg-white/95 backdrop-blur-md border border-slate-200 p-6 rounded-2xl shadow-2xl max-w-xs z-20 transform group-hover:-translate-y-2 transition-transform duration-500">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
+                      width="24"
+                      height="24"
                       viewBox="0 0 24 24"
-                      className="iconify"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M20 6L9 17l-5-5"
-                      />
+                      <path d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
-                  <span className="text-xs font-semibold text-slate-900">
-                    Surface Residue: 0%
-                  </span>
+                  <div>
+                    <span className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter">Surface Purity Score</span>
+                    <span className="text-xl font-bold text-slate-900">100.0% Grade A</span>
+                  </div>
                 </div>
-                <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full w-full bg-cyan-500 rounded-full"></div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full animate-shimmer bg-[length:200%_100%] shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
                 </div>
+                <p className="mt-4 text-[11px] text-slate-500 leading-relaxed font-medium">
+                  Autonomous analysis confirms zero microbial residue across all high-touch surface zones.
+                </p>
               </div>
             </div>
           </div>
@@ -254,28 +275,42 @@ export default async function Home() {
       {/* Product Categories */}
       <section id="categories" className="py-24 bg-white border-t border-slate-100 font-geist">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-12">
-            <h2 className="md:text-5xl text-3xl font-semibold text-slate-900 tracking-tight">
-              Our Product Categories
-            </h2>
+          <div className="mb-20">
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-6">
+              <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-[0.25em]">
+                  <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                  Comprehensive Inventory
+                </span>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
+                Search by <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">Application</span>
+              </h2>
+
+              <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-sm" style={{ animationDelay: '300ms' }}></div>
+
+              <p className="text-xl text-slate-600 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                Our proprietary formulas are engineered for specific soil loads and surfaces, ensuring maximum efficiency and cost-savings across your entire facility.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((cat: any) => {
+            {categories.map((cat: any, idx: number) => {
               const meta = CATEGORY_METADATA[cat.slug] || DEFAULT_CATEGORY_METADATA;
 
               return (
-                <CategoryCard
-                  key={cat.id}
-                  title={cat.name}
-                  slug={cat.slug}
-                  image={cat.image?.sourceUrl || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop"}
-                  description={cat.description ? cat.description.replace(/<[^>]*>/g, '').substring(0, 100) + '...' : "Advanced chemical solutions for professional facility maintenance."}
-                  ph={meta.ph}
-                  dilution={meta.dilution}
-                  icon={meta.icon}
-                  accentColor={meta.accentColor}
-                />
+                <div key={cat.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 100)}ms` }}>
+                  <CategoryCard
+                    title={cat.name}
+                    slug={cat.slug}
+                    image={cat.image?.sourceUrl || "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800&auto=format&fit=crop"}
+                    alt={cat.image?.altText || cat.name}
+                    icon={meta.icon}
+                    accentColor={meta.accentColor}
+                  />
+                </div>
               );
             })}
           </div>
@@ -283,7 +318,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-24 bg-[#020617] relative overflow-hidden font-geist">
+      <section className="py-24 bg-[#1E3A8A] relative overflow-hidden font-geist">
         {/* Ambient Light Blobs */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full animate-pulse"></div>
@@ -566,7 +601,7 @@ export default async function Home() {
       {/* The Commitment */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 font-geist">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="bg-slate-900 rounded-3xl p-10 md:p-16 text-center md:text-left flex flex-col md:flex-row gap-12 items-center shadow-2xl">
+          <div className="bg-[#1E3A8A] rounded-3xl p-10 md:p-16 text-center md:text-left flex flex-col md:flex-row gap-12 items-center shadow-2xl">
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl tracking-tight text-white mb-6 font-semibold">
                 A partner, not just a vendor.
@@ -642,7 +677,7 @@ export default async function Home() {
             Clean it once. Clean it right.
           </h2>
           <div className="flex justify-center mb-16">
-            <Link href="/contact" className="bg-cyan-600 hover:bg-cyan-500 text-white font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-cyan-600/20 active:scale-95 text-sm uppercase">
+            <Link href="/contact" className="bg-[#15803D] hover:bg-[#166534] text-white font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-green-700/20 active:scale-95 text-sm uppercase">
               Request a Quote
             </Link>
           </div>
