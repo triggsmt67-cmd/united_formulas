@@ -8,3 +8,7 @@ const client = new ApolloClient({
 });
 
 export default client;
+
+export function getClient() {
+    return client;
+}

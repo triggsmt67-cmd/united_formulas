@@ -15,7 +15,6 @@ const GET_HOME_DATA = gql`
         name
         slug
         shortDescription
-        sdsSheet
         image {
           sourceUrl
           altText
@@ -43,11 +42,13 @@ const GET_HOME_DATA = gql`
   }
 `;
 
+import { ProductNode, ProductCategory, HomeData } from "@/types";
+
 export default async function Home() {
-  let products: any[] = [];
-  let categories: any[] = [];
+  let products: ProductNode[] = [];
+  let categories: ProductCategory[] = [];
   try {
-    const { data } = await client.query<any>({
+    const { data } = await client.query<HomeData>({
       query: GET_HOME_DATA,
     });
 
@@ -76,7 +77,7 @@ export default async function Home() {
 
     // First pass: get targets in order of preference
     for (const slug of targetSlugs) {
-      const cat = allCats.find((c: any) => c.slug === slug);
+      const cat = allCats.find((c: ProductCategory) => c.slug === slug);
       if (cat && selectedCats.length < 10) {
         selectedCats.push(cat);
         usedSlugs.add(slug);
@@ -297,7 +298,7 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((cat: any, idx: number) => {
+            {categories.map((cat: ProductCategory, idx: number) => {
               const meta = CATEGORY_METADATA[cat.slug] || DEFAULT_CATEGORY_METADATA;
 
               return (
@@ -357,7 +358,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {products.length > 0 ? (
-              products.map((product: any, idx: number) => (
+              products.map((product: ProductNode, idx: number) => (
                 <div key={product.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 150)}ms` }}>
                   <div className="relative group/wrapper h-full">
                     {/* Floating Glow Behind Card */}
@@ -453,7 +454,7 @@ export default async function Home() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 order-2 lg:order-1">
               <h2 className="text-3xl md:text-4xl tracking-tight text-slate-900 mb-6 font-semibold">
-                We don't sell water. We sell results.
+                We don&apos;t sell water. We sell results.
               </h2>
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
@@ -463,7 +464,7 @@ export default async function Home() {
                 </p>
                 <p>
                   We are a Montana-based team of chemists and problem solvers.
-                  We don't focus on marketing fluff; we focus on{" "}
+                  We don&apos;t focus on marketing fluff; we focus on{" "}
                   <span className="text-slate-900 font-medium border-b-2 border-cyan-200">
                     yield
                   </span>
@@ -743,7 +744,15 @@ export default async function Home() {
 
 
 
-function ProblemCard({ title, description, highlight, icon, iconColor }: any) {
+interface ProblemCardProps {
+  title: string;
+  description: string;
+  highlight: string;
+  icon: React.ReactNode;
+  iconColor: string;
+}
+
+function ProblemCard({ title, description, highlight, icon, iconColor }: ProblemCardProps) {
   return (
     <div className="bg-slate-50 border border-slate-200 p-8 rounded-2xl hover:border-slate-300 transition-colors shadow-sm">
       <div className="flex items-center justify-between mb-6">
@@ -768,7 +777,13 @@ function ProblemCard({ title, description, highlight, icon, iconColor }: any) {
   );
 }
 
-function FeatureItem({ title, description, icon }: any) {
+interface FeatureItemProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+function FeatureItem({ title, description, icon }: FeatureItemProps) {
   return (
     <div className="flex gap-4">
       <div className="flex-none mt-1">
@@ -792,7 +807,14 @@ function FeatureItem({ title, description, icon }: any) {
   );
 }
 
-function StepItem({ number, title, description, icon }: any) {
+interface StepItemProps {
+  number: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+function StepItem({ number, title, description, icon }: StepItemProps) {
   return (
     <div className="relative z-10 flex flex-col items-center text-center">
       <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm flex items-center justify-center mb-6">
@@ -814,7 +836,12 @@ function StepItem({ number, title, description, icon }: any) {
   );
 }
 
-function CommitmentItem({ text, icon }: any) {
+interface CommitmentItemProps {
+  text: string;
+  icon: React.ReactNode;
+}
+
+function CommitmentItem({ text, icon }: CommitmentItemProps) {
   return (
     <div className="flex items-start gap-3">
       <svg

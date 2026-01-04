@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 export default function ContactPage() {
@@ -112,7 +111,14 @@ export default function ContactPage() {
     );
 }
 
-function ContactMethod({ icon, title, detail, description }: any) {
+interface ContactMethodProps {
+    icon: React.ReactNode;
+    title: string;
+    detail: string;
+    description: string;
+}
+
+function ContactMethod({ icon, title, detail, description }: ContactMethodProps) {
     return (
         <div className="flex gap-4">
             <div className="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center flex-shrink-0">

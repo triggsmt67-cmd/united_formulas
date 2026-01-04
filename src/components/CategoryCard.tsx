@@ -1,7 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CategoryCard({ title, slug, image, alt, icon, accentColor }: any) {
+interface CategoryCardProps {
+    title: string;
+    slug: string;
+    image: string;
+    alt?: string;
+    icon: React.ReactNode;
+    accentColor: string;
+}
+
+export default function CategoryCard({ title, slug, image, alt, icon, accentColor }: CategoryCardProps) {
     const colorMap: Record<string, string> = {
         amber: "hover:border-amber-400 hover:shadow-amber-400/50 text-amber-400",
         cyan: "hover:border-cyan-400 hover:shadow-cyan-400/50 text-cyan-400",
@@ -13,7 +22,6 @@ export default function CategoryCard({ title, slug, image, alt, icon, accentColo
 
     const colorClasses = colorMap[accentColor] || colorMap.cyan;
     const textColor = colorClasses.split(" ").find(c => c.startsWith("text-")) || "text-cyan-400";
-    const hoverClasses = colorClasses.split(" ").filter(c => c.startsWith("hover:")).join(" ");
 
     return (
         <Link href={`/category/${slug || ""}`} className="block group">

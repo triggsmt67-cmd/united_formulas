@@ -1,8 +1,8 @@
-import Link from "next/link";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 import ProductGrid from "@/components/ProductGrid";
 import Navbar from "@/components/Navbar";
+import { ProductNode } from "@/types";
 
 const GET_ALL_PRODUCTS = gql`
   query GetAllProducts {
@@ -12,7 +12,6 @@ const GET_ALL_PRODUCTS = gql`
         name
         slug
         shortDescription
-        sdsSheet
         image {
           sourceUrl
           altText
@@ -29,9 +28,9 @@ const GET_ALL_PRODUCTS = gql`
 `;
 
 export default async function ProductsPage() {
-    let products = [];
+    let products: ProductNode[] = [];
     try {
-        const { data } = await client.query<any>({
+        const { data } = await client.query<{ products: { nodes: ProductNode[] } }>({
             query: GET_ALL_PRODUCTS,
             fetchPolicy: "no-cache"
         });
@@ -86,8 +85,8 @@ export default async function ProductsPage() {
                             <span className="text-xs text-slate-500 uppercase font-semibold">Formulated</span>
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">SDS</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Included</span>
+                            <span className="text-2xl font-bold text-slate-900 mb-1">PRO</span>
+                            <span className="text-xs text-slate-500 uppercase font-semibold">Support</span>
                         </div>
                     </div>
                 </div>

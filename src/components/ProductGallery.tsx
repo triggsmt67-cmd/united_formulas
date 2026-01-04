@@ -3,7 +3,17 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function ProductGallery({ mainImage, galleryImages, productName }: any) {
+import { ProductImage } from "@/types";
+
+interface ProductGalleryProps {
+    mainImage?: ProductImage;
+    galleryImages?: {
+        nodes: ProductImage[];
+    };
+    productName: string;
+}
+
+export default function ProductGallery({ mainImage, galleryImages, productName }: ProductGalleryProps) {
     const allImages = [
         ...(mainImage ? [mainImage] : []),
         ...(galleryImages?.nodes || [])
@@ -39,13 +49,13 @@ export default function ProductGallery({ mainImage, galleryImages, productName }
             {/* Thumbnails */}
             {allImages.length > 1 && (
                 <div className="grid grid-cols-4 md:grid-cols-5 gap-4">
-                    {allImages.map((img: any, idx: number) => (
+                    {allImages.map((img: ProductImage, idx: number) => (
                         <button
                             key={img.id || idx}
                             onClick={() => setActiveImage(img)}
                             className={`relative aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeImage.sourceUrl === img.sourceUrl
-                                    ? 'border-cyan-500 shadow-lg shadow-cyan-500/10 scale-95'
-                                    : 'border-slate-100 hover:border-slate-300 opacity-70 hover:opacity-100'
+                                ? 'border-cyan-500 shadow-lg shadow-cyan-500/10 scale-95'
+                                : 'border-slate-100 hover:border-slate-300 opacity-70 hover:opacity-100'
                                 }`}
                         >
                             <Image

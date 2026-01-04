@@ -37,7 +37,7 @@ export default function AboutPage() {
                             <div className="p-8 bg-slate-50 border border-slate-200 rounded-3xl relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-100 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-cyan-200 transition-colors"></div>
                                 <p className="text-slate-800 font-medium relative z-10">
-                                    "We are customer-focused and driven to provide you with friendly, honest, personal service. In fact, when you reach out to us at United Formulas, you will be talking to a live Montana service representative."
+                                    &quot;We are customer-focused and driven to provide you with friendly, honest, personal service. In fact, when you reach out to us at United Formulas, you will be talking to a live Montana service representative.&quot;
                                 </p>
                             </div>
                         </div>
@@ -109,8 +109,15 @@ export default function AboutPage() {
     );
 }
 
-function GoalCard({ title, text, icon, color }: any) {
-    const colors: any = {
+interface GoalCardProps {
+    title: string;
+    text: string;
+    icon: React.ReactNode;
+    color: "cyan" | "amber" | "emerald";
+}
+
+function GoalCard({ title, text, icon, color }: GoalCardProps) {
+    const colors: Record<string, string> = {
         cyan: "bg-cyan-50 text-cyan-600 border-cyan-100",
         amber: "bg-amber-50 text-amber-600 border-amber-100",
         emerald: "bg-emerald-50 text-emerald-600 border-emerald-100"

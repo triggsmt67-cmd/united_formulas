@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ProductNode, ProductCategory } from "@/types";
 import Navbar from "@/components/Navbar";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
@@ -17,12 +18,14 @@ const GET_CATEGORY_PRODUCTS = gql`
           name
           slug
           shortDescription
-          sdsSheet
           image {
             sourceUrl
             altText
           }
           ... on SimpleProduct {
+            price
+          }
+          ... on VariableProduct {
             price
           }
         }
@@ -38,13 +41,13 @@ export default async function CategoryPage({
 }) {
     const { slug } = await params;
 
-    let category = null;
+    let category: (ProductCategory & { products: { nodes: ProductNode[] } }) | null = null;
     try {
-        const { data } = await client.query<any>({
+        const { data } = await client.query<{ productCategory: (ProductCategory & { products: { nodes: ProductNode[] } }) }>({
             query: GET_CATEGORY_PRODUCTS,
             variables: { slug: slug },
         });
-        category = data?.productCategory;
+        category = data?.productCategory ?? null;
     } catch (error) {
         console.error("Error fetching category products:", error);
     }
@@ -94,7 +97,7 @@ export default async function CategoryPage({
 
                     {products.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {products.map((product: any, idx: number) => (
+                            {products.map((product: ProductNode, idx: number) => (
                                 <div key={product.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 100)}ms` }}>
                                     <ProductCard product={product} delay={idx * 0.1} />
                                 </div>
@@ -135,8 +138,8 @@ export default async function CategoryPage({
                             <span className="text-xs text-slate-500 uppercase font-semibold">Formulated</span>
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">SDS</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Included</span>
+                            <span className="text-2xl font-bold text-slate-900 mb-1">PRO</span>
+                            <span className="text-xs text-slate-500 uppercase font-semibold">Support</span>
                         </div>
                     </div>
                 </div>

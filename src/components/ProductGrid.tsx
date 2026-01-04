@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ProductNode } from "@/types";
 import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ initialProducts }: { initialProducts: any[] }) {
+export default function ProductGrid({ initialProducts }: { initialProducts: ProductNode[] }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState("name-asc");
 
@@ -86,7 +87,7 @@ export default function ProductGrid({ initialProducts }: { initialProducts: any[
             {/* Grid */}
             {filteredAndSortedProducts.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredAndSortedProducts.map((product: any, idx: number) => (
+                    {filteredAndSortedProducts.map((product: ProductNode, idx: number) => (
                         <ProductCard key={product.id} product={product} delay={idx * 0.1} />
                     ))}
                 </div>
