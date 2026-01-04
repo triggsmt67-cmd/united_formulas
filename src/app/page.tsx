@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import CategoryCard from "@/components/CategoryCard";
 import { CATEGORY_METADATA, DEFAULT_CATEGORY_METADATA } from "@/config/categories";
 import Navbar from "@/components/Navbar";
+import RequestQuoteCTA from "@/components/RequestQuoteCTA";
 
 const GET_HOME_DATA = gql`
   query GetHomeData {
@@ -677,11 +678,7 @@ export default async function Home() {
           <h2 className="text-4xl md:text-5xl tracking-tighter text-slate-900 mb-8 font-semibold">
             Clean it once. Clean it right.
           </h2>
-          <div className="flex justify-center mb-16">
-            <Link href="/contact" className="bg-[#15803D] hover:bg-[#166534] text-white font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-green-700/20 active:scale-95 text-sm uppercase">
-              Request a Quote
-            </Link>
-          </div>
+          <RequestQuoteCTA />
           <div className="border-t border-slate-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2 opacity-80">
               <Image
