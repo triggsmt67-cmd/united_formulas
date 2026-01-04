@@ -1,14 +1,22 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
-const client = new ApolloClient({
-    link: new HttpLink({
-        uri: process.env.WORDPRESS_API_URL,
-    }),
-    cache: new InMemoryCache(),
-});
+let client: ApolloClient<any> | null = null;
 
-export default client;
+export const getClient = () => {
+    // Hardcoded URL to prevent server-side parsing errors on Vercel
+    const GRAPHQL_URL = "https://ufbackend.com/graphql";
 
-export function getClient() {
+    if (!client || typeof window === "undefined") {
+        client = new ApolloClient({
+            link: new HttpLink({
+                uri: GRAPHQL_URL,
+                fetchOptions: { cache: "no-store" },
+            }),
+            cache: new InMemoryCache(),
+        });
+    }
+
     return client;
-}
+};
+
+export default getClient();
