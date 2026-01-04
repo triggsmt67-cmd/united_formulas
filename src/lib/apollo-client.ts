@@ -1,22 +1,18 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
-let client: ApolloClient<any> | null = null;
+const GRAPHQL_URL = "https://ufbackend.com/graphql";
 
-export const getClient = () => {
-    // Hardcoded URL to prevent server-side parsing errors on Vercel
-    const GRAPHQL_URL = "https://ufbackend.com/graphql";
+/**
+ * Apollo Client instance configured for United Formulas.
+ * Hardcoded URL ensures Vercel server-side requests use an absolute path.
+ */
+const client = new ApolloClient({
+    link: new HttpLink({
+        uri: GRAPHQL_URL,
+        fetchOptions: { cache: "no-store" },
+    }),
+    cache: new InMemoryCache(),
+});
 
-    if (!client || typeof window === "undefined") {
-        client = new ApolloClient({
-            link: new HttpLink({
-                uri: GRAPHQL_URL,
-                fetchOptions: { cache: "no-store" },
-            }),
-            cache: new InMemoryCache(),
-        });
-    }
-
-    return client;
-};
-
-export default getClient();
+export const getClient = () => client;
+export default client;
