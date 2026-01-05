@@ -1,4 +1,5 @@
 import Link from "next/link";
+export const dynamic = 'force-dynamic';
 import { ProductNode, ProductCategory } from "@/types";
 import Navbar from "@/components/Navbar";
 import client from "@/lib/apollo-client";

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+
+export const dynamic = 'force-dynamic';
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 import ProductCard from "@/components/ProductCard";

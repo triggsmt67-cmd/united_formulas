@@ -1,4 +1,5 @@
 import client from "@/lib/apollo-client";
+export const dynamic = 'force-dynamic';
 import { gql } from "@apollo/client";
 import ProductGrid from "@/components/ProductGrid";
 import Navbar from "@/components/Navbar";
