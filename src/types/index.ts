@@ -33,6 +33,9 @@ export interface ProductNode {
             };
         }>;
     };
+    productData?: {
+        sdssheet?: string | null;
+    };
 }
 
 export interface HomeData {

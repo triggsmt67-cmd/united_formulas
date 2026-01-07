@@ -49,6 +49,9 @@ const GET_PRODUCT = gql`
           altText
         }
       }
+      productData {
+        sdssheet
+      }
     }
   }
 `;
@@ -166,6 +169,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             <button className="flex-[2] bg-slate-900 text-white font-semibold py-4 px-8 rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2">
                                 Add to Cart
                             </button>
+                            {product.productData?.sdssheet && (
+                                <a
+                                    href={product.productData.sdssheet}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex-1 bg-white border-2 border-slate-200 text-slate-900 font-semibold py-4 px-8 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 text-center"
+                                >
+                                    Download SDS Sheet
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>
