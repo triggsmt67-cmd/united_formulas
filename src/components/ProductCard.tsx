@@ -10,7 +10,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, delay }: ProductCardProps) {
     return (
-        <div className="group relative rounded-2xl p-[1px]">
+        <div className="group relative rounded-2xl p-[1px] h-full">
             <div
                 className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-gradient-border"
                 style={{ animationDelay: `${-delay}s` }}

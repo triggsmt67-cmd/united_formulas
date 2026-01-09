@@ -29,6 +29,12 @@ export default function Navbar() {
                         Products
                     </Link>
                     <Link
+                        href="/sds-sheets"
+                        className="text-sm font-medium text-slate-500 hover:text-cyan-600 transition-colors"
+                    >
+                        SDS Sheets
+                    </Link>
+                    <Link
                         href="/#categories"
                         className="text-sm font-medium text-slate-500 hover:text-cyan-600 transition-colors"
                     >

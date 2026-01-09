@@ -1,13 +1,27 @@
 import client from "@/lib/apollo-client";
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import { gql } from "@apollo/client";
 import ProductGrid from "@/components/ProductGrid";
 import Navbar from "@/components/Navbar";
+import PromotionGrid from "@/components/PromotionGrid";
 import { ProductNode } from "@/types";
 
-const GET_ALL_PRODUCTS = gql`
-  query GetAllProducts {
-    products(first: 100) {
+const GET_PRODUCTS_DATA = gql`
+  query GetProductsData {
+    featuredProducts: products(first: 3, where: { featured: true }) {
+      nodes {
+        id
+        name
+        slug
+        shortDescription
+        image {
+          sourceUrl
+          altText
+        }
+      }
+    }
+    allProducts: products(first: 100) {
       nodes {
         id
         name
@@ -29,69 +43,70 @@ const GET_ALL_PRODUCTS = gql`
 `;
 
 export default async function ProductsPage() {
-    let products: ProductNode[] = [];
-    try {
-        const { data } = await client.query<{ products: { nodes: ProductNode[] } }>({
-            query: GET_ALL_PRODUCTS,
-            fetchPolicy: "no-cache"
-        });
-        products = data?.products?.nodes || [];
-    } catch (error) {
-        console.error("Error fetching products:", error);
-    }
+  let products: ProductNode[] = [];
+  let featuredProducts: ProductNode[] = [];
+  try {
+    const { data } = await client.query<{
+      allProducts: { nodes: ProductNode[] },
+      featuredProducts: { nodes: ProductNode[] }
+    }>({
+      query: GET_PRODUCTS_DATA,
+      fetchPolicy: "no-cache"
+    });
+    products = data?.allProducts?.nodes || [];
+    featuredProducts = data?.featuredProducts?.nodes || [];
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
 
-    return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
-            <Navbar />
+  return (
+    <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+      <Navbar />
 
-            <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
-                {/* Hero Section */}
-                <div className="mb-16 relative">
-                    <div className="absolute -top-24 -left-24 w-96 h-96 bg-cyan-100/30 rounded-full blur-3xl -z-10 animate-pulse"></div>
+      <main className="pt-24 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* High Impact Promotion Grid */}
+        <PromotionGrid featuredProducts={featuredProducts} />
 
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-medium mb-8">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-                        Complete Solution Catalog
-                    </div>
+        {/* Main Content */}
+        <div className="mb-12">
+          <div className="max-w-3xl mb-12">
+            <p className="text-lg text-slate-600 leading-relaxed font-medium">
+              We formulate and stock industrial concentrates in <span className="text-slate-900 font-bold">Great Falls and Billings</span> for local route delivery. Every order includes audit-ready compliance, live local support, and an unconditional refund guarantee.
+            </p>
+          </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-6">
-                        Industrial Strength <br />
-                        <span className="text-slate-400">Inventory</span>
-                    </h1>
-
-                    <p className="text-xl text-slate-600 leading-relaxed max-w-2xl">
-                        Browse our professional-grade chemical concentrates. Every formula is engineered for maximum performance and cost-efficiency.
-                    </p>
-                </div>
-
-                {/* Main Content */}
-                <ProductGrid initialProducts={products} />
-            </main>
-
-            {/* Footer Trust Signal */}
-            <section className="py-20 border-t border-slate-100 bg-slate-50/50">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-                    <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-12">United Formulas Quality Guarantee</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">100%</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Concentrated</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">0%</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Residue</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">USA</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Formulated</span>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <span className="text-2xl font-bold text-slate-900 mb-1">PRO</span>
-                            <span className="text-xs text-slate-500 uppercase font-semibold">Support</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+          <h1 className="text-3xl font-black uppercase tracking-tighter text-slate-900 mb-2">
+            Full Product <span className="text-slate-400">Inventory</span>
+          </h1>
+          <div className="h-1 w-20 bg-[#15803D]"></div>
         </div>
-    );
+        <ProductGrid initialProducts={products} />
+      </main>
+
+      {/* Footer Trust Signal */}
+      <section className="py-20 border-t border-slate-100 bg-slate-50/50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-12">United Formulas Quality Guarantee</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-slate-900 mb-1">100%</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Concentrated</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-slate-900 mb-1">0%</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Residue</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-slate-900 mb-1">USA</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Formulated</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-slate-900 mb-1">PRO</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Support</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

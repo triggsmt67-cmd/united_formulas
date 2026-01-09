@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 import ProductCard from "@/components/ProductCard";
@@ -9,6 +10,7 @@ import CategoryCard from "@/components/CategoryCard";
 import { CATEGORY_METADATA, DEFAULT_CATEGORY_METADATA } from "@/config/categories";
 import Navbar from "@/components/Navbar";
 import RequestQuoteCTA from "@/components/RequestQuoteCTA";
+import ZipCheckCTA from "@/components/ZipCheckCTA";
 
 const GET_HOME_DATA = gql`
   query GetHomeData {
@@ -53,6 +55,7 @@ export default async function Home() {
   try {
     const { data } = await client.query<HomeData>({
       query: GET_HOME_DATA,
+      fetchPolicy: "no-cache"
     });
 
     products = data?.products?.nodes || [];
@@ -112,44 +115,18 @@ export default async function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden font-geist">
+      <section className="relative pt-24 pb-20 lg:pt-36 lg:pb-32 overflow-hidden font-geist">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 items-center">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-medium mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                Labor Cost Analysis
-              </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.1] mb-6 font-semibold">
-                If you have to scrub it twice,{" "}
-                <span className="text-slate-400">you paid too much.</span>
+                Industrial Chemicals <span className="text-slate-400">Delivered Within 100 Miles Of Great Falls</span>
               </h1>
               <p className="text-lg text-slate-600 leading-relaxed mb-10 max-w-lg">
-                Weak chemicals inflate your labor costs and kill your
-                efficiency. We formulate industrial-strength concentrates that
-                work on contact—so your team gets the job done right the first
-                time.
+                No Third-Party Freight Surprises. We Stock, Blend, And Deliver Locally On Our Own Trucks. SDS And TDS Downloads Available Pre-Purchase.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <button className="group inline-flex items-center justify-center bg-[#15803D] hover:bg-[#166534] text-white text-sm font-medium px-8 py-4 rounded-lg transition-all shadow-lg shadow-green-700/20 active:scale-95">
-                  Stop Wasting Labor
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                    className="iconify ml-2 group-hover:translate-x-1 transition-transform"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 12h14m-7-7l7 7l-7 7"
-                    />
-                  </svg>
-                </button>
+                <ZipCheckCTA />
               </div>
 
               <div className="mt-12 pt-8 border-t border-slate-100 flex flex-wrap gap-8 text-xs font-medium text-slate-500 uppercase tracking-wide">
@@ -215,63 +192,146 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="relative h-[600px] w-full rounded-[2.5rem] shadow-2xl overflow-hidden hidden lg:block group border border-slate-200/50 bg-slate-950">
-              {/* Floating Image Container with extra padding to prevent gaps during animation */}
-              <div className="absolute -inset-4 animate-float">
+            <div className="flex flex-col items-center">
+              <div className="mb-8 opacity-0 animate-fade-up hidden lg:block" style={{ animationDelay: '50ms' }}>
                 <Image
-                  src="https://ufbackend.com/wp-content/uploads/2026/01/the-graphic-space-kLZs4yoR0uU-unsplash.jpg"
-                  alt="Precision Industrial Formulation"
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-[3000ms] ease-out opacity-90"
+                  src="https://ufbackend.com/wp-content/uploads/2026/01/UFColorFinal-Logo-1-1.png"
+                  alt="United Formulas Logo"
+                  width={400}
+                  height={100}
+                  className="h-24 w-auto object-contain"
                   priority
                 />
               </div>
-
-              {/* Technical Scan Animation - Layered above image but below data cards */}
-              <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-                <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:30px_30px]"></div>
-                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
-              </div>
-
-              {/* Sophisticated Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/60 via-transparent to-transparent mix-blend-multiply z-10"></div>
-
-              {/* Data Badges - Highest Layer */}
-              <div className="absolute top-8 right-8 bg-slate-900/90 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full z-20 flex items-center gap-2 shadow-2xl">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">System Active: Formulation Verified</span>
-              </div>
-
-              <div className="absolute bottom-10 left-10 bg-white/95 backdrop-blur-md border border-slate-200 p-6 rounded-2xl shadow-2xl max-w-xs z-20 transform group-hover:-translate-y-2 transition-transform duration-500">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] font-black text-slate-400 uppercase tracking-tighter">Surface Purity Score</span>
-                    <span className="text-xl font-bold text-slate-900">100.0% Grade A</span>
-                  </div>
+              <div className="relative h-[600px] w-full rounded-[2.5rem] shadow-2xl overflow-hidden hidden lg:block group border border-slate-200/50 bg-slate-950">
+                {/* Floating Image Container with extra padding to prevent gaps during animation */}
+                <div className="absolute -inset-4 animate-float">
+                  <Image
+                    src="https://ufbackend.com/wp-content/uploads/2026/01/the-graphic-space-kLZs4yoR0uU-unsplash.jpg"
+                    alt="Precision Industrial Formulation"
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-[3000ms] ease-out opacity-90"
+                    priority
+                  />
                 </div>
-                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full animate-shimmer bg-[length:200%_100%] shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
+
+                {/* Technical Scan Animation - Layered above image but below data cards */}
+                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+                  <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:30px_30px]"></div>
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
                 </div>
-                <p className="mt-4 text-[11px] text-slate-500 leading-relaxed font-medium">
-                  Autonomous analysis confirms zero microbial residue across all high-touch surface zones.
-                </p>
+
+                {/* Sophisticated Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/60 via-transparent to-transparent mix-blend-multiply z-10"></div>
+
+                {/* Data Badges - Highest Layer */}
+                <div className="absolute top-8 right-8 bg-slate-900/90 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full z-20 flex items-center gap-2 shadow-2xl">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">System Active: Formulation Verified</span>
+                </div>
+
+                <div className="absolute bottom-10 left-10 bg-white/95 backdrop-blur-md border border-slate-200 p-6 rounded-2xl shadow-2xl max-w-xs z-20 transform group-hover:-translate-y-2 transition-transform duration-500">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/30">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-lg font-bold text-slate-900 leading-tight block">100% Satisfaction Guarantee</span>
+                    </div>
+                  </div>
+                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full animate-shimmer bg-[length:200%_100%] shadow-[0_0_10px_rgba(34,211,238,0.4)]"></div>
+                  </div>
+                  <p className="mt-4 text-[11px] text-slate-500 leading-relaxed font-medium">
+                    Stocked in Great Falls and Billings for local route delivery. Includes audit-ready compliance, live support, and unconditional refunds.
+                  </p>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-16 bg-[#1E3A8A] relative overflow-hidden font-geist">
+        {/* Ambient Light Blobs */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+          {/* Tech Grid Overlays */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+
+          {/* Technical Measurement Lines */}
+          <div className="absolute left-[5%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-800 to-transparent opacity-30"></div>
+          <div className="absolute right-[5%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-800 to-transparent opacity-30"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="mb-16">
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-6">
+              <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-[0.25em]">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] animate-pulse"></span>
+                  Proprietary Formulation
+                </span>
+              </div>
+
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
+                Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-[length:200%_auto] animate-gradient-border">Solutions</span>
+              </h2>
+
+              <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-[0_0_20px_rgba(34,211,238,0.3)]" style={{ animationDelay: '300ms' }}></div>
+
+              <p className="text-xl text-slate-400 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                Industrial performance, reformulated. Our concentrates are engineered to replace multiple drums of standard solution, slashing labor costs and environmental impact.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {products.length > 0 ? (
+              products.map((product: ProductNode, idx: number) => (
+                <div key={product.id} className="opacity-0 animate-fade-up h-full" style={{ animationDelay: `${500 + (idx * 150)}ms` }}>
+                  <div className="relative group/wrapper h-full flex flex-col">
+                    {/* Floating Glow Behind Card */}
+                    <div className="absolute -inset-4 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 blur-3xl opacity-0 group-hover/wrapper:opacity-100 transition-all duration-700 -z-10"></div>
+                    <ProductCard product={product} delay={idx * 0.2} />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-3 text-center py-24 text-slate-500 bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-slate-800/50 border-dashed">
+                <p className="text-lg">Awaiting batch shipment data...</p>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-16 flex justify-center opacity-0 animate-fade-up" style={{ animationDelay: '1000ms' }}>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-3 text-slate-400 hover:text-white transition-all duration-300 group/all"
+            >
+              <span className="text-sm font-bold uppercase tracking-[0.3em]">Examine Full Inventory</span>
+              <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center group-hover/all:border-cyan-500/50 group-hover/all:text-cyan-400 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/all:translate-x-1 transition-transform">
+                  <path d="M5 12h14m-7-7l7 7l-7 7" />
+                </svg>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -317,78 +377,6 @@ export default async function Home() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-24 bg-[#1E3A8A] relative overflow-hidden font-geist">
-        {/* Ambient Light Blobs */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-
-          {/* Tech Grid Overlays */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-
-          {/* Technical Measurement Lines */}
-          <div className="absolute left-[5%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-800 to-transparent opacity-30"></div>
-          <div className="absolute right-[5%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-800 to-transparent opacity-30"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="mb-24">
-            <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-6">
-              <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-bold uppercase tracking-[0.25em]">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] animate-pulse"></span>
-                  Proprietary Formulation
-                </span>
-              </div>
-
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
-                Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-[length:200%_auto] animate-gradient-border">Solutions</span>
-              </h2>
-
-              <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-[0_0_20px_rgba(34,211,238,0.3)]" style={{ animationDelay: '300ms' }}></div>
-
-              <p className="text-xl text-slate-400 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
-                Industrial performance, reformulated. Our concentrates are engineered to replace multiple drums of standard solution, slashing labor costs and environmental impact.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {products.length > 0 ? (
-              products.map((product: ProductNode, idx: number) => (
-                <div key={product.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 150)}ms` }}>
-                  <div className="relative group/wrapper h-full">
-                    {/* Floating Glow Behind Card */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-cyan-600/20 to-blue-600/20 blur-3xl opacity-0 group-hover/wrapper:opacity-100 transition-all duration-700 -z-10"></div>
-                    <ProductCard product={product} delay={idx * 0.2} />
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-3 text-center py-24 text-slate-500 bg-slate-900/40 backdrop-blur-xl rounded-2xl border border-slate-800/50 border-dashed">
-                <p className="text-lg">Awaiting batch shipment data...</p>
-              </div>
-            )}
-          </div>
-
-          <div className="mt-24 flex justify-center opacity-0 animate-fade-up" style={{ animationDelay: '1000ms' }}>
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-3 text-slate-400 hover:text-white transition-all duration-300 group/all"
-            >
-              <span className="text-sm font-bold uppercase tracking-[0.3em]">Examine Full Inventory</span>
-              <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center group-hover/all:border-cyan-500/50 group-hover/all:text-cyan-400 transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/all:translate-x-1 transition-transform">
-                  <path d="M5 12h14m-7-7l7 7l-7 7" />
-                </svg>
-              </div>
-            </Link>
           </div>
         </div>
       </section>
