@@ -540,7 +540,7 @@ export default async function Home() {
             <StepItem
               number="1"
               title="Diagnose"
-              description="Call 406.788.1614. Tell a live Montana expert what you’re trying to clean (and what’s failing)."
+              description="Call 406.727.4144. Tell a live Montana expert what you’re trying to clean (and what’s failing)."
               icon={
                 <path
                   fill="none"

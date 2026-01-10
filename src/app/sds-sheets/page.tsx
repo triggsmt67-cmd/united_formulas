@@ -104,10 +104,10 @@ export default async function SDSPage() {
                                 Contact Support
                             </a>
                             <a
-                                href="tel:4067881614"
+                                href="tel:4067274144"
                                 className="px-8 py-4 bg-slate-800 text-white rounded-xl font-bold border border-slate-700 hover:border-slate-500 transition-colors text-center"
                             >
-                                Call 406.788.1614
+                                Call 406.727.4144
                             </a>
                         </div>
                     </div>

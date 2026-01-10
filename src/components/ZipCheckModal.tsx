@@ -196,12 +196,13 @@ export default function ZipCheckModal({ isOpen, onClose }: ZipCheckModalProps) {
                                     Zip code <span className="font-bold underline">{zipCode}</span> is within our local delivery zone. Expect zero third-party freight charges.
                                 </p>
                             </div>
-                            <button
+                            <Link
+                                href="/products"
                                 onClick={onClose}
-                                className="w-full bg-[#15803D] hover:bg-[#166534] text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98] uppercase tracking-widest text-sm"
+                                className="w-full bg-[#15803D] hover:bg-[#166534] text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-green-700/20 active:scale-[0.98] uppercase tracking-widest text-sm flex items-center justify-center"
                             >
                                 Shop Inventory
-                            </button>
+                            </Link>
                         </div>
                     )}
 
