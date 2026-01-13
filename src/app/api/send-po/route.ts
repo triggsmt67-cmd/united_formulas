@@ -6,8 +6,20 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
 
-        // Resilience check: If RESEND_API_KEY is missing, simulate success for development
-        if (!process.env.RESEND_API_KEY) {
+        // 1. Server-Side Security & Runtime Check
+        const warehouseEmail = process.env.WAREHOUSE_EMAIL;
+
+        if (!warehouseEmail) {
+            console.error('CRITICAL: WAREHOUSE_EMAIL is not defined in environment variables.');
+            return NextResponse.json(
+                { error: "Dispatch Configuration Error: Recipient variable missing in Vercel." },
+                { status: 500 }
+            );
+        }
+
+        // 2. Resend API Key check & Runtime Initialization
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
             console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
             console.log('PO Submission Data:', body);
             return NextResponse.json({
@@ -17,7 +29,7 @@ export async function POST(req: Request) {
             });
         }
 
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const resend = new Resend(apiKey);
         const {
             fullName,
             phoneNumber,
@@ -29,8 +41,8 @@ export async function POST(req: Request) {
             grandTotal
         } = body;
 
-        // In a real scenario, you'd send this to the warehouse email
-        const warehouseEmail = process.env.WAREHOUSE_EMAIL || 'warehouse@unitedformulas.com';
+        // 3. Git-Agnostic Routing & Absolute Paths
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://united-formulas-v1.vercel.app';
 
         const { data, error } = await resend.emails.send({
             from: 'United Formulas Orders <orders@unitedformulas.com>', // Must be a verified domain in Resend
@@ -40,7 +52,7 @@ export async function POST(req: Request) {
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
                     <div style="background-color: #0f172a; padding: 24px; color: white; text-align: center;">
                         <h1 style="margin: 0; font-size: 24px;">New Purchase Order</h1>
-                        <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px;">Requisition ID: ${Math.random().toString(36).substring(7).toUpperCase()}</p>
+                        <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px;">Origin: ${siteUrl}</p>
                     </div>
                     
                     <div style="padding: 32px;">
@@ -95,7 +107,7 @@ export async function POST(req: Request) {
                     </div>
                     
                     <div style="background-color: #f8fafc; padding: 24px; text-align: center; color: #64748b; font-size: 12px;">
-                        <p style="margin: 0;">This is an automated requisition from the United Formulas B2B Portal.</p>
+                        <p style="margin: 0;">This is an automated requisition from ${siteUrl}</p>
                     </div>
                 </div>
             `
