@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "Weak chemicals inflate your labor costs and kill your efficiency. We formulate industrial-strength concentrates that work on contact.",
 };
 
+import { POProvider } from "@/context/POContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,7 +34,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <POProvider>
+          {children}
+        </POProvider>
       </body>
     </html>
   );

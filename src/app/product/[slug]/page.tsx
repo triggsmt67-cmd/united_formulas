@@ -3,6 +3,7 @@ import { getClient } from '@/lib/apollo-client';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import ProductGallery from '@/components/ProductGallery';
+import PurchaseOptions from '@/components/PurchaseOptions';
 import { ProductNode, ProductImage } from '@/types';
 
 type DetailedProduct = ProductNode & {
@@ -137,38 +138,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
                         {/* Pricing Breakdown / Options */}
                         {product.variations?.nodes && product.variations.nodes.length > 0 && (
-                            <div className="space-y-4">
-                                <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400">Purchase Options</h3>
-                                <div className="grid gap-3">
-                                    {product.variations.nodes.map((variant) => (
-                                        <div
-                                            key={variant.id}
-                                            className="group flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50 hover:border-cyan-500/50 hover:bg-white transition-all shadow-sm"
-                                        >
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-slate-900">
-                                                    {variant.attributes?.nodes?.[0]?.value || variant.name.replace(product.name, '').trim() || 'Standard Option'}
-                                                </span>
-                                                <span className="text-xs text-slate-500 uppercase tracking-wider font-medium">
-                                                    Professional Formulation
-                                                </span>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-lg font-black text-slate-900">{variant.price}</span>
-                                                <button className="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-tighter">
-                                                    Select
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <PurchaseOptions
+                                productName={product.name}
+                                variants={product.variations.nodes}
+                            />
                         )}
 
                         <div className="mt-4 flex flex-col sm:flex-row gap-4">
-                            <button className="flex-[2] bg-slate-900 text-white font-semibold py-4 px-8 rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2">
-                                Add to Cart
-                            </button>
                             {product.productData?.sdssheet && (
                                 <a
                                     href={product.productData.sdssheet}

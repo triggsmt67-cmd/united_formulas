@@ -120,10 +120,10 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 items-center">
             <div className="max-w-2xl">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl tracking-tight text-slate-900 leading-[1.1] mb-6 font-semibold">
-                Industrial Chemicals <span className="text-slate-400">Delivered Within 100 Miles Of Great Falls</span>
+                Industrial Concentrates. <span className="text-slate-400">Stocked Locally</span>
               </h1>
               <p className="text-lg text-slate-600 leading-relaxed mb-10 max-w-lg">
-                No Third-Party Freight Surprises. We Stock, Blend, And Deliver Locally On Our Own Trucks. SDS And TDS Downloads Available Pre-Purchase.
+                Direct delivery from our Great Falls and Billings hubs. Check your ZIP for route eligibility
               </p>
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                 <ZipCheckCTA />
