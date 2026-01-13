@@ -48,8 +48,8 @@ export default function PurchaseOptions({ productName, variants }: PurchaseOptio
                             <div
                                 key={variant.id}
                                 className={`group flex items-center justify-between p-4 rounded-xl border transition-all shadow-sm ${added
-                                        ? 'border-emerald-200 bg-emerald-50/50'
-                                        : 'border-slate-200 bg-slate-50 hover:border-cyan-500/50 hover:bg-white'
+                                    ? 'border-emerald-200 bg-emerald-50/50'
+                                    : 'border-slate-200 bg-slate-50 hover:border-cyan-500/50 hover:bg-white'
                                     }`}
                             >
                                 <div className="flex flex-col">
@@ -81,15 +81,17 @@ export default function PurchaseOptions({ productName, variants }: PurchaseOptio
                 </div>
             </div>
 
-            {/* Submit Trigger */}
-            {poDraft.length > 0 && (
-                <button
-                    onClick={() => setIsFormOpen(true)}
-                    className="w-full py-5 bg-cyan-600 text-white font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-cyan-700 transition-all shadow-xl shadow-cyan-600/20 animate-fade-up"
-                >
-                    Submit PO to Warehouse
-                </button>
-            )}
+            {/* Static Submit Trigger */}
+            <button
+                onClick={() => poDraft.length > 0 && setIsFormOpen(true)}
+                disabled={poDraft.length === 0}
+                className={`w-full py-5 font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl animate-fade-up ${poDraft.length > 0
+                        ? 'bg-cyan-600 text-white hover:bg-cyan-700 shadow-cyan-600/20'
+                        : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                    }`}
+            >
+                Submit PO to Warehouse
+            </button>
 
             <PORequisitionForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
         </div>

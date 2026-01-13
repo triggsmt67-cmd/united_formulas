@@ -67,7 +67,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
 
             if (res.ok) {
                 const nextDay = getNextBusinessDay();
-                setSuccessMessage(`Order Received. Dispatched to Great Falls Queue. We will email your official Invoice and confirm your delivery window by ${nextDay}. No payment required today.`);
+                setSuccessMessage(`Order Received. Dispatched to Great Falls Queue. We will email your official Invoice by ${nextDay}.`);
                 clearPO();
             } else {
                 alert('Failed to submit PO. Please try again.');
@@ -163,7 +163,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                 />
                                 <input
                                     required
-                                    placeholder="Direct Phone Number"
+                                    placeholder="Phone"
                                     className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none transition-all"
                                     value={formData.phoneNumber}
                                     onChange={e => setFormData({ ...formData, phoneNumber: e.target.value })}

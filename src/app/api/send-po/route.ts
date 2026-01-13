@@ -32,95 +32,66 @@ export async function POST(req: Request) {
         const resend = new Resend(apiKey);
         const {
             fullName,
+            phone,
             phoneNumber,
             businessName,
             poNumber,
             deliveryWindow,
+            deliveryTime,
             dockNotes,
             items,
+            lineItems,
             grandTotal
         } = body;
+
+        const actualPhone = phoneNumber || phone || 'N/A';
+        const actualDelivery = deliveryWindow || deliveryTime || 'Standard';
+        const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
 
         // 3. Git-Agnostic Routing & Absolute Paths
         const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://united-formulas-v1.vercel.app';
 
         const { data, error } = await resend.emails.send({
-            from: 'United Formulas Orders <orders@unitedformulas.com>', // Must be a verified domain in Resend
+            from: 'United Formulas <onboarding@resend.dev>', // Set to onboarding@resend.dev per request
             to: [warehouseEmail],
-            subject: `New PO Requisition: ${businessName} (${poNumber || 'No PO#'})`,
+            subject: `NEW PO: GREAT FALLS QUEUE - ${businessName}`,
             html: `
-                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
-                    <div style="background-color: #0f172a; padding: 24px; color: white; text-align: center;">
-                        <h1 style="margin: 0; font-size: 24px;">New Purchase Order</h1>
-                        <p style="margin: 8px 0 0; color: #94a3b8; font-size: 14px;">Origin: ${siteUrl}</p>
-                    </div>
-                    
-                    <div style="padding: 32px;">
-                        <div style="margin-bottom: 32px;">
-                            <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">B2B Contact Information</h2>
-                            <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
-                                <tr><td style="padding: 4px 0; color: #64748b; width: 120px;">Full Name</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${fullName}</td></tr>
-                                <tr><td style="padding: 4px 0; color: #64748b;">Phone Number</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${phoneNumber}</td></tr>
-                                <tr><td style="padding: 4px 0; color: #64748b;">Business Name</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${businessName}</td></tr>
-                            </table>
-                        </div>
-
-                        <div style="margin-bottom: 32px;">
-                            <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">Logistics & Delivery</h2>
-                            <table style="width: 100%; font-size: 14px; border-collapse: collapse;">
-                                <tr><td style="padding: 4px 0; color: #64748b; width: 120px;">PO Number</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${poNumber || 'N/A'}</td></tr>
-                                <tr><td style="padding: 4px 0; color: #64748b;">Window</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${deliveryWindow}</td></tr>
-                                <tr><td style="padding: 4px 0; color: #64748b;">Dock Notes</td><td style="padding: 4px 0; font-weight: bold; color: #0f172a;">${dockNotes || 'No notes provided.'}</td></tr>
-                            </table>
-                        </div>
-
-                        <div>
-                            <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;">Order Details</h2>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                                <thead>
-                                    <tr style="text-align: left; color: #64748b;">
-                                        <th style="padding: 8px 0; font-weight: normal;">Product</th>
-                                        <th style="padding: 8px 0; font-weight: normal; text-align: center;">Qty</th>
-                                        <th style="padding: 8px 0; font-weight: normal; text-align: right;">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="color: #0f172a;">
-                                    ${items.map((item: any) => `
-                                        <tr>
-                                            <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9;">
-                                                <div style="font-weight: bold;">${item.product}</div>
-                                                <div style="font-size: 11px; color: #64748b;">${item.sku}</div>
-                                            </td>
-                                            <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; text-align: center;">${item.quantity}</td>
-                                            <td style="padding: 12px 0; border-bottom: 1px solid #f1f5f9; text-align: right; font-weight: bold;">${item.total}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2" style="padding: 24px 0; font-size: 16px; font-weight: bold; text-align: right; color: #64748b;">Grand Total</td>
-                                        <td style="padding: 24px 0; font-size: 20px; font-weight: 900; text-align: right; color: #0f172a;">${grandTotal}</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <div style="background-color: #f8fafc; padding: 24px; text-align: center; color: #64748b; font-size: 12px;">
-                        <p style="margin: 0;">This is an automated requisition from ${siteUrl}</p>
-                    </div>
+                <div style="font-family: Arial; border: 1px solid #000; padding: 20px;">
+                  <h2>NEW PO: GREAT FALLS QUEUE</h2>
+                  <p><strong>Business:</strong> ${businessName} | <strong>Contact:</strong> ${fullName} (${actualPhone})</p>
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: #eee; text-align: left;">
+                      <th style="padding: 10px; border: 1px solid #ddd;">Product</th>
+                      <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Qty</th>
+                    </tr>
+                    ${actualItems.map((item: any) => `
+                    <tr>
+                      <td style="padding: 10px; border: 1px solid #ddd;">${item.productName || item.product} (${item.variantName || item.variant || ''})</td>
+                      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><strong>${item.quantity}</strong></td>
+                    </tr>
+                    `).join('')}
+                  </table>
+                  <p style="margin-top: 20px;"><strong>Notes:</strong> ${dockNotes || 'N/A'}</p>
+                  <p style="margin-top: 10px; font-size: 12px; color: #666;">Delivery Window: ${actualDelivery} | PO#: ${poNumber || 'N/A'}</p>
                 </div>
             `
         });
 
         if (error) {
-            console.error('Resend error:', error);
-            return NextResponse.json({ error }, { status: 500 });
+            console.error('Resend Dispatch Error:', error);
+            return NextResponse.json({
+                error: error.message || "Resend Dispatch Failed",
+                details: error
+            }, { status: 500 });
         }
 
         return NextResponse.json({ success: true, data });
-    } catch (error) {
-        console.error('API Error:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    } catch (err: any) {
+        console.error('API Route Exception:', err);
+        return NextResponse.json({
+            error: 'Internal Server Error',
+            message: err.message || "Unknown error occurred",
+            stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+        }, { status: 500 });
     }
 }
