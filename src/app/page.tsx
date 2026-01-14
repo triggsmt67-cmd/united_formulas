@@ -296,8 +296,8 @@ export default async function Home() {
 
               <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-[0_0_20px_rgba(34,211,238,0.3)]" style={{ animationDelay: '300ms' }}></div>
 
-              <p className="text-xl text-slate-400 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
-                Industrial performance, reformulated. Our concentrates are engineered to replace multiple drums of standard solution, slashing labor costs and environmental impact.
+              <p className="text-xl text-white leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
+                Our chemistry is continuously improved to deliver high performance while meeting environmental goals.
               </p>
             </div>
           </div>

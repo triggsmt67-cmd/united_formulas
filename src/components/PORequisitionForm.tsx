@@ -66,6 +66,15 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
             });
 
             if (res.ok) {
+                // GTM Data Layer Push
+                if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                    (window as any).dataLayer.push({
+                        event: 'po_dispatch_success',
+                        grandTotal: subtotal,
+                        itemCount: poDraft.length
+                    });
+                }
+
                 const nextDay = getNextBusinessDay();
                 setSuccessMessage(`Order Received. Dispatched to Great Falls Queue. We will email your official Invoice by ${nextDay}.`);
                 clearPO();
@@ -212,6 +221,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                     </div>
 
                     <button
+                        id="submit-po-btn"
                         type="submit"
                         disabled={isSubmitting || poDraft.length === 0}
                         className="w-full py-5 bg-slate-900 text-white font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-900/20"
