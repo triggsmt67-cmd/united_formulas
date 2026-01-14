@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { usePO } from '@/context/POContext';
 
 interface QuoteModalProps {
     isOpen: boolean;
@@ -8,6 +9,7 @@ interface QuoteModalProps {
 }
 
 export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
+    const { poDraft, clearPO } = usePO();
     const [formState, setFormState] = useState({
         fullName: '',
         company: '',
@@ -16,6 +18,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         interest: 'Industrial Cleaner',
         message: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     // Handle escape key to close
     useEffect(() => {
@@ -34,13 +38,56 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
     if (!isOpen) return null;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Logic for CRM connection will go here later
-        console.log('Form submitted:', formState);
-        alert('Request Dispatched. Inventory verification is in progress. A technician will contact you shortly with stock availability and pricing.');
-        onClose();
+        setIsSubmitting(true);
+
+        try {
+            const res = await fetch('/api/send-inquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formState,
+                    items: poDraft
+                })
+            });
+
+            if (res.ok) {
+                setIsSuccess(true);
+                clearPO();
+            } else {
+                alert('Dispatch failed. Please check your connection and try again.');
+            }
+        } catch (error) {
+            console.error('Inquiry error:', error);
+            alert('An unexpected error occurred during dispatch.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    if (isSuccess) {
+        return (
+            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
+                <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={onClose} />
+                <div className="relative w-full max-w-md bg-white rounded-3xl p-10 text-center shadow-2xl animate-fade-up">
+                    <div className="w-20 h-20 bg-orange-100 text-[#EA580C] rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                    </div>
+                    <h2 className="text-2xl font-black text-slate-900 uppercase italic mb-4 font-geist">Request Dispatched</h2>
+                    <p className="text-slate-600 mb-8 leading-relaxed">
+                        Inventory verification is in progress. A technician will contact you shortly with stock availability and pricing.
+                    </p>
+                    <button
+                        onClick={onClose}
+                        className="w-full py-4 bg-[#EA580C] text-white font-black rounded-xl uppercase tracking-widest font-geist shadow-lg shadow-orange-900/20"
+                    >
+                        Close Protocol
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
@@ -164,10 +211,12 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
                         <div className="pt-4">
                             <button
+                                id="dispatch-inquiry-btn"
                                 type="submit"
-                                className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-geist [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+                                disabled={isSubmitting}
+                                className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-geist [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] disabled:opacity-50"
                             >
-                                Dispatch System Request
+                                {isSubmitting ? 'Dispatching...' : 'Dispatch System Request'}
                             </button>
                             <p className="text-[10px] text-slate-400 text-center mt-4 uppercase tracking-[0.2em] font-medium">
                                 Inventory Verification Protocol • United Formulas

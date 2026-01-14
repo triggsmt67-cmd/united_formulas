@@ -56,23 +56,53 @@ export async function POST(req: Request) {
             to: [warehouseEmail],
             subject: `NEW PO: GREAT FALLS QUEUE - ${businessName}`,
             html: `
-                <div style="font-family: Arial; border: 1px solid #000; padding: 20px;">
-                  <h2>NEW PO: GREAT FALLS QUEUE</h2>
-                  <p><strong>Business:</strong> ${businessName} | <strong>Contact:</strong> ${fullName} (${actualPhone})</p>
-                  <table style="width: 100%; border-collapse: collapse;">
-                    <tr style="background: #eee; text-align: left;">
-                      <th style="padding: 10px; border: 1px solid #ddd;">Product</th>
-                      <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Qty</th>
-                    </tr>
-                    ${actualItems.map((item: any) => `
-                    <tr>
-                      <td style="padding: 10px; border: 1px solid #ddd;">${item.productName || item.product} (${item.variantName || item.variant || ''})</td>
-                      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;"><strong>${item.quantity}</strong></td>
-                    </tr>
-                    `).join('')}
+                <div style="font-family: sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; padding: 40px; border-radius: 12px;">
+                  <h2 style="color: #0F172A; text-transform: uppercase; margin-bottom: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">New Purchase Order: Great Falls Queue</h2>
+                  
+                  <div style="margin-bottom: 24px;">
+                    <p style="margin: 4px 0;"><strong>Business:</strong> ${businessName}</p>
+                    <p style="margin: 4px 0;"><strong>Contact:</strong> ${fullName} (${actualPhone})</p>
+                    <p style="margin: 4px 0;"><strong>PO Number:</strong> ${poNumber || 'N/A'}</p>
+                  </div>
+
+                  <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+                    <thead>
+                      <tr style="background: #f8fafc;">
+                        <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Product</th>
+                        <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">SKU</th>
+                        <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: center;">Qty</th>
+                        <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${actualItems.map((item: any) => `
+                      <tr>
+                        <td style="padding: 12px; border: 1px solid #e2e8f0;">
+                          <strong>${item.productName || item.product}</strong>
+                          <br/><small style="color: #64748b;">${item.variantName || item.variant || ''}</small>
+                        </td>
+                        <td style="padding: 12px; border: 1px solid #e2e8f0;">${item.sku || 'N/A'}</td>
+                        <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: center;">${item.quantity}</td>
+                        <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">${item.total || item.price}</td>
+                      </tr>
+                      `).join('')}
+                    </tbody>
+                    <tfoot>
+                      <tr style="background: #f8fafc; font-weight: bold;">
+                        <td colspan="3" style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">Grand Total</td>
+                        <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right; color: #0F172A;">${grandTotal}</td>
+                      </tr>
+                    </tfoot>
                   </table>
-                  <p style="margin-top: 20px;"><strong>Notes:</strong> ${dockNotes || 'N/A'}</p>
-                  <p style="margin-top: 10px; font-size: 12px; color: #666;">Delivery Window: ${actualDelivery} | PO#: ${poNumber || 'N/A'}</p>
+
+                  <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
+                    <h4 style="margin-top: 0; color: #475569;">Dock & Delivery Notes:</h4>
+                    <p style="margin-bottom: 0;">${dockNotes || 'No special instructions provided.'}</p>
+                  </div>
+
+                  <div style="font-size: 11px; color: #94a3b8; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
+                    Requested Window: ${actualDelivery} • United Formulas Dispatch System
+                  </div>
                 </div>
             `
         });
