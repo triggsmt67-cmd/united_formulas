@@ -97,7 +97,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
                     <div className="mb-8">
                         <span className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-2 block">Protocol Reference: {refNumber}</span>
-                        <h2 className="text-4xl font-black text-slate-900 uppercase italic mb-6 font-geist tracking-tight">Inquiry <span className="text-[#EA580C]">Dispatched</span></h2>
+                        <h2 className="text-4xl font-black text-slate-900 uppercase italic mb-6 font-geist tracking-tight">Inventory Protocol <span className="text-[#EA580C]">Initiated</span></h2>
 
                         <div className="space-y-6 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
                             <p className="text-slate-700 text-sm leading-relaxed">
@@ -105,11 +105,10 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                                 Your request for <span className="text-[#EA580C] font-bold">{formState.interest}</span> has been logged in the United Formulas Inventory & Pricing Protocol.
                             </p>
                             <p className="text-slate-700 text-sm leading-relaxed">
-                                <strong className="text-slate-900 block mb-1 uppercase tracking-widest text-[10px]">Action Statement</strong>
                                 The Great Falls fulfillment team has been notified. A specialized inventory check is now underway for your facility.
                             </p>
                             <p className="text-slate-900 text-sm leading-relaxed font-bold border-t border-slate-200 pt-4">
-                                You will receive a volume-based pricing estimate at <span className="underline decoration-[#EA580C] decoration-2 underline-offset-4">{formState.email}</span> within 24 hours.
+                                A United Formulas specialist will follow up with you at <span className="underline decoration-[#EA580C] decoration-2 underline-offset-4">{formState.email}</span> within 24 hours to discuss your inquiry.
                             </p>
                         </div>
                     </div>
