@@ -143,8 +143,8 @@ export default function PromotionGrid({ featuredProducts }: PromotionGridProps) 
             </div>
 
             {/* Bottom Banner */}
-            <div className="bg-red-600 text-white py-3 text-center text-[10px] font-black uppercase tracking-[0.4em]">
-                Order By 4 PM For Same Day Route Delivery
+            <div className="bg-red-600 text-white py-4 text-center text-sm font-black uppercase tracking-[0.2em]">
+                Order By 4 PM For Next Day Route Delivery
             </div>
         </section>
     );

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import ProductGallery from '@/components/ProductGallery';
 import PurchaseOptions from '@/components/PurchaseOptions';
+import POSubmitButton from '@/components/POSubmitButton';
 import { ProductNode, ProductImage } from '@/types';
 
 type DetailedProduct = ProductNode & {
@@ -109,31 +110,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-6">
                                 {product.name}
                             </h1>
-
-                            {product.price && (
-                                <div className="flex flex-col gap-1">
-                                    {product.variations?.nodes && product.variations.nodes.length > 0 && (
-                                        <span className="text-xs font-bold text-cyan-600 uppercase tracking-widest">Starting at</span>
-                                    )}
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="text-3xl font-bold text-slate-900">
-                                            {product.price}
-                                        </span>
-                                        <span className="text-slate-500 text-sm font-medium uppercase tracking-widest">
-                                            USD / Unit
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="prose prose-slate prose-lg text-slate-600 leading-relaxed">
-                            {product.shortDescription && (
-                                <div dangerouslySetInnerHTML={{ __html: product.shortDescription }} className="mb-4" />
-                            )}
-                            {product.description && product.description !== product.shortDescription && (
-                                <div dangerouslySetInnerHTML={{ __html: product.description }} />
-                            )}
                         </div>
 
                         {/* Pricing Breakdown / Options */}
@@ -144,13 +120,23 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             />
                         )}
 
-                        <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                        <div className="prose prose-slate prose-lg text-slate-600 leading-relaxed">
+                            {product.shortDescription && (
+                                <div dangerouslySetInnerHTML={{ __html: product.shortDescription }} className="mb-4" />
+                            )}
+                            {product.description && product.description !== product.shortDescription && (
+                                <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                            )}
+                        </div>
+
+                        <div className="mt-4 flex flex-col gap-4">
+                            <POSubmitButton />
                             {product.productData?.sdssheet && (
                                 <a
                                     href={product.productData.sdssheet}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex-1 bg-white border-2 border-slate-200 text-slate-900 font-semibold py-4 px-8 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 text-center"
+                                    className="w-full bg-white border-2 border-slate-200 text-slate-900 font-semibold py-4 px-8 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 text-center"
                                 >
                                     Download SDS Sheet
                                 </a>
