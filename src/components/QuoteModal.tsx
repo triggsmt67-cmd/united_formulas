@@ -20,6 +20,20 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [refNumber, setRefNumber] = useState('');
+
+    const resetForm = () => {
+        setFormState({
+            fullName: '',
+            company: '',
+            email: '',
+            phone: '',
+            interest: 'Industrial Cleaner',
+            message: ''
+        });
+        setIsSuccess(false);
+        setIsSubmitting(false);
+    };
 
     // Handle escape key to close
     useEffect(() => {
@@ -29,12 +43,16 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         if (isOpen) {
             document.addEventListener('keydown', handleEsc);
             document.body.style.overflow = 'hidden';
+            // Reset success state when opening fresh
+            if (!isSuccess) {
+                setRefNumber(`UF-DISPATCH-${Math.floor(1000 + Math.random() * 9000)}`);
+            }
         }
         return () => {
             document.removeEventListener('keydown', handleEsc);
             document.body.style.overflow = 'unset';
         };
-    }, [isOpen, onClose]);
+    }, [isOpen, onClose, isSuccess]);
 
     if (!isOpen) return null;
 
@@ -48,7 +66,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...formState,
-                    items: poDraft
+                    items: poDraft,
+                    refNumber
                 })
             });
 
@@ -70,20 +89,45 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         return (
             <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
                 <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onClick={onClose} />
-                <div className="relative w-full max-w-md bg-white rounded-3xl p-10 text-center shadow-2xl animate-fade-up">
-                    <div className="w-20 h-20 bg-orange-100 text-[#EA580C] rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="relative w-full max-w-lg bg-white rounded-3xl p-10 text-center shadow-2xl animate-fade-up overflow-hidden border border-slate-200">
+                    <div className="h-2 w-full bg-[#EA580C] absolute top-0 left-0"></div>
+                    <div className="w-20 h-20 bg-orange-100 text-[#EA580C] rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                     </div>
-                    <h2 className="text-2xl font-black text-slate-900 uppercase italic mb-4 font-geist">Request Dispatched</h2>
-                    <p className="text-slate-600 mb-8 leading-relaxed">
-                        Inventory verification is in progress. A technician will contact you shortly with stock availability and pricing.
-                    </p>
-                    <button
-                        onClick={onClose}
-                        className="w-full py-4 bg-[#EA580C] text-white font-black rounded-xl uppercase tracking-widest font-geist shadow-lg shadow-orange-900/20"
-                    >
-                        Close Protocol
-                    </button>
+
+                    <div className="mb-8">
+                        <span className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-2 block">Protocol Reference: {refNumber}</span>
+                        <h2 className="text-4xl font-black text-slate-900 uppercase italic mb-6 font-geist tracking-tight">Inquiry <span className="text-[#EA580C]">Dispatched</span></h2>
+
+                        <div className="space-y-6 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <p className="text-slate-700 text-sm leading-relaxed">
+                                <strong className="text-slate-900 block mb-1 uppercase tracking-widest text-[10px]">Protocol Status</strong>
+                                Your request for <span className="text-[#EA580C] font-bold">{formState.interest}</span> has been logged in the United Formulas Inventory & Pricing Protocol.
+                            </p>
+                            <p className="text-slate-700 text-sm leading-relaxed">
+                                <strong className="text-slate-900 block mb-1 uppercase tracking-widest text-[10px]">Action Statement</strong>
+                                The Great Falls fulfillment team has been notified. A specialized inventory check is now underway for your facility.
+                            </p>
+                            <p className="text-slate-900 text-sm leading-relaxed font-bold border-t border-slate-200 pt-4">
+                                You will receive a volume-based pricing estimate at <span className="underline decoration-[#EA580C] decoration-2 underline-offset-4">{formState.email}</span> within 24 hours.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        <button
+                            onClick={resetForm}
+                            className="w-full py-5 bg-[#EA580C] text-white font-black rounded-xl uppercase tracking-[0.2em] font-geist shadow-xl shadow-orange-900/20 hover:bg-[#C2410C] transition-all"
+                        >
+                            Submit New Request
+                        </button>
+                        <button
+                            onClick={onClose}
+                            className="w-full py-4 text-slate-400 font-bold uppercase tracking-widest text-[10px] hover:text-slate-900 transition-colors"
+                        >
+                            Exit Protocol
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -211,7 +255,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
                         <div className="pt-4">
                             <button
-                                id="dispatch-inquiry-btn"
+                                id="submit-po-btn"
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-geist [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] disabled:opacity-50"
