@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function AboutPage() {
     return (
@@ -105,6 +106,7 @@ export default function AboutPage() {
                     </section>
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }

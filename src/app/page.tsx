@@ -11,6 +11,8 @@ import { CATEGORY_METADATA, DEFAULT_CATEGORY_METADATA } from "@/config/categorie
 import Navbar from "@/components/Navbar";
 import RequestQuoteCTA from "@/components/RequestQuoteCTA";
 import ZipCheckCTA from "@/components/ZipCheckCTA";
+import Footer from "@/components/Footer";
+import ZipCheckModal from "@/components/ZipCheckModal";
 
 const GET_HOME_DATA = gql`
   query GetHomeData {
@@ -662,69 +664,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 pt-24 pb-12 font-geist">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl tracking-tighter text-slate-900 mb-8 font-semibold">
-            Clean it once. Clean it right.
-          </h2>
-          <RequestQuoteCTA />
-          <div className="border-t border-slate-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-2 opacity-80">
-              <Image
-                src="https://ufbackend.com/wp-content/uploads/2026/01/UFColorFinal-Logo-1-1.png"
-                alt="United Formulas Logo"
-                width={140}
-                height={32}
-                className="h-8 w-auto object-contain"
-              />
-            </div>
-            <p className="text-xs text-slate-500 font-medium">
-              Exceeding Expectations in Every Way.
-            </p>
-            <div className="flex gap-6">
-              <a href="#" className="text-slate-400 hover:text-cyan-600 transition-colors">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 24 24"
-                  className="iconify"
-                >
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6c2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4c-.9-4.2 4-6.6 7-3.8c1.1 0 3-1.2 3-1.2"
-                  />
-                </svg>
-              </a>
-              <a href="#" className="text-slate-400 hover:text-cyan-600 transition-colors">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 24 24"
-                  className="iconify"
-                >
-                  <g
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  >
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2a2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6M2 9h4v12H2z" />
-                    <circle cx="4" cy="4" r="2" />
-                  </g>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

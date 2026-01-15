@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import SDSList from '@/components/SDSList';
 import { ProductNode } from '@/types';
 import { Metadata } from 'next';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
     title: 'Safety Data Sheets (SDS) | Technical Documentation | United Formulas',
@@ -113,6 +114,7 @@ export default async function SDSPage() {
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }

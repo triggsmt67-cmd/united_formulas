@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 import { getClient } from '@/lib/apollo-client';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import ProductGallery from '@/components/ProductGallery';
 import PurchaseOptions from '@/components/PurchaseOptions';
 import POSubmitButton from '@/components/POSubmitButton';
@@ -83,6 +84,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         Back to Catalog
                     </Link>
                 </div>
+                <Footer />
             </div>
         );
     }
@@ -145,6 +147,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }

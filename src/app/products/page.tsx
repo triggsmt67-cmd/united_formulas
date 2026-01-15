@@ -6,6 +6,7 @@ import ProductGrid from "@/components/ProductGrid";
 import Navbar from "@/components/Navbar";
 import PromotionGrid from "@/components/PromotionGrid";
 import { ProductNode } from "@/types";
+import Footer from "@/components/Footer";
 
 const GET_PRODUCTS_DATA = gql`
   query GetProductsData {
@@ -107,6 +108,7 @@ export default async function ProductsPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

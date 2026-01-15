@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Footer from "@/components/Footer";
 export const dynamic = 'force-dynamic';
 import { ProductNode, ProductCategory } from "@/types";
 import Navbar from "@/components/Navbar";
@@ -145,6 +146,7 @@ export default async function CategoryPage({
                     </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }
