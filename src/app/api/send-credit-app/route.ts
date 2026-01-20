@@ -2,53 +2,53 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 export async function POST(req: Request) {
-    try {
-        const body = await req.json();
-        const {
-            companyName,
-            anticipatedPurchase,
-            dateEstablished,
-            phoneFax,
-            bizType,
-            email,
-            address,
-            taxId,
-            authorizedBuyers,
-            resalePermit,
-            apContact,
-            apPhoneEmail,
-            poRequired,
-            directors,
-            references,
-            bankName,
-            bankPhone,
-            bankAddress,
-            bankContact,
-            bankAccount,
-            bankType,
-            authSig,
-            authPrintedName,
-            authTitle,
-            authDate,
-            guarantorSig,
-            guarantorName
-        } = body;
+  try {
+    const body = await req.json();
+    const {
+      companyName,
+      anticipatedPurchase,
+      dateEstablished,
+      phoneFax,
+      bizType,
+      email,
+      address,
+      taxId,
+      authorizedBuyers,
+      resalePermit,
+      apContact,
+      apPhoneEmail,
+      poRequired,
+      directors,
+      references,
+      bankName,
+      bankPhone,
+      bankAddress,
+      bankContact,
+      bankAccount,
+      bankType,
+      authSig,
+      authPrintedName,
+      authTitle,
+      authDate,
+      guarantorSig,
+      guarantorName
+    } = body;
 
-        const warehouseEmail = process.env.WAREHOUSE_EMAIL;
-        const apiKey = process.env.RESEND_API_KEY;
+    const warehouseEmail = process.env.WAREHOUSE_EMAIL;
+    const apiKey = process.env.RESEND_API_KEY;
 
-        if (!warehouseEmail || !apiKey) {
-            console.error('CRITICAL: Environment variables missing for email dispatch.');
-            return NextResponse.json(
-                { error: "Configuration Error: Security or recipient variable missing." },
-                { status: 500 }
-            );
-        }
+    if (!warehouseEmail || !apiKey) {
+      console.error('CRITICAL: Environment variables missing for email dispatch.');
+      return NextResponse.json(
+        { error: "Configuration Error: Security or recipient variable missing." },
+        { status: 500 }
+      );
+    }
 
-        const resend = new Resend(apiKey);
+    const resend = new Resend(apiKey);
 
-        // Map directors loop
-        const directorsHtml = (directors || []).map((d: any) => `
+    // Map directors loop
+    const directorsHtml = (directors || []).map((d: any) => `
             <div class="signature-block" style="border: 1px dashed #ccc; padding: 10px; margin-top: 10px; background: #fafafa; margin-bottom: 10px;">
               <div style="display: table; width: 100%;">
                 <div style="display: table-cell; width: 50%; vertical-align: top;">
@@ -71,15 +71,15 @@ export async function POST(req: Request) {
             </div>
         `).join('');
 
-        // Map trade references loop
-        const referencesHtml = (references || []).map((r: any) => `
+    // Map trade references loop
+    const referencesHtml = (references || []).map((r: any) => `
             <div style="margin-bottom: 15px; border-bottom: 1px inset #f1f1f1; padding-bottom: 10px;">
               <span style="font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; display: block; margin-bottom: 2px;">Reference: ${r.name || ''}</span>
               <div style="font-size: 15px; color: #111; font-weight: 500;">${r.address || ''} | ${r.email || ''} | ${r.contact || ''}</div>
             </div>
         `).join('');
 
-        const htmlTemplate = `
+    const htmlTemplate = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -289,21 +289,24 @@ export async function POST(req: Request) {
 </html>
         `;
 
-        const { data, error } = await resend.emails.send({
-            from: 'UF Credit Dept <onboarding@resend.dev>',
-            to: [warehouseEmail],
-            subject: `CREDIT APPLICATION: ${companyName}`,
-            html: htmlTemplate
-        });
+    const rawRecipients = process.env.CREDIT_EMAIL || warehouseEmail;
+    const recipients = rawRecipients.split(',').map(email => email.trim());
 
-        if (error) {
-            console.error('Credit App Dispatch Error:', error);
-            return NextResponse.json({ error: "Email dispatch failed." }, { status: 500 });
-        }
+    const { data, error } = await resend.emails.send({
+      from: 'UF Credit Dept <notifications@unitedformulas.com>',
+      to: recipients,
+      subject: `CREDIT APPLICATION: ${companyName}`,
+      html: htmlTemplate
+    });
 
-        return NextResponse.json({ success: true, data });
-    } catch (err: any) {
-        console.error('Credit App Route Exception:', err);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    if (error) {
+      console.error('Credit App Dispatch Error:', error);
+      return NextResponse.json({ error: "Email dispatch failed." }, { status: 500 });
     }
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    console.error('Credit App Route Exception:', err);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }

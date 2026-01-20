@@ -3,65 +3,74 @@ import { Resend } from 'resend';
 
 // The user should add RESEND_API_KEY to their .env.local
 export async function POST(req: Request) {
-    try {
-        const body = await req.json();
+  try {
+    const body = await req.json();
 
-        // 1. Server-Side Security & Runtime Check
-        const warehouseEmail = process.env.WAREHOUSE_EMAIL;
+    // 1. Server-Side Security & Runtime Check
+    const warehouseEmail = process.env.WAREHOUSE_EMAIL;
 
-        if (!warehouseEmail) {
-            console.error('CRITICAL: WAREHOUSE_EMAIL is not defined in environment variables.');
-            return NextResponse.json(
-                { error: "Dispatch Configuration Error: Recipient variable missing in Vercel." },
-                { status: 500 }
-            );
-        }
+    if (!warehouseEmail) {
+      console.error('CRITICAL: WAREHOUSE_EMAIL is not defined in environment variables.');
+      return NextResponse.json(
+        { error: "Dispatch Configuration Error: Recipient variable missing in Vercel." },
+        { status: 500 }
+      );
+    }
 
-        // 2. Resend API Key check & Runtime Initialization
-        const apiKey = process.env.RESEND_API_KEY;
-        if (!apiKey) {
-            console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
-            console.log('PO Submission Data:', body);
-            return NextResponse.json({
-                success: true,
-                simulated: true,
-                message: "Dev Mode: PO logged to console instead of email."
-            });
-        }
+    // 2. Resend API Key check & Runtime Initialization
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
+      console.log('PO Submission Data:', body);
+      return NextResponse.json({
+        success: true,
+        simulated: true,
+        message: "Dev Mode: PO logged to console instead of email."
+      });
+    }
 
-        const resend = new Resend(apiKey);
-        const {
-            fullName,
-            phone,
-            phoneNumber,
-            businessName,
-            poNumber,
-            deliveryWindow,
-            deliveryTime,
-            dockNotes,
-            items,
-            lineItems,
-            grandTotal
-        } = body;
+    const resend = new Resend(apiKey);
+    const {
+      fullName,
+      phone,
+      phoneNumber,
+      email,
+      businessName,
+      poNumber,
+      deliveryWindow,
+      deliveryTime,
+      dockNotes,
+      items,
+      lineItems,
+      grandTotal
+    } = body;
 
-        const actualPhone = phoneNumber || phone || 'N/A';
-        const actualDelivery = deliveryWindow || deliveryTime || 'Standard';
-        const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
+    const actualPhone = phoneNumber || phone || 'N/A';
+    const actualEmail = email || 'N/A';
+    const actualDelivery = deliveryWindow || deliveryTime || 'Standard';
+    const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
 
-        // 3. Git-Agnostic Routing & Absolute Paths
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://united-formulas-v1.vercel.app';
+    // 3. Git-Agnostic Routing & Absolute Paths
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://united-formulas-v1.vercel.app';
 
-        const { data, error } = await resend.emails.send({
-            from: 'United Formulas <onboarding@resend.dev>', // Set to onboarding@resend.dev per request
-            to: [warehouseEmail],
-            subject: `NEW PO: GREAT FALLS QUEUE - ${businessName}`,
-            html: `
+    const recipients = warehouseEmail.split(',').map(email => email.trim());
+    if (actualEmail && actualEmail !== 'N/A' && !recipients.includes(actualEmail)) {
+      recipients.push(actualEmail);
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: 'UF Orders <notifications@unitedformulas.com>', // Production-ready sender address
+      to: recipients,
+      subject: `NEW PO: GREAT FALLS QUEUE - ${businessName}`,
+      html: `
                 <div style="font-family: sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; padding: 40px; border-radius: 12px;">
                   <h2 style="color: #0F172A; text-transform: uppercase; margin-bottom: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">New Purchase Order: Great Falls Queue</h2>
                   
                   <div style="margin-bottom: 24px;">
                     <p style="margin: 4px 0;"><strong>Business:</strong> ${businessName}</p>
-                    <p style="margin: 4px 0;"><strong>Contact:</strong> ${fullName} (${actualPhone})</p>
+                    <p style="margin: 4px 0;"><strong>Contact:</strong> ${fullName}</p>
+                    <p style="margin: 4px 0;"><strong>Email:</strong> ${actualEmail}</p>
+                    <p style="margin: 4px 0;"><strong>Phone:</strong> ${actualPhone}</p>
                     <p style="margin: 4px 0;"><strong>PO Number:</strong> ${poNumber || 'N/A'}</p>
                   </div>
 
@@ -105,23 +114,23 @@ export async function POST(req: Request) {
                   </div>
                 </div>
             `
-        });
+    });
 
-        if (error) {
-            console.error('Resend Dispatch Error:', error);
-            return NextResponse.json({
-                error: error.message || "Resend Dispatch Failed",
-                details: error
-            }, { status: 500 });
-        }
-
-        return NextResponse.json({ success: true, data });
-    } catch (err: any) {
-        console.error('API Route Exception:', err);
-        return NextResponse.json({
-            error: 'Internal Server Error',
-            message: err.message || "Unknown error occurred",
-            stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-        }, { status: 500 });
+    if (error) {
+      console.error('Resend Dispatch Error:', error);
+      return NextResponse.json({
+        error: error.message || "Resend Dispatch Failed",
+        details: error
+      }, { status: 500 });
     }
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: any) {
+    console.error('API Route Exception:', err);
+    return NextResponse.json({
+      error: 'Internal Server Error',
+      message: err.message || "Unknown error occurred",
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    }, { status: 500 });
+  }
 }

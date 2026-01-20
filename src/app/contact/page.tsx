@@ -1,7 +1,54 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function ContactPage() {
+    const [formState, setFormState] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        subject: 'Product Inquiries',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            const res = await fetch('/api/send-inquiry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fullName: `${formState.firstName} ${formState.lastName}`,
+                    email: formState.email,
+                    interest: formState.subject,
+                    message: formState.message,
+                    company: 'General Inquiry',
+                    phone: 'N/A',
+                    items: [],
+                    formName: 'Contact Form'
+                })
+            });
+
+            if (res.ok) {
+                setIsSuccess(true);
+                setFormState({ firstName: '', lastName: '', email: '', subject: 'Product Inquiries', message: '' });
+            } else {
+                alert('Failed to send message. Please try again or call us directly.');
+            }
+        } catch (error) {
+            console.error('Contact error:', error);
+            alert('An unexpected error occurred.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
             <Navbar />
@@ -45,66 +92,100 @@ export default function ContactPage() {
 
                     {/* Right Column: Contact Form */}
                     <div className="bg-slate-50 border border-slate-200 p-8 md:p-12 rounded-3xl shadow-xl">
-                        <form className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label htmlFor="first-name" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">First Name</label>
-                                    <input
-                                        type="text"
-                                        id="first-name"
-                                        placeholder="John"
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
-                                    />
+                        {isSuccess ? (
+                            <div className="text-center py-12 animate-fade-up">
+                                <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                                 </div>
-                                <div className="space-y-2">
-                                    <label htmlFor="last-name" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Last Name</label>
-                                    <input
-                                        type="text"
-                                        id="last-name"
-                                        placeholder="Doe"
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Email Address</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    placeholder="john@example.com"
-                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Subject</label>
-                                <select
-                                    id="subject"
-                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
+                                <h2 className="text-3xl font-bold text-slate-900 mb-4">Message Sent!</h2>
+                                <p className="text-slate-500 mb-8">Our Montana team will review your inquiry and get back to you within 24 hours.</p>
+                                <button
+                                    onClick={() => setIsSuccess(false)}
+                                    className="text-cyan-600 font-bold uppercase tracking-widest text-xs hover:text-cyan-700 transition-colors"
                                 >
-                                    <option>Product Inquiries</option>
-                                    <option>Custom Formulation</option>
-                                    <option>Bulk Quote Request</option>
-                                    <option>Technical Support</option>
-                                    <option>Other</option>
-                                </select>
+                                    Send another message
+                                </button>
                             </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label htmlFor="first-name" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">First Name</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            id="first-name"
+                                            placeholder="John"
+                                            value={formState.firstName}
+                                            onChange={(e) => setFormState({ ...formState, firstName: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="last-name" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Last Name</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            id="last-name"
+                                            placeholder="Doe"
+                                            value={formState.lastName}
+                                            onChange={(e) => setFormState({ ...formState, lastName: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
+                                        />
+                                    </div>
+                                </div>
 
-                            <div className="space-y-2">
-                                <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Message</label>
-                                <textarea
-                                    id="message"
-                                    rows={4}
-                                    placeholder="Tell us about your cleaning challenges..."
-                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white resize-none"
-                                ></textarea>
-                            </div>
+                                <div className="space-y-2">
+                                    <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Email Address</label>
+                                    <input
+                                        required
+                                        type="email"
+                                        id="email"
+                                        placeholder="john@example.com"
+                                        value={formState.email}
+                                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
+                                    />
+                                </div>
 
-                            <button className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-600/20 transition-all active:scale-[0.98] uppercase tracking-widest text-sm">
-                                Send Message
-                            </button>
-                        </form>
+                                <div className="space-y-2">
+                                    <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Subject</label>
+                                    <select
+                                        id="subject"
+                                        value={formState.subject}
+                                        onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
+                                    >
+                                        <option>Product Inquiries</option>
+                                        <option>Custom Formulation</option>
+                                        <option>Bulk Quote Request</option>
+                                        <option>Technical Support</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Message</label>
+                                    <textarea
+                                        required
+                                        id="message"
+                                        rows={4}
+                                        placeholder="Tell us about your cleaning challenges..."
+                                        value={formState.message}
+                                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white resize-none"
+                                    ></textarea>
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-cyan-600/20 transition-all active:scale-[0.98] uppercase tracking-widest text-sm disabled:opacity-50"
+                                >
+                                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                                </button>
+                            </form>
+                        )}
                     </div>
                 </div>
             </main>

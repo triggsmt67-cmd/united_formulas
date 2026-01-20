@@ -67,7 +67,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 body: JSON.stringify({
                     ...formState,
                     items: poDraft,
-                    refNumber
+                    refNumber,
+                    formName: 'Stock & Price Check'
                 })
             });
 
