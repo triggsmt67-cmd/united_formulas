@@ -18,7 +18,7 @@ export default function POSubmitButton() {
                     : 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
                     }`}
             >
-                Submit PO to Warehouse
+                SUBMIT PURCHASE ORDER TO WAREHOUSE
             </button>
             <PORequisitionForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
         </>

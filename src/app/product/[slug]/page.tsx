@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import ProductGallery from '@/components/ProductGallery';
 import PurchaseOptions from '@/components/PurchaseOptions';
 import POSubmitButton from '@/components/POSubmitButton';
+import RelatedProducts from '@/components/RelatedProducts';
 import { ProductNode, ProductImage } from '@/types';
 
 type DetailedProduct = ProductNode & {
@@ -13,6 +14,9 @@ type DetailedProduct = ProductNode & {
         nodes: ProductImage[];
     };
     description?: string;
+    related?: {
+        nodes: ProductNode[];
+    };
 };
 
 const GET_PRODUCT = gql`
@@ -54,6 +58,24 @@ const GET_PRODUCT = gql`
       }
       productData {
         sdssheet
+      }
+      related(first: 3) {
+        nodes {
+          id
+          name
+          slug
+          shortDescription
+          image {
+            sourceUrl
+            altText
+          }
+          ... on SimpleProduct {
+            price
+          }
+          ... on VariableProduct {
+            price
+          }
+        }
       }
     }
   }
@@ -146,6 +168,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                         </div>
                     </div>
                 </div>
+
+                {product.related?.nodes && product.related.nodes.length > 0 && (
+                    <RelatedProducts products={product.related.nodes} />
+                )}
             </main>
             <Footer />
         </div>

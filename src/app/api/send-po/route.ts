@@ -50,9 +50,6 @@ export async function POST(req: Request) {
     const actualDelivery = deliveryWindow || deliveryTime || 'Standard';
     const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
 
-    // 3. Git-Agnostic Routing & Absolute Paths
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://united-formulas-v1.vercel.app';
-
     const recipients = warehouseEmail.split(',').map(email => email.trim());
     if (actualEmail && actualEmail !== 'N/A' && !recipients.includes(actualEmail)) {
       recipients.push(actualEmail);

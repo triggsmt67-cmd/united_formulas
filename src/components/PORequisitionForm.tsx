@@ -9,14 +9,14 @@ interface PORequisitionFormProps {
 }
 
 export default function PORequisitionForm({ isOpen, onClose }: PORequisitionFormProps) {
-    const { poDraft, updateQuantity, clearPO } = usePO();
+    const { poDraft, updateQuantity, removeFromPO, clearPO } = usePO();
     const [formData, setFormData] = useState({
         fullName: '',
         phoneNumber: '',
         email: '',
         businessName: '',
         poNumber: '',
-        deliveryWindow: '07:00–11:00',
+        deliveryWindow: '7:00 AM – 11:00 AM MT',
         dockNotes: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -291,6 +291,14 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                                 ${(parseFloat(item.price.replace(/[^0-9.]/g, '')) * (item.quantity || 1)).toFixed(2)}
                                             </p>
                                         </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeFromPO(item.sku)}
+                                            className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                            title="Remove item"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -351,21 +359,21 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                 />
 
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Preferred Time Window</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Preferred Time Window (Mountain Time)</label>
                                     <div className="grid grid-cols-2 gap-2">
                                         <button
                                             type="button"
-                                            onClick={() => setFormData({ ...formData, deliveryWindow: '07:00–11:00' })}
-                                            className={`py-3 px-2 rounded-xl border text-[10px] font-bold uppercase tracking-widest transition-all ${formData.deliveryWindow === '07:00–11:00' ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}
+                                            onClick={() => setFormData({ ...formData, deliveryWindow: '7:00 AM – 11:00 AM MT' })}
+                                            className={`py-3 px-2 rounded-xl border text-[10px] font-bold uppercase tracking-widest transition-all ${formData.deliveryWindow === '7:00 AM – 11:00 AM MT' ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}
                                         >
-                                            Morning (07-11)
+                                            Morning (7-11 AM MT)
                                         </button>
                                         <button
                                             type="button"
-                                            onClick={() => setFormData({ ...formData, deliveryWindow: '13:00–16:00' })}
-                                            className={`py-3 px-2 rounded-xl border text-[10px] font-bold uppercase tracking-widest transition-all ${formData.deliveryWindow === '13:00–16:00' ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}
+                                            onClick={() => setFormData({ ...formData, deliveryWindow: '1:00 PM – 5:00 PM MT' })}
+                                            className={`py-3 px-2 rounded-xl border text-[10px] font-bold uppercase tracking-widest transition-all ${formData.deliveryWindow === '1:00 PM – 5:00 PM MT' ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-slate-50 text-slate-500 border-slate-200 hover:border-slate-300'}`}
                                         >
-                                            Afternoon (13-16)
+                                            Afternoon (1-5 PM MT)
                                         </button>
                                     </div>
                                 </div>
