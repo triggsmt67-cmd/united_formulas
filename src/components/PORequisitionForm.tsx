@@ -105,7 +105,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 <div class="value">
                     <div style="margin-bottom: 4px;"><strong>P.O. Number:</strong> ${formData.poNumber || 'WEB-QUEUED'}</div>
                     <div style="margin-bottom: 4px;"><strong>Date:</strong> ${new Date().toLocaleDateString()}</div>
-                    <div style="margin-bottom: 4px;"><strong>Time Window:</strong> ${formData.deliveryWindow}</div>
+                    <!-- <div style="margin-bottom: 4px;"><strong>Time Window:</strong> ${formData.deliveryWindow}</div> -->
                     <div><strong>Expected Invoice:</strong> ${nextDay}</div>
                 </div>
             </div>
@@ -177,8 +177,9 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
             total: subtotal
         };
 
+        const { deliveryWindow, ...formDataToSubmit } = formData;
         const payload = {
-            ...formData,
+            ...formDataToSubmit,
             items: poDraft.map(item => ({
                 product: `${item.productName} (${item.variantName})`,
                 sku: item.sku,
@@ -358,7 +359,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                     onChange={e => setFormData({ ...formData, poNumber: e.target.value })}
                                 />
 
-                                <div className="space-y-2">
+                                {/* <div className="space-y-2">
                                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Preferred Time Window (Mountain Time)</label>
                                     <div className="grid grid-cols-2 gap-2">
                                         <button
@@ -376,7 +377,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                             Afternoon (1-5 PM MT)
                                         </button>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
