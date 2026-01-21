@@ -35,6 +35,7 @@ export interface ProductNode {
     };
     productData?: {
         sdssheet?: string | null;
+        costPerOunce?: string | null;
     };
 }
 

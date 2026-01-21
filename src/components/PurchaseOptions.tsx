@@ -18,9 +18,10 @@ interface Variant {
 interface PurchaseOptionsProps {
     productName: string;
     variants: Variant[];
+    costPerOunce?: string | null;
 }
 
-export default function PurchaseOptions({ productName, variants }: PurchaseOptionsProps) {
+export default function PurchaseOptions({ productName, variants, costPerOunce }: PurchaseOptionsProps) {
     const { poDraft, addToPO } = usePO();
 
     const isAdded = (sku: string) => poDraft.some((item) => item.sku === sku);
@@ -39,6 +40,11 @@ export default function PurchaseOptions({ productName, variants }: PurchaseOptio
         <div className="space-y-6">
             <div className="space-y-4">
                 <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400">Purchase Options</h3>
+                {costPerOunce && (
+                    <div className="text-sm font-bold text-black uppercase tracking-wide">
+                        COST AS LOW AS {costPerOunce}
+                    </div>
+                )}
                 <div className="grid gap-3">
                     {variants.map((variant) => {
                         const added = isAdded(variant.id);
