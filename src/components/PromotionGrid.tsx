@@ -121,7 +121,7 @@ export default function PromotionGrid({ featuredProducts }: PromotionGridProps) 
                         )}
                         <div className="absolute inset-0 p-8 flex flex-col justify-between">
                             <div className="bg-red-600 text-white self-start px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
-                                Seasonal
+                                MOST RECOMMENDED
                             </div>
                             <div>
                                 <h3 className="text-2xl font-black text-white uppercase tracking-tighter leading-none mb-2">
