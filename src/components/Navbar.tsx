@@ -37,71 +37,84 @@ export default function Navbar() {
     ];
 
     return (
-        <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/60 font-geist">
-            <div className="flex h-20 max-w-7xl mx-auto px-6 items-center justify-between">
-                <Link href="/" className="flex items-center gap-2 group z-[60]">
-                    <Image
-                        src="https://ufbackend.com/wp-content/uploads/2026/01/UFColorFinal-Logo-1-1.png"
-                        alt="United Formulas Logo"
-                        width={180}
-                        height={40}
-                        className="h-12 w-auto object-contain"
-                        priority
-                    />
-                </Link>
+        <>
+            <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/60 font-geist">
+                <div className="flex h-20 max-w-7xl mx-auto px-4 sm:px-6 items-center justify-between">
+                    <Link href="/" className="flex items-center gap-2 group z-[60]">
+                        <Image
+                            src="https://ufbackend.com/wp-content/uploads/2026/01/UFColorFinal-Logo-1-1.png"
+                            alt="United Formulas Logo"
+                            width={180}
+                            height={40}
+                            className="h-12 w-auto object-contain"
+                            priority
+                        />
+                    </Link>
 
-                {/* Desktop Menu */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.label}
-                            href={link.href}
-                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Desktop Phone Number */}
-                <a
-                    href="tel:4067274144"
-                    className="hidden md:block text-xs font-medium text-slate-900 hover:text-cyan-600 transition-colors"
-                >
-                    406.727.4144
-                </a>
-
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="md:hidden p-2 text-slate-900 focus:outline-none z-[60]"
-                    aria-label="Toggle Menu"
-                >
-                    <div className="w-6 h-5 relative flex flex-col justify-between">
-                        <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                        <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                        <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex items-center gap-8">
+                        {navLinks.map((link) => {
+                            const isExternal = link.href.startsWith('http');
+                            return (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    target={isExternal ? "_blank" : undefined}
+                                    rel={isExternal ? "noopener noreferrer" : undefined}
+                                    className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
                     </div>
-                </button>
-            </div>
 
-            {/* Mobile Menu Overlay */}
+                    {/* Desktop Phone Number */}
+                    <a
+                        href="tel:4067274144"
+                        className="hidden md:block text-xs font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                    >
+                        406.727.4144
+                    </a>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 text-slate-900 focus:outline-none z-[110] relative"
+                        aria-label="Toggle Menu"
+                    >
+                        <div className="w-6 h-5 relative flex flex-col justify-between">
+                            <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                            <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+                            <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                        </div>
+                    </button>
+                </div>
+            </nav>
+
+            {/* Mobile Menu Overlay - MOVED OUTSIDE NAV TO AVOID BACKDROP-FILTER CONSTRAINTS */}
             <div
-                className={`fixed inset-0 bg-white z-[55] transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed inset-0 bg-white z-[100] transition-all duration-300 ease-in-out md:hidden ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
                     }`}
+                style={{ visibility: isMenuOpen ? 'visible' : 'hidden' }}
             >
                 <div className="flex flex-col h-full pt-28 px-8 pb-12 overflow-y-auto">
                     <div className="flex flex-col gap-6">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.label}
-                                href={link.href}
-                                onClick={() => setIsMenuOpen(false)}
-                                className="text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isExternal = link.href.startsWith('http');
+                            return (
+                                <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    target={isExternal ? "_blank" : undefined}
+                                    rel={isExternal ? "noopener noreferrer" : undefined}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     <div className="mt-auto pt-10 border-t border-slate-100 italic">
@@ -123,6 +136,6 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
-        </nav>
+        </>
     );
 }
