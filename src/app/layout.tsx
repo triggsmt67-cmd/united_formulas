@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 import { POProvider } from "@/context/POContext";
+import ChatWidget from "@/components/ChatWidget";
 
 export default function RootLayout({
   children,
@@ -31,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -45,6 +46,7 @@ export default function RootLayout({
         )}
         <POProvider>
           {children}
+          <ChatWidget />
         </POProvider>
       </body>
     </html>

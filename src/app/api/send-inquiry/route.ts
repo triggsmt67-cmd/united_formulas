@@ -104,9 +104,10 @@ export async function POST(req: Request) {
             `
         });
 
+        console.log('Inquiry Dispatch Response Data:', data);
         if (error) {
             console.error('Inquiry Dispatch Error:', error);
-            return NextResponse.json({ error: "Email dispatch failed." }, { status: 500 });
+            return NextResponse.json({ error: "Email dispatch failed.", details: error }, { status: 500 });
         }
 
         return NextResponse.json({ success: true, data });

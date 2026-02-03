@@ -113,6 +113,7 @@ export async function POST(req: Request) {
             `
     });
 
+    console.log('PO Dispatch Response Data:', data);
     if (error) {
       console.error('Resend Dispatch Error:', error);
       return NextResponse.json({
