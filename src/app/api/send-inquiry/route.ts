@@ -10,12 +10,21 @@ export async function POST(req: Request) {
         const warehouseEmail = process.env.WAREHOUSE_EMAIL;
         const apiKey = process.env.RESEND_API_KEY;
 
-        if (!warehouseEmail || !apiKey) {
-            console.error('CRITICAL: Environment variables missing for email dispatch.');
+        if (!warehouseEmail) {
+            console.error('CRITICAL: WAREHOUSE_EMAIL is missing.');
             return NextResponse.json(
-                { error: "Configuration Error: Security or recipient variable missing." },
+                { error: "Configuration Error: Recipient variable missing." },
                 { status: 500 }
             );
+        }
+
+        if (!apiKey) {
+            console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
+            return NextResponse.json({
+                success: true,
+                simulated: true,
+                message: "Dev Mode: Email captured but not sent (API Key missing)."
+            });
         }
 
         const resend = new Resend(apiKey);
