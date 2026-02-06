@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 import { POProvider } from "@/context/POContext";
-import ChatWidget from "@/components/ChatWidget";
+// import ChatWidget from "@/components/ChatWidget";
 
 export default function RootLayout({
   children,
@@ -46,7 +46,7 @@ export default function RootLayout({
         )}
         <POProvider>
           {children}
-          <ChatWidget />
+          {/* <ChatWidget /> */}
         </POProvider>
       </body>
     </html>
