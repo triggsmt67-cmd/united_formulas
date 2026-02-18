@@ -85,6 +85,18 @@ export const CATEGORY_METADATA: Record<string, CategoryMetadata> = {
         ph: "Industrial",
         dilution: "1:128",
         icon: <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2M6.453 15h11.094M8.5 2h7" />
+    },
+    "kitchen-warewash": {
+        accentColor: "blue",
+        ph: "pH 12.0",
+        dilution: "1:256",
+        icon: <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v4M5 2v4M9 2v4m2 12h10m-10-3h10m-10-3h10M3 15h2m-2 3h2m-2 3h2" />
+    },
+    "laundry": {
+        accentColor: "indigo",
+        ph: "Variable",
+        dilution: "1:512",
+        icon: <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M3 6h18v14H3zM3 10h18M8 14h.01M12 14h.01M16 14h.01" /><circle cx="12" cy="15" r="5" /></g>
     }
 };
 

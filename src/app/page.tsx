@@ -69,14 +69,15 @@ export default async function Home() {
       "automotive",
       "bathroom",
       "carpet-care",
-      "disinfectant",
+      "disinfectants-deodorizers",
+      "kitchen-warewash",
+      "laundry",
       "degreaser",
       "floor-care",
       "glass-cleaner",
       "heavy-duty-cleaner",
       "industrial-cleaner-degreaser",
-      "enzymatic-cleaners",
-      "disinfectants-deodorizers"
+      "enzymatic-cleaners"
     ];
 
     // Create a set of categories based on targets if they exist, otherwise fill with first available
@@ -86,15 +87,15 @@ export default async function Home() {
     // First pass: get targets in order of preference
     for (const slug of targetSlugs) {
       const cat = allCats.find((c: ProductCategory) => c.slug === slug);
-      if (cat && selectedCats.length < 10) {
+      if (cat && selectedCats.length < 12) {
         selectedCats.push(cat);
         usedSlugs.add(slug);
       }
     }
 
-    // Second pass: fill to 10 if needed from all available categories
+    // Second pass: fill to 12 if needed from all available categories
     for (const cat of allCats) {
-      if (selectedCats.length >= 10) break;
+      if (selectedCats.length >= 12) break;
       if (!usedSlugs.has(cat.slug)) {
         // Skip variants ONLY if we already have the main version and it's a very similar name
         const isAllPurposeVariant = cat.slug.includes("all-purpose") && usedSlugs.has("all-purpose");
