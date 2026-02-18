@@ -72,7 +72,7 @@ export default function Navbar() {
                     {/* Desktop Phone Number */}
                     <a
                         href="tel:4067274144"
-                        className="hidden md:block text-xs font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                        className="hidden md:block text-base font-bold text-slate-900 hover:text-cyan-600 transition-colors"
                     >
                         406.727.4144
                     </a>
@@ -117,11 +117,12 @@ export default function Navbar() {
                         })}
                     </div>
 
-                    <div className="mt-auto pt-10 border-t border-slate-100 italic">
+                    <div className="mt-6 pt-6 border-t border-slate-100 italic">
                         <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Direct Support</p>
                         <a
                             href="tel:4067274144"
                             className="text-2xl font-black text-slate-900 hover:text-cyan-600 transition-colors flex items-center gap-3"
+                            onClick={() => setIsMenuOpen(false)}
                         >
                             <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -130,7 +131,7 @@ export default function Navbar() {
                             </div>
                             406.727.4144
                         </a>
-                        <p className="text-sm text-slate-500 mt-4 leading-relaxed font-medium">
+                        <p className="text-sm text-slate-500 mt-4 leading-relaxed font-bold">
                             Personalized formulation service from Montana experts.
                         </p>
                     </div>
