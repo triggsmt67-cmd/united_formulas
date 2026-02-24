@@ -10,7 +10,8 @@ export default function ContactPage() {
         lastName: '',
         email: '',
         subject: 'Product Inquiries',
-        message: ''
+        message: '',
+        website_verify_field: '' // Honeypot field
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -31,13 +32,14 @@ export default function ContactPage() {
                     company: 'General Inquiry',
                     phone: 'N/A',
                     items: [],
-                    formName: 'Contact Form'
+                    formName: 'Contact Form',
+                    website_verify_field: formState.website_verify_field // Send honeypot field
                 })
             });
 
             if (res.ok) {
                 setIsSuccess(true);
-                setFormState({ firstName: '', lastName: '', email: '', subject: 'Product Inquiries', message: '' });
+                setFormState({ firstName: '', lastName: '', email: '', subject: 'Product Inquiries', message: '', website_verify_field: '' });
             } else {
                 alert('Failed to send message. Please try again or call us directly.');
             }
@@ -72,13 +74,13 @@ export default function ContactPage() {
                             <ContactMethod
                                 icon={<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />}
                                 title="Call Us"
-                                detail="406.727.4144"
+                                detail={<a href="tel:4067274144" className="hover:text-cyan-600 transition-colors">406.727.4144</a>}
                                 description="Mon-Fri, 8am-5pm MT"
                             />
                             <ContactMethod
                                 icon={<><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></>}
                                 title="Email Us"
-                                detail="sales@unitedformulas.com"
+                                detail={<a href="mailto:crystalm@unitedformulas.com,triggsmt67@gmail.com" className="hover:text-cyan-600 transition-colors text-base md:text-lg">sales@unitedformulas.com</a>}
                                 description="We respond within 24 hours"
                             />
                             <ContactMethod
@@ -108,6 +110,17 @@ export default function ContactPage() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
+                                {/* Honeypot field - hidden from users */}
+                                <div style={{ display: 'none' }} aria-hidden="true">
+                                    <input
+                                        type="text"
+                                        name="website_verify_field"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        value={formState.website_verify_field}
+                                        onChange={(e) => setFormState({ ...formState, website_verify_field: e.target.value })}
+                                    />
+                                </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="first-name" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">First Name</label>
@@ -197,7 +210,7 @@ export default function ContactPage() {
 interface ContactMethodProps {
     icon: React.ReactNode;
     title: string;
-    detail: string;
+    detail: React.ReactNode;
     description: string;
 }
 
@@ -211,7 +224,7 @@ function ContactMethod({ icon, title, detail, description }: ContactMethodProps)
             </div>
             <div>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-1">{title}</h3>
-                <p className="text-lg font-semibold text-slate-900">{detail}</p>
+                <div className="text-lg font-semibold text-slate-900">{detail}</div>
                 <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
             </div>
         </div>

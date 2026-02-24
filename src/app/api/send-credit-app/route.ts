@@ -1,9 +1,22 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { validateHoneypot, checkRateLimit } from '@/lib/security';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+
+    // Rate limit check: 2 applications per minute per IP
+    if (!checkRateLimit(ip, 2)) {
+      return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
+    }
+
     const body = await req.json();
+
+    // Anti-spam check
+    if (!validateHoneypot(body)) {
+      return NextResponse.json({ success: true, message: "Application received (filtered)" });
+    }
     const {
       companyName,
       anticipatedPurchase,

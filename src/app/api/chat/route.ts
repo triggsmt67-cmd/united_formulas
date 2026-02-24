@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Storage } from '@google-cloud/storage';
 import { LRUCache } from 'lru-cache';
+import { checkRateLimit } from '@/lib/security';
 
 const PDFParser = require("pdf2json");
 
@@ -25,6 +26,13 @@ const modelFlash = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
 export async function POST(req: NextRequest) {
     try {
+        const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+
+        // Rate limit check: 10 messages per minute per IP
+        if (!checkRateLimit(ip, 10)) {
+            return NextResponse.json({ error: "Too many messages. Please wait a minute." }, { status: 429 });
+        }
+
         const { message, history } = await req.json();
 
         // 1. Get Metadata (Cached)

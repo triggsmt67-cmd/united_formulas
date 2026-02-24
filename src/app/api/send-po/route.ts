@@ -1,10 +1,23 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { validateHoneypot, checkRateLimit } from '@/lib/security';
 
 // The user should add RESEND_API_KEY to their .env.local
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+
+    // Rate limit check: 2 POs per minute per IP
+    if (!checkRateLimit(ip, 2)) {
+      return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
+    }
+
     const body = await req.json();
+
+    // Anti-spam check
+    if (!validateHoneypot(body)) {
+      return NextResponse.json({ success: true, message: "PO Queued (filtered)" });
+    }
 
     // 1. Server-Side Security & Runtime Check
     const warehouseEmail = process.env.WAREHOUSE_EMAIL;

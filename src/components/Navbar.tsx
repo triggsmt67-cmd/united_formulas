@@ -69,26 +69,33 @@ export default function Navbar() {
                         })}
                     </div>
 
-                    {/* Desktop Phone Number */}
-                    <a
-                        href="tel:4067274144"
-                        className="hidden md:block text-base font-bold text-slate-900 hover:text-cyan-600 transition-colors"
-                    >
-                        406.727.4144
-                    </a>
+                    {/* Actions Area */}
+                    <div className="flex items-center gap-3 sm:gap-6">
+                        <a
+                            href="tel:4067274144"
+                            className="flex items-center gap-2 text-sm md:text-base font-bold text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            <div className="w-10 h-10 md:hidden rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600 shadow-sm border border-cyan-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                </svg>
+                            </div>
+                            <span className="hidden sm:inline">406.727.4144</span>
+                        </a>
 
-                    {/* Mobile Menu Button */}
-                    <button
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="md:hidden p-2 text-slate-900 focus:outline-none z-[110] relative"
-                        aria-label="Toggle Menu"
-                    >
-                        <div className="w-6 h-5 relative flex flex-col justify-between">
-                            <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                            <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                            <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-                        </div>
-                    </button>
+                        {/* Mobile Menu Button */}
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="md:hidden p-2 text-slate-900 focus:outline-none z-[110] relative"
+                            aria-label="Toggle Menu"
+                        >
+                            <div className="w-6 h-5 relative flex flex-col justify-between">
+                                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                                <span className={`w-full h-0.5 bg-current transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+                                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </nav>
 

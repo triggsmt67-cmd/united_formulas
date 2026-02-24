@@ -1,9 +1,24 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { validateHoneypot, validateBasicInputs, checkRateLimit } from '@/lib/security';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
+        const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+
+        // Rate limit check: 3 inquiries per minute per IP
+        if (!checkRateLimit(ip, 3)) {
+            return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+        }
+
         const body = await req.json();
+
+        // Anti-spam check: Honeypot & Basic Validation
+        if (!validateHoneypot(body) || !validateBasicInputs(body)) {
+            // We return a fake success or a generic error to not tip off the bot
+            return NextResponse.json({ success: true, message: "Submission received (filtered)" });
+        }
+
         const { fullName, company, email, phone, interest, message, items, formName } = body;
         const origin = formName || 'General Inquiry';
 

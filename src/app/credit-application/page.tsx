@@ -46,6 +46,7 @@ export default function CreditApplicationPage() {
             apContact: formData.get("apContact"),
             apPhoneEmail: formData.get("apPhoneEmail"),
             poRequired: formData.get("poRequired"),
+            website_verify_field: formData.get("website_verify_field"), // Honeypot field
             directors: directors.map((d, i) => ({
                 name: formData.get(`directorName_${i}`),
                 title: formData.get(`directorTitle_${i}`),
@@ -143,6 +144,15 @@ export default function CreditApplicationPage() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-12">
+                    {/* Honeypot field - hidden from users */}
+                    <div style={{ display: 'none' }} aria-hidden="true">
+                        <input
+                            type="text"
+                            name="website_verify_field"
+                            tabIndex={-1}
+                            autoComplete="off"
+                        />
+                    </div>
                     {/* Business Information */}
                     <section className="bg-slate-50 border border-slate-200 p-8 md:p-12 rounded-[2.5rem] shadow-sm animate-fade-up" style={{ animationDelay: "100ms" }}>
                         <div className="flex items-center gap-4 mb-10">

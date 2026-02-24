@@ -16,7 +16,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         email: '',
         phone: '',
         interest: 'Industrial Cleaner',
-        message: ''
+        message: '',
+        website_verify_field: '' // Honeypot field
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -29,7 +30,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
             email: '',
             phone: '',
             interest: 'Industrial Cleaner',
-            message: ''
+            message: '',
+            website_verify_field: ''
         });
         setIsSuccess(false);
         setIsSubmitting(false);
@@ -171,6 +173,17 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
+                        {/* Honeypot field - hidden from users */}
+                        <div style={{ display: 'none' }} aria-hidden="true">
+                            <input
+                                type="text"
+                                name="website_verify_field"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                value={formState.website_verify_field}
+                                onChange={(e) => setFormState({ ...formState, website_verify_field: e.target.value })}
+                            />
+                        </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-slate-700 uppercase tracking-tighter ml-1">Full Name</label>

@@ -17,7 +17,8 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
         businessName: '',
         poNumber: '',
         deliveryWindow: '7:00 AM – 11:00 AM MT',
-        dockNotes: ''
+        dockNotes: '',
+        website_verify_field: '' // Honeypot field
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -187,7 +188,8 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 price: item.price,
                 total: `$${(parseFloat(item.price.replace(/[^0-9.]/g, '')) * (item.quantity || 1)).toFixed(2)}`
             })),
-            grandTotal: `$${subtotal.toFixed(2)}`
+            grandTotal: `$${subtotal.toFixed(2)}`,
+            website_verify_field: formData.website_verify_field // Send honeypot field
         };
 
         try {
@@ -266,6 +268,17 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                    {/* Honeypot field - hidden from users */}
+                    <div style={{ display: 'none' }} aria-hidden="true">
+                        <input
+                            type="text"
+                            name="website_verify_field"
+                            tabIndex={-1}
+                            autoComplete="off"
+                            value={formData.website_verify_field}
+                            onChange={(e) => setFormData({ ...formData, website_verify_field: e.target.value })}
+                        />
+                    </div>
                     {/* Line Item Review */}
                     <div className="space-y-4">
                         <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">Line Item Review</h3>
