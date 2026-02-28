@@ -85,7 +85,7 @@ export default function Footer() {
                             <li className="flex flex-col">
                                 <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Social Networks</span>
                                 <div className="flex gap-4 mt-2">
-                                    <a href="#" className="text-slate-400 hover:text-cyan-600 transition-colors">
+                                    <a href="https://www.facebook.com/profile.php?id=61585925686938" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-600 transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
                                     </a>
                                     <a href="#" className="text-slate-400 hover:text-cyan-600 transition-colors">

@@ -24,12 +24,23 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [finalOrder, setFinalOrder] = useState<{ items: POItem[], total: number } | null>(null);
 
-    if (!isOpen) return null;
+    // Robust price parsing that handles currency symbols, commas, and edge cases
+    const parsePrice = (priceStr: string): number => {
+        if (!priceStr) return 0;
+        // Keep only digits and decimal point
+        const cleaned = priceStr.replace(/[^0-9.]/g, '');
+        return parseFloat(cleaned) || 0;
+    };
 
-    const subtotal = poDraft.reduce((acc, item) => {
-        const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
-        return acc + (priceNum * (item.quantity || 1));
-    }, 0);
+    // Calculate subtotal using useMemo for reliability and performance
+    const subtotal = React.useMemo(() => {
+        return poDraft.reduce((acc, item) => {
+            const priceNum = parsePrice(item.price);
+            return acc + (priceNum * (item.quantity || 1));
+        }, 0);
+    }, [poDraft]);
+
+    if (!isOpen) return null;
 
     const getNextBusinessDay = () => {
         const d = new Date();
@@ -130,7 +141,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                     </td>
                     <td style="text-align: center; font-weight: 700;">${item.quantity}</td>
                     <td style="text-align: right; color: #64748b;">${item.price}</td>
-                    <td style="text-align: right; font-weight: 800; color: #0f172a;">$${(parseFloat(item.price.replace(/[^0-9.]/g, '')) * (item.quantity || 1)).toFixed(2)}</td>
+                    <td style="text-align: right; font-weight: 800; color: #0f172a;">$${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}</td>
                 </tr>
                 `).join('')}
             </tbody>
@@ -186,7 +197,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 sku: item.sku,
                 quantity: item.quantity,
                 price: item.price,
-                total: `$${(parseFloat(item.price.replace(/[^0-9.]/g, '')) * (item.quantity || 1)).toFixed(2)}`
+                total: `$${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}`
             })),
             grandTotal: `$${subtotal.toFixed(2)}`,
             website_verify_field: formData.website_verify_field // Send honeypot field
@@ -295,14 +306,25 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                             <input
                                                 type="number"
                                                 min="1"
-                                                value={item.quantity || 1}
-                                                onChange={(e) => updateQuantity(item.sku, parseInt(e.target.value) || 1)}
+                                                value={item.quantity === 0 ? '' : item.quantity}
+                                                onChange={(e) => {
+                                                    const val = e.target.value;
+                                                    if (val === '') {
+                                                        updateQuantity(item.sku, 0);
+                                                    } else {
+                                                        const num = parseInt(val);
+                                                        if (!isNaN(num)) updateQuantity(item.sku, Math.max(0, num));
+                                                    }
+                                                }}
+                                                onBlur={() => {
+                                                    if (!item.quantity || item.quantity < 1) updateQuantity(item.sku, 1);
+                                                }}
                                                 className="w-16 p-2 border border-slate-200 rounded-lg text-center font-bold text-slate-900 focus:ring-2 focus:ring-cyan-500 outline-none"
                                             />
                                         </div>
                                         <div className="text-right min-w-[80px]">
                                             <p className="text-sm font-black text-slate-900">
-                                                ${(parseFloat(item.price.replace(/[^0-9.]/g, '')) * (item.quantity || 1)).toFixed(2)}
+                                                ${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}
                                             </p>
                                         </div>
                                         <button
@@ -406,14 +428,23 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                         />
                     </div>
 
-                    <button
-                        id="submit-po-btn"
-                        type="submit"
-                        disabled={isSubmitting || poDraft.length === 0}
-                        className="w-full py-5 bg-slate-900 text-white font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-900/20"
-                    >
-                        {isSubmitting ? 'Dispatching...' : 'Confirm & Submit PO'}
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="flex-1 py-5 bg-white border-2 border-slate-200 text-slate-600 font-bold uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-50 transition-all text-[10px] sm:text-xs"
+                        >
+                            Modify / Continue Shopping
+                        </button>
+                        <button
+                            id="submit-po-btn"
+                            type="submit"
+                            disabled={isSubmitting || poDraft.length === 0}
+                            className="flex-[2] py-5 bg-slate-900 text-white font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-900/20 text-sm"
+                        >
+                            {isSubmitting ? 'Dispatching...' : 'Confirm & Submit PO'}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
