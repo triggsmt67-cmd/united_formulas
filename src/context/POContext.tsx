@@ -16,12 +16,15 @@ interface POContextType {
     removeFromPO: (sku: string) => void;
     updateQuantity: (sku: string, quantity: number) => void;
     clearPO: () => void;
+    isPOFormOpen: boolean;
+    setIsPOFormOpen: (open: boolean) => void;
 }
 
 const POContext = createContext<POContextType | undefined>(undefined);
 
 export function POProvider({ children }: { children: React.ReactNode }) {
     const [poDraft, setPoDraft] = useState<POItem[]>([]);
+    const [isPOFormOpen, setIsPOFormOpen] = useState(false);
 
     // Optional: Load from localStorage on mount
     useEffect(() => {
@@ -63,7 +66,15 @@ export function POProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <POContext.Provider value={{ poDraft, addToPO, removeFromPO, updateQuantity, clearPO }}>
+        <POContext.Provider value={{
+            poDraft,
+            addToPO,
+            removeFromPO,
+            updateQuantity,
+            clearPO,
+            isPOFormOpen,
+            setIsPOFormOpen
+        }}>
             {children}
         </POContext.Provider>
     );

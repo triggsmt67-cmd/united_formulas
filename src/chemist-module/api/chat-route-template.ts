@@ -336,18 +336,13 @@ export async function POST(req: NextRequest) {
             let premiumMatch: any = null;
             // Improved Slug Logic:
             // 1. Clean up file extensions and prefixes
-            // 2. Normalize spaces to hyphens for matching with metadata keys
+            // 2. Normalize spaces to hyphens for matching
             // 3. Handle cases where the filename is "Delta Green" (spaces) vs "delta-green" (hyphens)
-            const baseName = selectedFile.split('/').pop() || "";
-            // Step 1: Remove prefixes and extensions
-            const cleanName = baseName.replace(/grounding__|sku_master__|.txt|.pdf/g, '');
-            // Step 2: Extract the product part (before versioning/date segments like __v1 or __2025)
-            // We split by '__' BEFORE replacing '_' to avoid losing the structure
-            const productPart = cleanName.split('__')[0].trim();
-            // Step 3: Normalize for metadata key matching (lowercased, spaces/underscores to hyphens)
-            const fileKey = productPart.toLowerCase().replace(/[\s_]+/g, '-');
+            const cleanName = selectedFile.split('/').pop()?.replace(/grounding__|sku_master__|.txt|.pdf/g, '') || "";
+            // Normalize underscores to hyphens for matching with metadata keys
+            const fileKey = cleanName.toLowerCase().replace(/_/g, '-').split('__')[0].trim().replace(/\s+/g, '-');
 
-            console.log(`Searching metadata for slug: ${fileKey} (from source: ${productPart})`);
+            console.log(`Searching metadata for slug: ${fileKey} (from file: ${selectedFile})`);
 
             for (const [key, details] of Object.entries(productMetadata) as [string, any]) {
                 const normalizedKey = key.toLowerCase().replace(/_/g, '-');
@@ -359,7 +354,7 @@ export async function POST(req: NextRequest) {
                     normalizedKey.startsWith(fileKey)
                 ) {
                     premiumMatch = details;
-                    console.log(`✅ MATCH FOUND: ${key}`);
+                    console.log(`Match found: ${key}`);
                     break;
                 }
             }
@@ -395,7 +390,7 @@ export async function POST(req: NextRequest) {
             PREMIUM BRANDED DATA (MANDATORY FOR OVERVIEW):
             - Product Name: ${premiumMatch?.displayName || selectedFile}
             - Category: ${premiumMatch?.category || "Industrial Cleaner"}
-            - SDS Link: ${premiumMatch?.sds || `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(selectedFile)}`}
+            - SDS Link: https://storage.googleapis.com/${bucketName}/${encodeURIComponent(selectedFile)}
             - Official Description: ${premiumMatch?.canonicalDescription || "I am currently retrieving the full branded details for this product. See the technical safety data below for immediate guidance."}
             - VARIANTS / SIZES: ${variantList} (If user asks about sizes, LIST THESE EXACTLY)
             
@@ -436,16 +431,11 @@ export async function POST(req: NextRequest) {
       7. STATUS: PRODUCT IDENTIFIED (TECHNICAL): Use the retrieved technical data to provide professional, precise guidance.
 
       ────────────────────────────────
-      ORDERING & PURCHASE ORDERS (CRITICAL):
-      - If a user expresses any intent to buy, order, request a quote, or ask about pricing for a specific product, YOU MUST provide the order trigger.
-      - **TRIGGER MARKDOWN (MANDATORY)**: \`[Start Order](#open-po)\`
-      - Place this trigger at the VERY END of your response.
-      - Reassure them that high-volume orders (drums/totes) are handled via our B2B Dispatch system.
-      - Inform them that submitting the form will generate an official PO for their records and our dispatch team.
-      - **Phone**: 406.727.4144 (Available Mon-Fri, 8am-5pm MT)
-      - **Email**: sales@unitedformulas.com
-      - **Address**: PO BOX 2589, Great Falls, MT 59403
-      - ALWAYS provide these details directly. Do NOT say "I don't have this information."
+1. CONTACT & SUPPORT (MANDATORY): If the user asks for contact info, a representative, how to order, or where to find more help:
+         - **Phone**: 406.727.4144 (Available Mon-Fri, 8am-5pm MT)
+         - **Email**: sales@unitedformulas.com
+         - **Address**: PO BOX 2589, Great Falls, MT 59403
+         - ALWAYS provide these details directly. Do NOT say "I don't have this information."
 
       ────────────────────────────────
       DELIVERY & LOGISTICS:

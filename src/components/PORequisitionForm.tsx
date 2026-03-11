@@ -1,7 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { usePO, POItem } from '@/context/POContext';
+import Fuse from 'fuse.js';
+
+import searchDataList from '@/data/searchable_products.json';
 
 interface PORequisitionFormProps {
     isOpen: boolean;
@@ -9,7 +12,7 @@ interface PORequisitionFormProps {
 }
 
 export default function PORequisitionForm({ isOpen, onClose }: PORequisitionFormProps) {
-    const { poDraft, updateQuantity, removeFromPO, clearPO } = usePO();
+    const { poDraft, addToPO, updateQuantity, removeFromPO, clearPO } = usePO();
     const [formData, setFormData] = useState({
         fullName: '',
         phoneNumber: '',
@@ -23,6 +26,51 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [finalOrder, setFinalOrder] = useState<{ items: POItem[], total: number } | null>(null);
+
+    // Search state
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState<typeof searchDataList>([]);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const searchRef = useRef<HTMLDivElement>(null);
+
+    // Fuse.js setup
+    const fuse = React.useMemo(() => new Fuse(searchDataList, {
+        keys: ['productName', 'variantName', 'sku'],
+        threshold: 0.3,
+    }), []);
+
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setSearchResults([]);
+            setIsSearchOpen(false);
+        } else {
+            const results = fuse.search(searchQuery).map(result => result.item);
+            setSearchResults(results.slice(0, 5)); // Show top 5 results
+            setIsSearchOpen(true);
+        }
+    }, [searchQuery, fuse]);
+
+    // Close search dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+                setIsSearchOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleAddFromSearch = (item: typeof searchDataList[0]) => {
+        addToPO({
+            productName: item.productName,
+            variantName: item.variantName,
+            sku: item.sku,
+            price: item.price
+        });
+        setSearchQuery('');
+        setIsSearchOpen(false);
+    };
 
     // Robust price parsing that handles currency symbols, commas, and edge cases
     const parsePrice = (priceStr: string): number => {
@@ -189,7 +237,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
             total: subtotal
         };
 
-        const { deliveryWindow, ...formDataToSubmit } = formData;
+        const { deliveryWindow: _deliveryWindow, ...formDataToSubmit } = formData;
         const payload = {
             ...formDataToSubmit,
             items: poDraft.map(item => ({
@@ -211,8 +259,8 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
             });
 
             if (res.ok) {
-                if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                    (window as any).dataLayer.push({
+                if (typeof window !== 'undefined' && 'dataLayer' in window) {
+                    (window as unknown as { dataLayer: Array<Record<string, unknown>> }).dataLayer.push({
                         event: 'po_dispatch_success',
                         grandTotal: subtotal,
                         itemCount: poDraft.length
@@ -292,57 +340,108 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                     </div>
                     {/* Line Item Review */}
                     <div className="space-y-4">
-                        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">Line Item Review</h3>
-                        <div className="divide-y divide-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
-                            {poDraft.map((item) => (
-                                <div key={item.sku} className="p-4 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                    <div className="flex-1">
-                                        <h4 className="font-bold text-slate-900">{item.productName}</h4>
-                                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{item.variantName}</p>
-                                    </div>
-                                    <div className="flex items-center gap-6">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Qty:</span>
-                                            <input
-                                                type="number"
-                                                min="1"
-                                                value={item.quantity === 0 ? '' : item.quantity}
-                                                onChange={(e) => {
-                                                    const val = e.target.value;
-                                                    if (val === '') {
-                                                        updateQuantity(item.sku, 0);
-                                                    } else {
-                                                        const num = parseInt(val);
-                                                        if (!isNaN(num)) updateQuantity(item.sku, Math.max(0, num));
-                                                    }
-                                                }}
-                                                onBlur={() => {
-                                                    if (!item.quantity || item.quantity < 1) updateQuantity(item.sku, 1);
-                                                }}
-                                                className="w-16 p-2 border border-slate-200 rounded-lg text-center font-bold text-slate-900 focus:ring-2 focus:ring-cyan-500 outline-none"
-                                            />
-                                        </div>
-                                        <div className="text-right min-w-[80px]">
-                                            <p className="text-sm font-black text-slate-900">
-                                                ${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}
-                                            </p>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => removeFromPO(item.sku)}
-                                            className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                                            title="Remove item"
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                        </button>
-                                    </div>
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">Line Item Review</h3>
+                            
+                            {/* Quick Add Search */}
+                            <div className="relative w-full sm:w-72" ref={searchRef}>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Quick add product (e.g. Delta Green)"
+                                        className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        onFocus={() => { if (searchQuery.trim() !== '') setIsSearchOpen(true); }}
+                                    />
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                 </div>
-                            ))}
+                                
+                                {isSearchOpen && searchResults.length > 0 && (
+                                    <div className="absolute z-20 w-full mt-2 bg-white border border-slate-100 rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] overflow-hidden">
+                                        {searchResults.map((item, idx) => (
+                                            <button
+                                                type="button"
+                                                key={idx}
+                                                onClick={() => handleAddFromSearch(item)}
+                                                className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 flex flex-col group/search-item"
+                                            >
+                                                <span className="font-bold text-slate-900 group-hover/search-item:text-cyan-600 transition-colors text-sm">{item.productName}</span>
+                                                <div className="flex items-center justify-between w-full mt-1">
+                                                    <span className="text-[10px] text-slate-500 uppercase tracking-widest">{item.variantName}</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xs font-bold text-slate-900">{item.price}</span>
+                                                        <span className="text-xs font-bold text-slate-400 group-hover/search-item:text-cyan-600">+ Add</span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                        <div className="flex justify-between items-center p-4 bg-slate-950 rounded-2xl text-white">
-                            <span className="text-sm font-bold uppercase tracking-widest text-slate-400">Grand Total</span>
-                            <span className="text-2xl font-black">${subtotal.toFixed(2)}</span>
-                        </div>
+
+                        {poDraft.length === 0 && (
+                            <div className="p-8 text-center border border-dashed border-slate-200 rounded-2xl bg-slate-50">
+                                <p className="text-slate-500 text-sm font-medium">Your requisition list is currently empty.</p>
+                                <p className="text-xs text-slate-400 mt-2">Use the search bar above to quickly add products, or continue shopping.</p>
+                            </div>
+                        )}
+
+                        {poDraft.length > 0 && (
+                            <div className="divide-y divide-slate-100 border border-slate-100 rounded-2xl overflow-hidden">
+                                {poDraft.map((item) => (
+                                    <div key={item.sku} className="p-4 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-slate-900">{item.productName}</h4>
+                                            <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{item.variantName}</p>
+                                        </div>
+                                        <div className="flex items-center gap-6">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Qty:</span>
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    value={item.quantity === 0 ? '' : item.quantity}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        if (val === '') {
+                                                            updateQuantity(item.sku, 0);
+                                                        } else {
+                                                            const num = parseInt(val);
+                                                            if (!isNaN(num)) updateQuantity(item.sku, Math.max(0, num));
+                                                        }
+                                                    }}
+                                                    onBlur={() => {
+                                                        if (!item.quantity || item.quantity < 1) updateQuantity(item.sku, 1);
+                                                    }}
+                                                    className="w-16 p-2 border border-slate-200 rounded-lg text-center font-bold text-slate-900 focus:ring-2 focus:ring-cyan-500 outline-none"
+                                                />
+                                            </div>
+                                            <div className="text-right min-w-[80px]">
+                                                <p className="text-sm font-black text-slate-900">
+                                                    ${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}
+                                                </p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeFromPO(item.sku)}
+                                                className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                                                title="Remove item"
+                                            >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        {poDraft.length > 0 && (
+                            <div className="flex justify-between items-center p-4 bg-slate-950 rounded-2xl text-white">
+                                <span className="text-sm font-bold uppercase tracking-widest text-slate-400">Grand Total</span>
+                                <span className="text-2xl font-black">${subtotal.toFixed(2)}</span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

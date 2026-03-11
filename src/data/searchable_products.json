@@ -1,0 +1,842 @@
+[
+  {
+    "productName": "X Coat Nano 22",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo2MzE=",
+    "price": "$187.00"
+  },
+  {
+    "productName": "Windshield Ice Melt Spray",
+    "variantName": "24x16 oz",
+    "sku": "cG9zdDo1OTE=",
+    "price": "$143.00"
+  },
+  {
+    "productName": "Vinegar Neutralizer",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyNDQ=",
+    "price": "$96.00"
+  },
+  {
+    "productName": "Vinegar Neutralizer",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoyNDM=",
+    "price": "$86.00"
+  },
+  {
+    "productName": "Trophy Car Wash",
+    "variantName": "55 Gallon",
+    "sku": "cG9zdDo0MTU=",
+    "price": "$1,624.00"
+  },
+  {
+    "productName": "Trophy Car Wash",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0MTQ=",
+    "price": "$168.00"
+  },
+  {
+    "productName": "Tornado Plus",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozMDA=",
+    "price": "$224.00"
+  },
+  {
+    "productName": "Tornado",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0MTY=",
+    "price": "$140.00"
+  },
+  {
+    "productName": "Super Soak",
+    "variantName": "4x10 Pounds",
+    "sku": "cG9zdDozODQ=",
+    "price": "$229.00"
+  },
+  {
+    "productName": "Strike Out",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo2MzQ=",
+    "price": "$171.00"
+  },
+  {
+    "productName": "Strike Out",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo2MzM=",
+    "price": "$169.00"
+  },
+  {
+    "productName": "Steam It",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDoyMzg=",
+    "price": "$136.00"
+  },
+  {
+    "productName": "Steam It",
+    "variantName": "12/1 Quart Case",
+    "sku": "cG9zdDoyMzc=",
+    "price": "$144.00"
+  },
+  {
+    "productName": "Squirt-N-Wash",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDoyMzU=",
+    "price": "$131.00"
+  },
+  {
+    "productName": "Squirt-N-Wash",
+    "variantName": "12/1 Quart Case",
+    "sku": "cG9zdDoyMzQ=",
+    "price": "$139.00"
+  },
+  {
+    "productName": "Spotless",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyMzI=",
+    "price": "$173.00"
+  },
+  {
+    "productName": "Spotless",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDoyMzE=",
+    "price": "$143.00"
+  },
+  {
+    "productName": "Sport Kote PC",
+    "variantName": "Standard Option",
+    "sku": "cG9zdDo2Mjk=",
+    "price": "$909.00"
+  },
+  {
+    "productName": "Sparkle Rinse",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozODI=",
+    "price": "$64.00"
+  },
+  {
+    "productName": "Sparkle Rinse",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozODE=",
+    "price": "$55.00"
+  },
+  {
+    "productName": "Soft Suds Peach",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozNjE=",
+    "price": "$84.00"
+  },
+  {
+    "productName": "Soft Prep",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozNTk=",
+    "price": "$105.00"
+  },
+  {
+    "productName": "Simply Clean Laundry Detergent",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozNTc=",
+    "price": "$147.00"
+  },
+  {
+    "productName": "Simply Clean Laundry Detergent",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDozNTY=",
+    "price": "$131.00"
+  },
+  {
+    "productName": "Shot Maker",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoyMDU=",
+    "price": "$103.00"
+  },
+  {
+    "productName": "Shot Maker",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyMDQ=",
+    "price": "$112.00"
+  },
+  {
+    "productName": "Sapphire",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDozNTQ=",
+    "price": "$139.00"
+  },
+  {
+    "productName": "Sapphire",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozNTM=",
+    "price": "$131.00"
+  },
+  {
+    "productName": "Rejuve 8%",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxOTg=",
+    "price": "$70.00"
+  },
+  {
+    "productName": "R&R Degreaser",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxOTU=",
+    "price": "$111.00"
+  },
+  {
+    "productName": "R&R Degreaser",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoxOTQ=",
+    "price": "$102.00"
+  },
+  {
+    "productName": "R&R Degreaser",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDoxNzE=",
+    "price": "$118.00"
+  },
+  {
+    "productName": "Prepare Sour",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyNzY=",
+    "price": "$96.00"
+  },
+  {
+    "productName": "Prep Car Wash (Road Film Breaker)",
+    "variantName": "55 Gallon",
+    "sku": "cG9zdDozNTE=",
+    "price": "$1,494.00"
+  },
+  {
+    "productName": "Prep Car Wash (Road Film Breaker)",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozNTA=",
+    "price": "$156.00"
+  },
+  {
+    "productName": "Pazzaz",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDoyNzU=",
+    "price": "$74.00"
+  },
+  {
+    "productName": "Panhandler (luxury hand dish washing soap)",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozNDg=",
+    "price": "$172.00"
+  },
+  {
+    "productName": "Panhandler (luxury hand dish washing soap)",
+    "variantName": "4/1 Gallon",
+    "sku": "cG9zdDozNDc=",
+    "price": "$149.00"
+  },
+  {
+    "productName": "Pan Power",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxNjc=",
+    "price": "$123.00"
+  },
+  {
+    "productName": "Pan Power",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDoxNjY=",
+    "price": "$109.00"
+  },
+  {
+    "productName": "Pan Power",
+    "variantName": "1 Gallon Bottle",
+    "sku": "cG9zdDoxNjU=",
+    "price": "$19.00"
+  },
+  {
+    "productName": "Oxy Rejuve",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxNjM=",
+    "price": "$120.00"
+  },
+  {
+    "productName": "Oxy Brite (PF)",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDoxNDE=",
+    "price": "$110.00"
+  },
+  {
+    "productName": "Nugget XK Car Wash",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozNDU=",
+    "price": "$178.00"
+  },
+  {
+    "productName": "Nugget XK Car Wash",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozNDQ=",
+    "price": "$152.00"
+  },
+  {
+    "productName": "Nugget Car Wash",
+    "variantName": "20 Pounds",
+    "sku": "cG9zdDo0OTg=",
+    "price": "$105.00"
+  },
+  {
+    "productName": "Multi-Chlor",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0OTA=",
+    "price": "$108.00"
+  },
+  {
+    "productName": "Maintenance Master",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDoxMzk=",
+    "price": "$114.00"
+  },
+  {
+    "productName": "Maintenance Master",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxMzg=",
+    "price": "$107.00"
+  },
+  {
+    "productName": "Maintenance Master",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoxMzc=",
+    "price": "$97.00"
+  },
+  {
+    "productName": "Low Temp Detergent",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxMzU=",
+    "price": "$61.00"
+  },
+  {
+    "productName": "Low Temp Detergent",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0Mjc=",
+    "price": "$84.00"
+  },
+  {
+    "productName": "Liquid Silver Soak",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxMzM=",
+    "price": "$90.00"
+  },
+  {
+    "productName": "Liquid Silver Soak",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoxMzI=",
+    "price": "$83.00"
+  },
+  {
+    "productName": "Liquid Ice Melt",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1MzU=",
+    "price": "$112.00"
+  },
+  {
+    "productName": "Liquid Ice Melt",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1MzQ=",
+    "price": "$103.00"
+  },
+  {
+    "productName": "Liqui-Chlor",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0OTI=",
+    "price": "$140.00"
+  },
+  {
+    "productName": "Lightning",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoxMjk=",
+    "price": "$127.00"
+  },
+  {
+    "productName": "Lightning",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDoxMzA=",
+    "price": "$136.00"
+  },
+  {
+    "productName": "Jewelmaster HD",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxMjc=",
+    "price": "$144.00"
+  },
+  {
+    "productName": "Jewelmaster HD",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoxMjY=",
+    "price": "$127.00"
+  },
+  {
+    "productName": "Jewelmaster HD",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDoxMjU=",
+    "price": "$136.00"
+  },
+  {
+    "productName": "Jax",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0MTk=",
+    "price": "$124.00"
+  },
+  {
+    "productName": "Jax",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0MTg=",
+    "price": "$110.00"
+  },
+  {
+    "productName": "Isopropyl Alcohol",
+    "variantName": "70% 5 Gallon",
+    "sku": "cG9zdDo0MjI=",
+    "price": "$191.00"
+  },
+  {
+    "productName": "Isopropyl Alcohol",
+    "variantName": "99% 5 Gallon",
+    "sku": "cG9zdDo0MjE=",
+    "price": "$261.00"
+  },
+  {
+    "productName": "Isopropyl Alcohol",
+    "variantName": "99% 4x1 Gallon",
+    "sku": "cG9zdDo0MjA=",
+    "price": "$247.00"
+  },
+  {
+    "productName": "IndustraPro",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDo0OTY=",
+    "price": "$145.00"
+  },
+  {
+    "productName": "Household Ammonia",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozNDA=",
+    "price": "$98.00"
+  },
+  {
+    "productName": "High Temp Detergent",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoxMjM=",
+    "price": "$100.00"
+  },
+  {
+    "productName": "High Temp Detergent",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0MjY=",
+    "price": "$118.00"
+  },
+  {
+    "productName": "Glacier Power Suds",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozMzg=",
+    "price": "$225.00"
+  },
+  {
+    "productName": "Glacier Power Suds",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozMzc=",
+    "price": "$194.00"
+  },
+  {
+    "productName": "Glacier Eco Suds",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozMzU=",
+    "price": "$76.00"
+  },
+  {
+    "productName": "Glacier Eco Suds",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NDc=",
+    "price": "$74.00"
+  },
+  {
+    "productName": "Glacier Blue Suds",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDozMTE=",
+    "price": "$126.00"
+  },
+  {
+    "productName": "Glacier Blue Suds",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozMTA=",
+    "price": "$114.00"
+  },
+  {
+    "productName": "Genie",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozMDg=",
+    "price": "$47.00"
+  },
+  {
+    "productName": "Genie",
+    "variantName": "24x16 oz",
+    "sku": "cG9zdDozMDc=",
+    "price": "$107.00"
+  },
+  {
+    "productName": "Fryer Squire",
+    "variantName": "4x4 Pounds",
+    "sku": "cG9zdDozMDU=",
+    "price": "$85.00"
+  },
+  {
+    "productName": "EZ Rinse",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0MjQ=",
+    "price": "$95.00"
+  },
+  {
+    "productName": "EZ Rinse",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0MjM=",
+    "price": "$87.00"
+  },
+  {
+    "productName": "Essential Nu-Tral Cleaner",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo2Mjg=",
+    "price": "$79.00"
+  },
+  {
+    "productName": "Essential Blue Concentrate",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0MzA=",
+    "price": "$105.00"
+  },
+  {
+    "productName": "Essential Blue Concentrate",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0Mjk=",
+    "price": "$95.00"
+  },
+  {
+    "productName": "Essential  Annihilator",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1ODA=",
+    "price": "$214.00"
+  },
+  {
+    "productName": "Emusolv",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo5Mg==",
+    "price": "$278.00"
+  },
+  {
+    "productName": "Emusolv",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo5MQ==",
+    "price": "$234.00"
+  },
+  {
+    "productName": "Emusolv",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo0MjU=",
+    "price": "$184.00"
+  },
+  {
+    "productName": "Dynamo-X Professional",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0NjI=",
+    "price": "$50.00"
+  },
+  {
+    "productName": "Dynamo-X Professional",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NjE=",
+    "price": "$51.00"
+  },
+  {
+    "productName": "Dynamo-X Professional",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo0NjA=",
+    "price": "$80.00"
+  },
+  {
+    "productName": "Dynamo-X Industrial",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0ODg=",
+    "price": "$71.00"
+  },
+  {
+    "productName": "Dynamo-X Industrial",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0ODc=",
+    "price": "$68.00"
+  },
+  {
+    "productName": "Dynamo-X Industrial",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo0ODY=",
+    "price": "$92.00"
+  },
+  {
+    "productName": "Dynamo-X Degreaser/Stripper",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo4Ng==",
+    "price": "$195.00"
+  },
+  {
+    "productName": "Dynamo-X Degreaser/Stripper",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NTQ=",
+    "price": "$167.00"
+  },
+  {
+    "productName": "Dynamo-X Degreaser/Stripper",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo0NTM=",
+    "price": "$167.00"
+  },
+  {
+    "productName": "Dynamo-X Commercial",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0NTg=",
+    "price": "$32.00"
+  },
+  {
+    "productName": "Dynamo-X Commercial",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NTc=",
+    "price": "$37.00"
+  },
+  {
+    "productName": "Dynamo-X Commercial",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo0NTY=",
+    "price": "$69.00"
+  },
+  {
+    "productName": "Delta Green Slip Free Floor Cleaner",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo3ODM=",
+    "price": "$120.00"
+  },
+  {
+    "productName": "Delta Green Slip Free Floor Cleaner",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo3ODE=",
+    "price": "$136.00"
+  },
+  {
+    "productName": "Delta Green Professional",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1NDM=",
+    "price": "$121.00"
+  },
+  {
+    "productName": "Delta Green Professional",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1NDI=",
+    "price": "$108.00"
+  },
+  {
+    "productName": "Delta Green Professional",
+    "variantName": "12x1 Gallon",
+    "sku": "cG9zdDo1NDE=",
+    "price": "$122.00"
+  },
+  {
+    "productName": "Delta Green Industrial",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1Mzk=",
+    "price": "$37.00"
+  },
+  {
+    "productName": "Delta Green Industrial",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1Mzg=",
+    "price": "$41.00"
+  },
+  {
+    "productName": "Delta Green Industrial",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo1Mzc=",
+    "price": "$72.00"
+  },
+  {
+    "productName": "Delta Green Concentrate 300",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1NTE=",
+    "price": "$188.00"
+  },
+  {
+    "productName": "Delta Green Concentrate 300",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1NTA=",
+    "price": "$162.00"
+  },
+  {
+    "productName": "Delta Green Concentrate 300",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo1NDk=",
+    "price": "$163.00"
+  },
+  {
+    "productName": "Delta Green Commercial",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1NDc=",
+    "price": "$31.00"
+  },
+  {
+    "productName": "Delta Green Commercial",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1NDY=",
+    "price": "$36.00"
+  },
+  {
+    "productName": "Delta Green Commercial",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo1NDU=",
+    "price": "$68.00"
+  },
+  {
+    "productName": "DeLime",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NTI=",
+    "price": "$243.00"
+  },
+  {
+    "productName": "Dazzle Plus",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDozODU=",
+    "price": "$114.00"
+  },
+  {
+    "productName": "Dazzle LD500",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDo4Mw==",
+    "price": "$111.00"
+  },
+  {
+    "productName": "Cloud 9 Free",
+    "variantName": "1 Gallon Bottle",
+    "sku": "cG9zdDoyNzE=",
+    "price": "$23.00"
+  },
+  {
+    "productName": "Cloud 9 Free",
+    "variantName": "4/1 Gallon Case",
+    "sku": "cG9zdDoyNzA=",
+    "price": "$91.00"
+  },
+  {
+    "productName": "Cloud 9 EX",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyNzQ=",
+    "price": "$98.00"
+  },
+  {
+    "productName": "Cloud 9 EX",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoyNzM=",
+    "price": "$91.00"
+  },
+  {
+    "productName": "Clearwater (PF)",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDoyNjc=",
+    "price": "$173.00"
+  },
+  {
+    "productName": "Chlorbrite NF",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDoyNjU=",
+    "price": "$126.00"
+  },
+  {
+    "productName": "Champion",
+    "variantName": "25 Pounds",
+    "sku": "cG9zdDo0OTQ=",
+    "price": "$146.00"
+  },
+  {
+    "productName": "C-Thru Concentrate",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo1ODc=",
+    "price": "$164.00"
+  },
+  {
+    "productName": "C-Thru Concentrate",
+    "variantName": "24x16 oz",
+    "sku": "cG9zdDo1ODY=",
+    "price": "$146.00"
+  },
+  {
+    "productName": "Boost",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo1NTM=",
+    "price": "$102.00"
+  },
+  {
+    "productName": "Blitz (PF)",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo3Nw==",
+    "price": "$108.00"
+  },
+  {
+    "productName": "Bio-Maxx",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo3NQ==",
+    "price": "$93.00"
+  },
+  {
+    "productName": "Bio-Maxx",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo3NA==",
+    "price": "$88.00"
+  },
+  {
+    "productName": "Bio-Maxx",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo3Mw==",
+    "price": "$107.00"
+  },
+  {
+    "productName": "Big Sky Concentrate",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo0NTA=",
+    "price": "$137.00"
+  },
+  {
+    "productName": "Big Sky Concentrate",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo0NDk=",
+    "price": "$121.00"
+  },
+  {
+    "productName": "Bath Butler",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo3MA==",
+    "price": "$169.00"
+  },
+  {
+    "productName": "Bath Butler",
+    "variantName": "12x1 Quart",
+    "sku": "cG9zdDo2OQ==",
+    "price": "$168.00"
+  },
+  {
+    "productName": "Apex",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDoyNDY=",
+    "price": "$120.00"
+  },
+  {
+    "productName": "Almond Cream",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDozMDM=",
+    "price": "$128.00"
+  },
+  {
+    "productName": "All Temp Detergent",
+    "variantName": "5 Gallon",
+    "sku": "cG9zdDo2Nw==",
+    "price": "$96.00"
+  },
+  {
+    "productName": "All Temp Detergent",
+    "variantName": "4x1 Gallon",
+    "sku": "cG9zdDo2Ng==",
+    "price": "$113.00"
+  }
+]

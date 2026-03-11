@@ -5,13 +5,12 @@ import { usePO } from '@/context/POContext';
 import PORequisitionForm from './PORequisitionForm';
 
 export default function POSubmitButton() {
-    const { poDraft } = usePO();
-    const [isFormOpen, setIsFormOpen] = useState(false);
+    const { poDraft, setIsPOFormOpen } = usePO();
 
     return (
         <>
             <button
-                onClick={() => poDraft.length > 0 && setIsFormOpen(true)}
+                onClick={() => poDraft.length > 0 && setIsPOFormOpen(true)}
                 disabled={poDraft.length === 0}
                 className={`w-full py-5 font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl animate-fade-up ${poDraft.length > 0
                     ? 'bg-cyan-600 text-white hover:bg-cyan-700 shadow-cyan-600/20'
@@ -20,7 +19,6 @@ export default function POSubmitButton() {
             >
                 SUBMIT PURCHASE ORDER
             </button>
-            <PORequisitionForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
         </>
     );
 }
