@@ -102,9 +102,14 @@ export default function Footer() {
 
                 {/* Lower Footer: Copyright & Legal */}
                 <div className="border-t border-slate-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                        © {new Date().getFullYear()} United Formulas. Exceeding Expectations in Every Way.
-                    </p>
+                    <div className="flex flex-col items-center md:items-start gap-2">
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                            © {new Date().getFullYear()} United Formulas. Exceeding Expectations in Every Way.
+                        </p>
+                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider opacity-70">
+                            Powered by <a href="https://truepath406.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">True Path Digital</a>
+                        </p>
+                    </div>
                     <div className="flex gap-8">
                         <Link href="/privacy-policy" className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] hover:text-slate-600 transition-colors">Privacy Policy</Link>
                         <Link href="/terms-of-service" className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] hover:text-slate-600 transition-colors">Terms of Service</Link>
