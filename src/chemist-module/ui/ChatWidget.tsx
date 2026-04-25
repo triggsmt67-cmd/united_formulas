@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import ReactMarkdown from 'react-markdown';
-import { saveLead } from '@/lib/firebase';
+// import { saveLead } from '@/lib/firebase';
 import { usePO } from '@/context/POContext';
 
 export default function ChatWidget() {
@@ -52,6 +52,7 @@ export default function ChatWidget() {
         setInput('');
         
         // --- Lead Capture Logic ---
+        /*
         const lastAssistantMsg = messages[messages.length - 1]?.content.toLowerCase();
         let updatedUser = { ...user } as { name: string; email: string };
         let infoCaptured = false;
@@ -78,6 +79,7 @@ export default function ChatWidget() {
             // Non-blocking save to Firebase
             saveLead(updatedUser.name || 'Conversation Lead', updatedUser.email || 'No Email').catch(console.error);
         }
+        */
         // -------------------------
 
         setMessages(prev => [...prev, { role: 'user', content: userMessage, timestamp }]);
