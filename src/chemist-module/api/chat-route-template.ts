@@ -93,8 +93,8 @@ const bucketName = process.env.GCS_BUCKET_NAME || 'united-formulas-files';
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
-// gemini-2.0-flash is significantly faster than previous versions
-const modelFlash = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+// gemini-2.5-flash is significantly faster than previous versions
+const modelFlash = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 export async function POST(req: NextRequest) {
     try {
@@ -462,7 +462,7 @@ export async function POST(req: NextRequest) {
 
         // Initialize model with system instruction
         const chatModel = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-2.5-flash',
             systemInstruction: systemInstruction
         });
 
