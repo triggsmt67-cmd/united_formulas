@@ -1,12 +1,123 @@
 import Link from "next/link";
 import Footer from "@/components/Footer";
-export const dynamic = 'force-dynamic';
+import type { Metadata } from "next";
+export const revalidate = 3600;
 import { ProductNode, ProductCategory } from "@/types";
 import Navbar from "@/components/Navbar";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
+
+export async function generateStaticParams() {
+    const defaultCategories = [
+        'automotive',
+        'degreaser',
+        'floor-care',
+        'all-purpose',
+        'laundry',
+        'dish-washing',
+        'sanitizers',
+        'disinfectant',
+        'specialty',
+    ];
+    try {
+        const { data } = await client.query<{
+            productCategories: { nodes: { slug: string }[] };
+        }>({
+            query: gql`
+                query GetCategorySlugs {
+                    productCategories(first: 50) {
+                        nodes {
+                            slug
+                        }
+                    }
+                }
+            `,
+        });
+        if (data?.productCategories?.nodes && data.productCategories.nodes.length > 0) {
+            return data.productCategories.nodes.map((c) => ({ slug: c.slug }));
+        }
+    } catch {
+        // Fall back to default categories
+    }
+    return defaultCategories.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+    const { slug } = await params;
+    try {
+        const { data } = await client.query<{
+            productCategory: {
+                name: string;
+                description?: string;
+            };
+        }>({
+            query: gql`
+                query GetCategoryMeta($slug: ID!) {
+                    productCategory(id: $slug, idType: SLUG) {
+                        name
+                        description
+                    }
+                }
+            `,
+            variables: { slug },
+        });
+
+        const category = data?.productCategory;
+        if (!category) {
+            return {
+                title: "Category Not Found | United Formulas",
+                robots: {
+                    index: false,
+                    follow: false,
+                },
+            };
+        }
+
+        const rawTitle = `${category.name} Cleaning Supplies | United Formulas`;
+        const title = rawTitle.length <= 60 ? rawTitle : `${category.name} | United Formulas`;
+
+        const cleanDesc = category.description
+            ? category.description.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
+            : "";
+
+        let description = `Shop commercial ${category.name.toLowerCase()} supplies and concentrates made in Montana. Bulk 5-gallon pails and drums delivered from United Formulas.`;
+        if (cleanDesc && cleanDesc.length >= 40) {
+            description = cleanDesc.length > 155 ? `${cleanDesc.substring(0, 152).trim()}...` : cleanDesc;
+        }
+
+        const canonicalUrl = `https://unitedformulas.com/category/${slug}`;
+
+        return {
+            title,
+            description,
+            alternates: {
+                canonical: canonicalUrl,
+            },
+            openGraph: {
+                title,
+                description,
+                url: canonicalUrl,
+                siteName: "United Formulas",
+                type: "website",
+                locale: "en_US",
+            },
+        };
+    } catch {
+        return {
+            title: "Commercial Cleaning Supplies | United Formulas",
+            description: "Industrial cleaning chemicals and wholesale supplies formulated in Montana by United Formulas.",
+            alternates: {
+                canonical: `https://unitedformulas.com/category/${slug}`,
+            },
+        };
+    }
+}
 
 const GET_CATEGORY_PRODUCTS = gql`
   query GetCategoryProducts($slug: ID!) {
@@ -36,6 +147,8 @@ const GET_CATEGORY_PRODUCTS = gql`
   }
 `;
 
+import productMetadata from "@/data/product_metadata.json";
+
 export default async function CategoryPage({
     params,
 }: {
@@ -51,7 +164,40 @@ export default async function CategoryPage({
         });
         category = data?.productCategory ?? null;
     } catch (error) {
-        console.error("Error fetching category products:", error);
+        console.error("Error fetching category products from GraphQL:", error);
+    }
+
+    if (!category) {
+        // Fallback to local catalog products matching the category slug
+        const searchWords = slug.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+        const matchingProducts = Object.entries(productMetadata as unknown as Record<string, { displayName?: string; canonicalDescription?: string; category?: string; sds?: string }>)
+            .filter(([, p]) => {
+                if (!p.category) return false;
+                const cat = p.category.toLowerCase().replace(/[^a-z0-9]+/g, ' ');
+                return searchWords.every((word) => cat.includes(word)) || (searchWords.length > 1 && searchWords.some((word) => word.length > 3 && cat.includes(word)));
+            })
+            .map(([pSlug, p]) => ({
+                id: pSlug,
+                name: p.displayName || pSlug,
+                slug: pSlug,
+                shortDescription: p.canonicalDescription || '',
+                price: undefined,
+            }));
+
+        if (matchingProducts.length > 0) {
+            const formattedName = slug
+                .split('-')
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+
+            category = {
+                id: slug,
+                name: formattedName,
+                slug: slug,
+                description: `<p>Commercial ${formattedName.toLowerCase()} solutions formulated in Montana for demanding industrial operations.</p>`,
+                products: { nodes: matchingProducts as unknown as ProductNode[] },
+            };
+        }
     }
 
     if (!category) {
@@ -61,7 +207,7 @@ export default async function CategoryPage({
     const products = category.products?.nodes || [];
 
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">

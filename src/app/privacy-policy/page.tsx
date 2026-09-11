@@ -1,9 +1,26 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy | United Formulas Montana",
+    description: "Read the official privacy policy for United Formulas. Learn how we handle customer data, commercial credit applications, and product inquiries.",
+    alternates: {
+        canonical: "https://unitedformulas.com/privacy-policy",
+    },
+    openGraph: {
+        title: "Privacy Policy | United Formulas Montana",
+        description: "Read the official privacy policy for United Formulas. Learn how we handle customer data, commercial credit applications, and product inquiries.",
+        url: "https://unitedformulas.com/privacy-policy",
+        siteName: "United Formulas",
+        type: "website",
+        locale: "en_US",
+    },
+};
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-4xl mx-auto px-6 lg:px-8">

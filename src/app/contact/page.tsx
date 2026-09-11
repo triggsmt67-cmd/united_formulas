@@ -52,7 +52,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">

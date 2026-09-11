@@ -31,7 +31,8 @@ export function POProvider({ children }: { children: React.ReactNode }) {
         const saved = localStorage.getItem('united_formulas_po_draft');
         if (saved) {
             try {
-                setPoDraft(JSON.parse(saved));
+                const parsed = JSON.parse(saved);
+                setTimeout(() => setPoDraft(parsed), 0);
             } catch (e) {
                 console.error("Failed to parse PO draft", e);
             }

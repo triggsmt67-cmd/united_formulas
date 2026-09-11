@@ -96,7 +96,7 @@ export default function CreditApplicationPage() {
 
     if (isSubmitted) {
         return (
-            <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+            <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
                 <Navbar />
                 <main className="pt-48 pb-24 max-w-xl mx-auto px-6 text-center animate-fade-up">
                     <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
@@ -119,7 +119,7 @@ export default function CreditApplicationPage() {
     }
 
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-5xl mx-auto px-6 lg:px-8">

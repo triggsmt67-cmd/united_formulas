@@ -2,10 +2,27 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "About United Formulas | Montana Chemical Manufacturer",
+    description: "Family-owned chemical formulator blending high-performance industrial cleaners and degreasers in Great Falls and Billings, Montana for over 30 years.",
+    alternates: {
+        canonical: "https://unitedformulas.com/about",
+    },
+    openGraph: {
+        title: "About United Formulas | Montana Chemical Manufacturer",
+        description: "Family-owned chemical formulator blending high-performance industrial cleaners and degreasers in Great Falls and Billings, Montana for over 30 years.",
+        url: "https://unitedformulas.com/about",
+        siteName: "United Formulas",
+        type: "website",
+        locale: "en_US",
+    },
+};
 
 export default function AboutPage() {
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24">

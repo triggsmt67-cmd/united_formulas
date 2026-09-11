@@ -47,7 +47,10 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
             document.body.style.overflow = 'hidden';
             // Reset success state when opening fresh
             if (!isSuccess) {
-                setRefNumber(`UF-DISPATCH-${Math.floor(1000 + Math.random() * 9000)}`);
+                // Avoid synchronous state updates in effect
+                setTimeout(() => {
+                    setRefNumber(`UF-DISPATCH-${Math.floor(1000 + Math.random() * 9000)}`);
+                }, 0);
             }
         }
         return () => {
@@ -100,7 +103,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
                     <div className="mb-8">
                         <span className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-2 block">Protocol Reference: {refNumber}</span>
-                        <h2 className="text-4xl font-black text-slate-900 uppercase italic mb-6 font-geist tracking-tight">Inventory Protocol <span className="text-[#EA580C]">Initiated</span></h2>
+                        <h2 className="text-4xl font-black text-slate-900 uppercase italic mb-6 font-sans tracking-tight">Inventory Protocol <span className="text-[#EA580C]">Initiated</span></h2>
 
                         <div className="space-y-6 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
                             <p className="text-slate-700 text-sm leading-relaxed">
@@ -119,7 +122,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <div className="flex flex-col gap-3">
                         <button
                             onClick={resetForm}
-                            className="w-full py-5 bg-[#EA580C] text-white font-black rounded-xl uppercase tracking-[0.2em] font-geist shadow-xl shadow-orange-900/20 hover:bg-[#C2410C] transition-all"
+                            className="w-full py-5 bg-[#EA580C] text-white font-black rounded-xl uppercase tracking-[0.2em] font-sans shadow-xl shadow-orange-900/20 hover:bg-[#C2410C] transition-all"
                         >
                             Submit New Request
                         </button>
@@ -155,7 +158,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#EA580C] animate-pulse"></span>
                                 Inventory & Pricing Protocol
                             </span>
-                            <h2 className="text-3xl font-black tracking-tight text-slate-900 font-geist uppercase italic">
+                            <h2 className="text-3xl font-black tracking-tight text-slate-900 font-sans uppercase italic">
                                 Check <span className="text-[#EA580C]">Stock & Price</span>
                             </h2>
                             <p className="text-slate-500 text-sm mt-2 font-medium">
@@ -271,7 +274,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                                 id="submit-po-btn"
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-geist [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] disabled:opacity-50"
+                                className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-sans [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] disabled:opacity-50"
                             >
                                 {isSubmitting ? 'Dispatching...' : 'Dispatch System Request'}
                             </button>

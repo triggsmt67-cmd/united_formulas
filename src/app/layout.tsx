@@ -1,31 +1,24 @@
 import type { Metadata } from "next";
-import { Inter, Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google';
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "United Formulas - Performance First",
-  description: "Weak chemicals inflate your labor costs and kill your efficiency. We formulate industrial-strength concentrates that work on contact.",
+  metadataBase: new URL("https://unitedformulas.com"),
+  title: "Industrial Cleaning Chemicals & Wholesale Supplies | Montana",
+  description: "Commercial cleaning concentrates, degreasers, and dish soaps made in Montana. Bulk drum delivery and route service from Great Falls and Billings warehouses.",
 };
 
+import dynamic from "next/dynamic";
 import { POProvider } from "@/context/POContext";
-import ChatWidget from "@/chemist-module/ui/ChatWidget";
-import GlobalPOContainer from "@/components/GlobalPOContainer";
+
+const ChatWidget = dynamic(() => import("@/chemist-module/ui/ChatWidget"));
+const GlobalPOContainer = dynamic(() => import("@/components/GlobalPOContainer"));
 
 export default function RootLayout({
   children,
@@ -35,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${outfit.variable} antialiased`}
       >
         <GoogleTagManager gtmId="GTM-KZPZ7VZT" />
         {process.env.NODE_ENV === 'development' && (

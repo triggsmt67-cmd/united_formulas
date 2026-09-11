@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Formulas — Website Handoff & Moving Guide</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11.5pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    max-width: 8in;
+    margin: 0 auto;
+    padding: 0.75in 0.5in;
+    background: #fff;
+  }
+
+  /* ── Typography ── */
+  h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    margin-bottom: 4pt;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    border-bottom: 3px solid #0f172a;
+    padding-bottom: 8pt;
+  }
+
+  h1 + p.subtitle {
+    font-size: 13pt;
+    color: #475569;
+    font-style: italic;
+    margin-bottom: 18pt;
+  }
+
+  h2 {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 28pt;
+    margin-bottom: 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 1.5px solid #cbd5e1;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 12.5pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 16pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+  }
+
+  p { margin-bottom: 8pt; }
+
+  strong { font-weight: 700; }
+
+  code {
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 9.5pt;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
+    padding: 1px 4px;
+  }
+
+  a { color: #1e293b; text-decoration: underline; }
+
+  /* ── Callout Box ── */
+  .callout {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 10pt 14pt;
+    margin: 12pt 0;
+    font-size: 10.5pt;
+  }
+  .callout strong { color: #92400e; }
+
+  .callout-blue {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 10pt 14pt;
+    margin: 12pt 0;
+    font-size: 10.5pt;
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10pt 0 14pt;
+    font-size: 10.5pt;
+    page-break-inside: avoid;
+  }
+  th {
+    background: #0f172a;
+    color: #fff;
+    text-align: left;
+    padding: 6pt 8pt;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  td {
+    padding: 5pt 8pt;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td code {
+    font-size: 9pt;
+    word-break: break-all;
+  }
+
+  /* ── Lists ── */
+  ul, ol { margin: 6pt 0 10pt 18pt; }
+  li { margin-bottom: 4pt; }
+  li strong { color: #1e293b; }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin-left: 0; padding-left: 0; }
+  .checklist li {
+    padding-left: 24pt;
+    position: relative;
+    margin-bottom: 6pt;
+  }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3pt;
+    width: 13pt;
+    height: 13pt;
+    border: 1.5px solid #64748b;
+    border-radius: 2px;
+  }
+
+  /* ── Horizontal Rule ── */
+  hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 20pt 0;
+  }
+
+  /* ── Header Bar ── */
+  .header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 6pt;
+  }
+  .header-bar .label {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-size: 9pt;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 30pt;
+    padding-top: 10pt;
+    border-top: 1px solid #cbd5e1;
+    font-size: 9pt;
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { padding: 0; max-width: none; }
+    h2 { page-break-after: avoid; }
+    table, .callout, .callout-blue { page-break-inside: avoid; }
+    .no-print { display: none; }
+    a { color: #1a1a1a; }
+  }
+
+  @page {
+    margin: 0.7in 0.75in;
+    size: letter;
+  }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <span class="label">Confidential — Internal Use Only</span>
+  <span class="label">unitedformulas.com</span>
+</div>
+
+<h1>Your Website Handoff &amp; Moving Guide</h1>
+<p class="subtitle">What you own, where it lives, and how to move it</p>
+
+<p>Moving this website is simpler than it sounds.</p>
+
+<p>You do not need to understand the code, rebuild the site, or become a website expert. Most of the move comes down to three things: give the right person access, copy the existing setup, and test everything before you switch.</p>
+
+<p>Nearly anyone can manage the handoff using this guide. A developer should handle the few technical steps involving code, private keys, or domain settings — but you will still know what they are doing and how to confirm the job is finished.</p>
+
+<div class="callout">
+  <strong>Keep this guide private.</strong> Store passwords, recovery codes, and secret keys in a company password manager such as 1Password or Bitwarden. Do not put them in this document.
+</div>
+
+<hr>
+
+<h2>Your website has nine main pieces</h2>
+
+<table>
+  <thead>
+    <tr><th>Part</th><th>Plain-English meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Domain</strong></td><td>Your website's address: <code>unitedformulas.com</code></td></tr>
+    <tr><td><strong>WordPress (WooCommerce)</strong></td><td>Where you manage products, pages, posts, and images at <code>ufbackend.com</code></td></tr>
+    <tr><td><strong>Next.js</strong></td><td>The code that turns your WordPress content into the public website</td></tr>
+    <tr><td><strong>GitHub</strong></td><td>The master copy of that code at <code>github.com/triggsmt67-cmd/united_formulas</code></td></tr>
+    <tr><td><strong>Vercel</strong></td><td>The service that currently puts the website online</td></tr>
+    <tr><td><strong>Resend</strong></td><td>The email service that delivers contact forms, purchase orders, and credit applications</td></tr>
+    <tr><td><strong>Google Cloud</strong></td><td>Cloud storage for product documents (SDS sheets) and the AI assistant (Dr.&nbsp;Aris)</td></tr>
+    <tr><td><strong>Firebase</strong></td><td>Authentication and data layer for the AI chemist module</td></tr>
+    <tr><td><strong>Google Tag Manager</strong></td><td>Marketing analytics and conversion tracking (ID: <code>GTM-KZPZ7VZT</code>)</td></tr>
+  </tbody>
+</table>
+
+<p>These pieces connect to each other, but they do not all have to move at once. If you are only changing developers, nothing may need to move. You can simply give the new person access to the existing accounts.</p>
+
+<hr>
+
+<h2>Start here: make sure the business is in control</h2>
+
+<p>The business should own the main accounts. A developer can have access, but they should not be the only person who can log in, recover an account, or update billing.</p>
+
+<p>Fill this in without adding passwords:</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Provider or link</th><th>Business owner</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Domain and DNS</td><td>[Confirm registrar]</td><td><code>crystalm@unitedformulas.com</code></td></tr>
+    <tr><td>WordPress + WooCommerce</td><td><code>https://ufbackend.com/wp-admin</code></td><td><code>crystalm@unitedformulas.com</code></td></tr>
+    <tr><td>GitHub code repository</td><td><code>https://github.com/triggsmt67-cmd/united_formulas</code></td><td><code>triggsmt67-cmd</code></td></tr>
+    <tr><td>Frontend hosting (Vercel)</td><td><code>https://vercel.com</code> — deploys to <code>unitedformulas.com</code></td><td>[Confirm Vercel team owner]</td></tr>
+    <tr><td>Email dispatch (Resend)</td><td><code>https://resend.com</code> — sends from <code>notifications@unitedformulas.com</code></td><td>[Confirm Resend account owner]</td></tr>
+    <tr><td>Google Cloud Platform</td><td>GCS Bucket: <code>united-formulas-files</code> / Gemini AI API</td><td>[Confirm GCP project owner]</td></tr>
+    <tr><td>Firebase</td><td>[Confirm Firebase project]</td><td>[Confirm Firebase owner]</td></tr>
+    <tr><td>Google Tag Manager</td><td><code>https://tagmanager.google.com</code> — Container: <code>GTM-KZPZ7VZT</code></td><td>[Confirm GTM account owner]</td></tr>
+    <tr><td>Password manager</td><td>[Vault name — recommend 1Password or Bitwarden]</td><td>[Business owner]</td></tr>
+  </tbody>
+</table>
+
+<p>Then confirm:</p>
+<ul>
+  <li>The business controls the main email and billing.</li>
+  <li>At least two trusted people can recover important accounts.</li>
+  <li>Multi-factor authentication is turned on.</li>
+  <li>Passwords and recovery codes are in the company password manager.</li>
+</ul>
+<p>That is the foundation. Once those four things are true, you are not trapped with one developer or hosting company.</p>
+
+<hr>
+
+<h2>If you are changing developers</h2>
+
+<p>This is the easy version. Nothing needs to be rebuilt.</p>
+
+<h3>1. Invite the new developer</h3>
+<p>Give them their own login for WordPress, GitHub, Vercel, and any other service they need. Do not send them your master passwords. Look for menu options called <strong>Users</strong>, <strong>Members</strong>, <strong>Team</strong>, <strong>Access</strong>, or <strong>Collaborators</strong>.</p>
+
+<h3>2. Ask them to verify access</h3>
+<p>The new developer should confirm they can open the code, log in to WordPress, and create a test version of the website without changing the live site.</p>
+
+<h3>3. Clean up the old access</h3>
+<p>Once the new person proves everything works, remove access the old developer no longer needs. Change any shared passwords or private keys they could see.</p>
+
+<p>Done.</p>
+
+<hr>
+
+<h2>If you are moving the public website</h2>
+
+<p>This moves the Next.js website from Vercel to another hosting company. WordPress can stay exactly where it is. Your developer will handle most of the technical work. Your job is to make sure they follow this order:</p>
+
+<h3>1. Save the working setup</h3>
+
+<p>Before changing anything, keep:</p>
+<ul>
+  <li>A current WordPress backup (full database + <code>/wp-content/uploads/</code> media folder from <code>ufbackend.com</code>).</li>
+  <li>The complete website code in GitHub (<code>https://github.com/triggsmt67-cmd/united_formulas</code>, branch: <code>main</code>).</li>
+  <li>A copy of the current domain DNS settings (A records, CNAME records, MX records, DKIM records for Resend).</li>
+  <li>A list of private environment settings and where their values are stored.</li>
+</ul>
+
+<p>Environment settings are the private connections between the website, WordPress, and other services. The new host needs them, but their secret values belong in the password manager — not in email or chat.</p>
+
+<p><strong>Environment variables this site requires</strong> (names only — store actual values in the password manager):</p>
+
+<table>
+  <thead><tr><th>Variable</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>RESEND_API_KEY</code></td><td>API key for the Resend email service</td></tr>
+    <tr><td><code>WAREHOUSE_EMAIL</code></td><td>Primary recipient(s) for PO and inquiry emails</td></tr>
+    <tr><td><code>SALES_EMAIL</code></td><td>Recipient(s) for general sales inquiries (falls back to <code>WAREHOUSE_EMAIL</code>)</td></tr>
+    <tr><td><code>CREDIT_EMAIL</code></td><td>Recipient(s) for credit applications (falls back to <code>WAREHOUSE_EMAIL</code>)</td></tr>
+    <tr><td><code>NEXT_PUBLIC_SITE_URL</code></td><td>Public URL of the live website (<code>https://unitedformulas.com</code>)</td></tr>
+    <tr><td><code>NEXT_PUBLIC_WORDPRESS_API_URL</code></td><td>WordPress GraphQL endpoint (<code>https://ufbackend.com/graphql</code>)</td></tr>
+    <tr><td><code>WORDPRESS_API_URL</code></td><td>Server-side WordPress GraphQL endpoint</td></tr>
+    <tr><td><code>GOOGLE_GENERATIVE_AI_API_KEY</code></td><td>Gemini AI key for the Dr. Aris / "Ask the Chemist" assistant</td></tr>
+    <tr><td><code>GCS_BUCKET_NAME</code></td><td>Google Cloud Storage bucket (<code>united-formulas-files</code>)</td></tr>
+    <tr><td><code>GCS_CREDENTIALS_BASE64</code></td><td>Base64-encoded GCS service account key (for Vercel production — <strong>not</strong> a file path)</td></tr>
+    <tr><td><code>GOOGLE_APPLICATION_CREDENTIALS</code></td><td>Local file path to <code>gcs-key.json</code> (for local dev only — <strong>do not</strong> set in Vercel)</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_API_KEY</code></td><td>Firebase API key</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN</code></td><td>Firebase auth domain</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_PROJECT_ID</code></td><td>Firebase project ID</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET</code></td><td>Firebase storage bucket</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID</code></td><td>Firebase messaging sender ID</td></tr>
+    <tr><td><code>NEXT_PUBLIC_FIREBASE_APP_ID</code></td><td>Firebase app ID</td></tr>
+  </tbody>
+</table>
+
+<div class="callout-blue">
+  <strong>Vercel note:</strong> After adding or changing any environment variable in the Vercel dashboard, you <strong>must</strong> trigger a Redeploy. Variables are baked into the build — they do not update until the next deployment.
+</div>
+
+<h3>2. Build the site on the new host</h3>
+
+<p>The developer connects the existing GitHub repository to the new hosting account and copies the working build settings.</p>
+
+<p>The current build settings on Vercel are:</p>
+<ul>
+  <li><strong>Framework:</strong> Next.js</li>
+  <li><strong>Build command:</strong> <code>npm run build</code> (which runs <code>next build</code>)</li>
+  <li><strong>Output directory:</strong> <code>.next</code> (default)</li>
+  <li><strong>Install command:</strong> <code>npm install</code></li>
+  <li><strong>Node.js version:</strong> 20.x or later</li>
+</ul>
+
+<p>No one should guess or start over. The code already exists.</p>
+
+<h3>3. Test it before the public switch</h3>
+
+<p>The new host will provide a temporary website address. Use it to check:</p>
+
+<ul>
+  <li><strong>Home page</strong> (<code>/</code>) — hero section, featured products grid, zip code checker.</li>
+  <li><strong>Products catalog</strong> (<code>/products</code>) — full product listing from WordPress/WooCommerce.</li>
+  <li><strong>Individual product pages</strong> (<code>/product/[slug]</code>) — images, pricing, variants, SDS download, PO ordering.</li>
+  <li><strong>Category pages</strong> (<code>/category/[slug]</code>) — filtered product views.</li>
+  <li><strong>SDS Sheets page</strong> (<code>/sds-sheets</code>) — safety data sheet search and download.</li>
+  <li><strong>Contact form</strong> (<code>/contact</code>) — submit a test inquiry and confirm it arrives at the warehouse email.</li>
+  <li><strong>Purchase Order flow</strong> — add items to a PO draft, submit, and confirm the email arrives.</li>
+  <li><strong>Credit Application</strong> (<code>/credit-application</code>) — submit a test application.</li>
+  <li><strong>Dr. Aris / "Ask the Chemist"</strong> — the floating chat widget in the bottom-right corner.</li>
+  <li><strong>About page</strong> (<code>/about</code>).</li>
+  <li><strong>Legal pages</strong> (<code>/privacy-policy</code>, <code>/terms-of-service</code>).</li>
+  <li>Mobile layout on a phone.</li>
+  <li>A new or updated WordPress product — confirm it appears on the site.</li>
+</ul>
+
+<p>Fix any problems while the current website is still live.</p>
+
+<h3>4. Point the domain to the new site</h3>
+<p>Once the test site works, the developer updates the domain settings using the exact instructions from the new host. This is one of the few steps that deserves extra care. Website and email routing live in the same general area. The developer should save the old settings and leave business email records alone.</p>
+
+<h3>5. Keep the old host for a short safety window</h3>
+<p>Check the live website again after the switch. Keep the old hosting account active until the new site has worked reliably for the agreed period. If something goes wrong, the developer can point the domain back to the old working site. That is your safety net.</p>
+
+<hr>
+
+<h2>Only moving WordPress or the domain?</h2>
+
+<p>These are separate jobs. You do not need to move either one just because you changed developers or moved the public website.</p>
+
+<h3>Moving WordPress</h3>
+<p>A developer should copy the WordPress database, images, users, plugins, and settings to the new WordPress host. They should test the new copy and confirm the public website can read it before changing the live WordPress address.</p>
+
+<p>The current WordPress + WooCommerce backend lives at <code>ufbackend.com</code>. The Next.js website reads product data from the GraphQL endpoint at <code>https://ufbackend.com/graphql</code> (via WPGraphQL plugin). If WordPress moves to a new URL, the developer must update:</p>
+<ul>
+  <li>The <code>NEXT_PUBLIC_WORDPRESS_API_URL</code> and <code>WORDPRESS_API_URL</code> environment variables.</li>
+  <li>The hardcoded fallback in <code>src/lib/apollo-client.ts</code> (currently set to <code>https://ufbackend.com/graphql</code>).</li>
+  <li>Any references in <code>src/data/product_metadata.json</code> that point to <code>ufbackend.com</code> for SDS PDF downloads.</li>
+</ul>
+
+<h3>Moving the domain</h3>
+<p>Only transfer the domain if the business wants to change domain companies. Keep a copy of the current domain settings, confirm the new account belongs to the business, and check both the website and business email after the transfer.</p>
+
+<div class="callout">
+  <strong>Critical DNS records to preserve:</strong>
+  <ul style="margin-top: 4pt; margin-bottom: 0;">
+    <li>DKIM records for Resend email delivery (<code>resend._domainkey.unitedformulas.com</code>) — without these, the contact form, PO, and credit application emails will stop sending.</li>
+    <li>Any MX records for business email (<code>@unitedformulas.com</code>).</li>
+  </ul>
+</div>
+
+<p>If the business already controls the domain account, leaving it where it is may be the simplest choice.</p>
+
+<hr>
+
+<h2>How you know the move worked</h2>
+
+<p>You do not need a technical report. Open the website and confirm:</p>
+
+<ol>
+  <li>The main pages load on a phone and computer.</li>
+  <li>Product images and data appear correctly (pulled from WordPress at <code>ufbackend.com</code>).</li>
+  <li>The <strong>Contact form</strong> (<code>/contact</code>) delivers an email to the warehouse.</li>
+  <li>A <strong>Purchase Order</strong> submission delivers an email with line items and totals.</li>
+  <li>The <strong>Credit Application</strong> (<code>/credit-application</code>) delivers an email.</li>
+  <li>The <strong>Dr.&nbsp;Aris chat widget</strong> responds to product questions (requires GCS + Gemini keys).</li>
+  <li>A new or updated WordPress product appears on the public site.</li>
+  <li>The website shows no security warning (HTTPS with valid certificate).</li>
+  <li><strong>Google Tag Manager</strong> is firing (check browser console for <code>GTM-KZPZ7VZT</code>).</li>
+  <li>The <strong>PO Submit button</strong> retains its ID <code>submit-po-btn</code> (linked to marketing conversions — do not rename).</li>
+  <li>The new developer can push a code update and it deploys successfully.</li>
+</ol>
+
+<p>If all eleven are true, the move is working.</p>
+
+<hr>
+
+<h2>If something breaks</h2>
+
+<p>Stop making more changes and return to the last working version.</p>
+
+<ul>
+  <li>If a code update caused the problem, restore the previous deployment from the host's deployment history.</li>
+  <li>If the new host caused the problem, point the domain back to the old host.</li>
+  <li>If WordPress content is missing, use the verified WordPress backup or reconnect the old WordPress site.</li>
+  <li>If business email stops working, compare the domain settings with the saved copy and contact the email provider before changing anything else.</li>
+</ul>
+
+<p>This is why you test first and keep the old setup available for a short time. You always have a way back.</p>
+
+<hr>
+
+<h2>Everyday updates are still easy</h2>
+
+<p>You should not need a developer to change normal website content.</p>
+
+<ol>
+  <li>Log in to WordPress at <code>https://ufbackend.com/wp-admin</code>.</li>
+  <li>Edit the product, page, post, or image.</li>
+  <li>Click <strong>Publish</strong> or <strong>Update</strong>.</li>
+  <li>Open the public page at <code>https://unitedformulas.com</code> and confirm the change appears.</li>
+</ol>
+
+<p>The site uses a <code>force-dynamic</code> / <code>no-store</code> fetch policy, so WordPress changes should appear without needing to redeploy the code.</p>
+
+<p>That is it.</p>
+
+<hr>
+
+<h2>Final handoff check</h2>
+
+<ul class="checklist">
+  <li>The business owns the main accounts.</li>
+  <li>The new developer has their own access.</li>
+  <li>Backups and old domain settings are saved.</li>
+  <li>The new site was tested before the switch.</li>
+  <li>Website content, forms, email, and analytics work.</li>
+  <li>The old setup will stay available until ____________.</li>
+  <li>Old access was removed and shared secrets were changed.</li>
+  <li>The handoff was approved by ____________ on ____________.</li>
+</ul>
+
+<hr>
+
+<h2>Support contacts</h2>
+
+<table>
+  <thead>
+    <tr><th>Role</th><th>Name or company</th><th>Email</th><th>Phone</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Business owner</td><td>______________________</td><td><code>crystalm@unitedformulas.com</code></td><td>406.727.4144</td></tr>
+    <tr><td>Developer or agency</td><td>______________________</td><td>______________________</td><td>______________________</td></tr>
+    <tr><td>WordPress host</td><td>______________________</td><td>______________________</td><td>______________________</td></tr>
+    <tr><td>Domain provider</td><td>______________________</td><td>______________________</td><td>______________________</td></tr>
+    <tr><td>Email dispatch</td><td>Resend</td><td>resend.com/support</td><td>—</td></tr>
+    <tr><td>Cloud services</td><td>Google Cloud Platform</td><td>cloud.google.com/support</td><td>—</td></tr>
+    <tr><td>Frontend hosting</td><td>Vercel</td><td>vercel.com/support</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="doc-footer">
+  <p>United Formulas — Website Handoff &amp; Moving Guide — Confidential</p>
+  <p>Generated July 2026 · unitedformulas.com</p>
+</div>
+
+</body>
+</html>

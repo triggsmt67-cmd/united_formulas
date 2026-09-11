@@ -1,6 +1,30 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/industries/janitorial-cleaning-companies',
+        destination: '/industries/commercial-janitorial',
+        permanent: true,
+      },
+      {
+        source: '/industries/schools-education',
+        destination: '/industries/schools-educational-facilities',
+        permanent: true,
+      },
+      {
+        source: '/industries/industrial-manufacturing',
+        destination: '/industries/auto-repair-service-bays',
+        permanent: true,
+      },
+      {
+        source: '/category/disinfectants-deodorizers',
+        destination: '/category/disinfectant',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

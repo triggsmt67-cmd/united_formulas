@@ -11,7 +11,7 @@ export default function RequestQuoteCTA() {
             <div className="flex justify-center mb-16">
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="group relative bg-[#EA580C] hover:bg-[#C2410C] text-white font-black px-12 py-5 rounded-xl shadow-2xl shadow-orange-900/20 active:scale-95 text-lg uppercase tracking-[0.2em] font-geist transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] overflow-hidden"
+                    className="group relative bg-[#EA580C] hover:bg-[#C2410C] text-white font-black px-12 py-5 rounded-xl shadow-2xl shadow-orange-900/20 active:scale-95 text-lg uppercase tracking-[0.2em] font-sans transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] overflow-hidden"
                 >
                     <span className="relative z-10 flex items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

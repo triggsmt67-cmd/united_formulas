@@ -1,6 +1,23 @@
 import client from "@/lib/apollo-client";
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import type { Metadata } from "next";
+
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
+    title: "Commercial Cleaning Chemicals & Concentrates | United Formulas",
+    description: "Browse our full catalog of Montana-made degreasers, floor cleaners, dish machine soaps, and vehicle washes. Available in 5-gal pails, drums, and totes.",
+    alternates: {
+        canonical: "https://unitedformulas.com/products",
+    },
+    openGraph: {
+        title: "Commercial Cleaning Chemicals & Concentrates | United Formulas",
+        description: "Browse our full catalog of Montana-made degreasers, floor cleaners, dish machine soaps, and vehicle washes. Available in 5-gal pails, drums, and totes.",
+        url: "https://unitedformulas.com/products",
+        siteName: "United Formulas",
+        type: "website",
+        locale: "en_US",
+    },
+};
 import { gql } from "@apollo/client";
 import ProductGrid from "@/components/ProductGrid";
 import Navbar from "@/components/Navbar";
@@ -10,7 +27,7 @@ import Footer from "@/components/Footer";
 
 const GET_PRODUCTS_DATA = gql`
   query GetProductsData {
-    featuredProducts: products(first: 3, where: { featured: true }) {
+    featuredProducts: products(first: 6, where: { featured: true }) {
       nodes {
         id
         name
@@ -19,6 +36,12 @@ const GET_PRODUCTS_DATA = gql`
         image {
           sourceUrl
           altText
+        }
+        ... on SimpleProduct {
+          price
+        }
+        ... on VariableProduct {
+          price
         }
       }
     }
@@ -52,7 +75,6 @@ export default async function ProductsPage() {
       featuredProducts: { nodes: ProductNode[] }
     }>({
       query: GET_PRODUCTS_DATA,
-      fetchPolicy: "no-cache"
     });
     products = data?.allProducts?.nodes || [];
     featuredProducts = data?.featuredProducts?.nodes || [];
@@ -61,7 +83,7 @@ export default async function ProductsPage() {
   }
 
   return (
-    <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+    <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
       <Navbar />
 
       <main className="pt-24 pb-24 max-w-7xl mx-auto px-6 lg:px-8">

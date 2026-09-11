@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // Simple in-memory rate limiter (per-instance)
 // Note: In serverless, this is not global but helps against concurrent bursts

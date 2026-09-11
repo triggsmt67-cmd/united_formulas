@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @next/next/no-img-element */
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -19,7 +20,6 @@ export default function ChatWidget() {
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [user, setUser] = useState<{ name: string; email: string } | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     
     const scrollToBottom = () => {
@@ -40,7 +40,6 @@ export default function ChatWidget() {
                 timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }
         ]);
-        setUser(null);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -112,7 +111,7 @@ export default function ChatWidget() {
             }]);
         } catch (error: any) {
             console.error('Chat error:', error);
-            let errorMessage = "Oops! Something went wrong on my end. Let's try that again.";
+            const errorMessage = "Oops! Something went wrong on my end. Let's try that again.";
             setMessages(prev => [...prev, {
                 role: 'assistant',
                 content: errorMessage,
@@ -250,6 +249,7 @@ export default function ChatWidget() {
                                             >
                                                 <ReactMarkdown
                                                     components={{
+                                                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                                         a: ({ node, ...props }) => {
                                                             const href = props.href || '';
                                                             const isSDS = href.toLowerCase().endsWith('.pdf') || href.toLowerCase().includes('grounding');

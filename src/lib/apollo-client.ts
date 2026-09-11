@@ -9,7 +9,7 @@ const GRAPHQL_URL = "https://ufbackend.com/graphql";
 const client = new ApolloClient({
     link: new HttpLink({
         uri: GRAPHQL_URL,
-        fetchOptions: { cache: "no-store" },
+        fetchOptions: { next: { revalidate: 3600 } },
     }),
     cache: new InMemoryCache(),
 });

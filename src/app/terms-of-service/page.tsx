@@ -1,9 +1,26 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Terms of Service | United Formulas Montana",
+    description: "Review terms and conditions for commercial purchasing, 30-day net credit accounts, route delivery, and chemical compliance with United Formulas.",
+    alternates: {
+        canonical: "https://unitedformulas.com/terms-of-service",
+    },
+    openGraph: {
+        title: "Terms of Service | United Formulas Montana",
+        description: "Review terms and conditions for commercial purchasing, 30-day net credit accounts, route delivery, and chemical compliance with United Formulas.",
+        url: "https://unitedformulas.com/terms-of-service",
+        siteName: "United Formulas",
+        type: "website",
+        locale: "en_US",
+    },
+};
 
 export default function TermsOfServicePage() {
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-4xl mx-auto px-6 lg:px-8">

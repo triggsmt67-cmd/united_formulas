@@ -114,7 +114,7 @@ export default function SDSList({ products }: SDSListProps) {
                             </svg>
                         </div>
                         <h3 className="text-xl font-bold text-slate-900 mb-2">No sheets found</h3>
-                        <p className="text-slate-500">We couldn't find any safety sheets matching your search for "{searchQuery}".</p>
+                        <p className="text-slate-500">We couldn&apos;t find any safety sheets matching your search for &quot;{searchQuery}&quot;.</p>
                     </div>
                 )
             )}

@@ -16,7 +16,7 @@ export default function PromotionGrid({ featuredProducts }: PromotionGridProps) 
     const p3 = featuredProducts[2];
 
     return (
-        <section className="mb-20 overflow-hidden font-geist">
+        <section className="mb-20 overflow-hidden font-sans">
             {/* Top Banner */}
             <div className="bg-[#1E3A8A] text-white py-3 text-center text-xs font-black uppercase tracking-[0.3em] border-b border-white/10">
                 Free Delivery Within 100 Miles Of Great Falls

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { validateHoneypot, validateBasicInputs, checkRateLimit } from '@/lib/security';

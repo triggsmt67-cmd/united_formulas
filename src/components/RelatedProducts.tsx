@@ -14,7 +14,7 @@ export default function RelatedProducts({ products }: RelatedProductsProps) {
 
     return (
         <section className="mt-24 pt-16 border-t border-slate-100">
-            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-12 text-center italic font-geist">
+            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-12 text-center italic font-sans">
                 Recommended <span className="text-cyan-600">For Your Facility</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

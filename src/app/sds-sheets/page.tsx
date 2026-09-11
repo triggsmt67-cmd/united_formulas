@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { gql } from '@apollo/client';
 import client from '@/lib/apollo-client';
 import Navbar from '@/components/Navbar';
@@ -7,12 +8,22 @@ import { Metadata } from 'next';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-    title: 'Safety Data Sheets (SDS) | Technical Documentation | United Formulas',
-    description: 'Access our complete library of Safety Data Sheets (SDS) and TDS documentation for United Formulas industrial chemicals. High-performance compliance data from Great Falls & Billings, MT.',
+    title: 'Safety Data Sheets (SDS) & Tech Sheets | United Formulas',
+    description: 'Download official Safety Data Sheets (SDS) and technical compliance guides for all United Formulas commercial chemicals. Direct from Great Falls, MT.',
+    alternates: {
+        canonical: 'https://unitedformulas.com/sds-sheets',
+    },
+    openGraph: {
+        title: 'Safety Data Sheets (SDS) & Tech Sheets | United Formulas',
+        description: 'Download official Safety Data Sheets (SDS) and technical compliance guides for all United Formulas commercial chemicals. Direct from Great Falls, MT.',
+        url: 'https://unitedformulas.com/sds-sheets',
+        siteName: 'United Formulas',
+        type: 'website',
+        locale: 'en_US',
+    },
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 3600;
 
 const GET_SDS_PRODUCTS = gql`
   query GetSDSProducts {
@@ -39,7 +50,6 @@ export default async function SDSPage() {
     try {
         const { data } = await client.query<{ products: { nodes: any[] } }>({
             query: GET_SDS_PRODUCTS,
-            fetchPolicy: 'no-cache',
         });
 
         // Fetch all products and normalize the data
@@ -60,7 +70,7 @@ export default async function SDSPage() {
     }
 
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-geist antialiased selection:bg-cyan-100">
+        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-24 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
@@ -92,7 +102,7 @@ export default async function SDSPage() {
                     <div className="absolute inset-0 bg-grid-white/[0.03] bg-[size:30px_30px]"></div>
                     <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl font-bold mb-4">Can't find a document?</h2>
+                            <h2 className="text-3xl font-bold mb-4">Can&apos;t find a document?</h2>
                             <p className="text-slate-400 text-lg leading-relaxed">
                                 Our technical support team is standing by in Great Falls and Billings to assist with specific formulation data or compliance audits.
                             </p>

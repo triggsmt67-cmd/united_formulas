@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { getClient } from '@/lib/apollo-client';
-import Link from 'next/link';
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductGallery from '@/components/ProductGallery';
@@ -82,38 +82,149 @@ const GET_PRODUCT = gql`
   }
 `;
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+import { notFound } from 'next/navigation';
+import productMetadata from '@/data/product_metadata.json';
+
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return Object.keys(productMetadata as Record<string, unknown>).map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
+  const metaFallback = (productMetadata as unknown as Record<string, { displayName?: string; canonicalDescription?: string; sds?: string }>)[slug];
 
-  const { data } = await getClient().query<{ product: DetailedProduct }>({
-    query: GET_PRODUCT,
-    variables: { slug: slug },
-    context: {
-      fetchOptions: {
-        next: { revalidate: 0 },
-      },
-    },
-  });
+  let product: { name: string; shortDescription?: string; description?: string; image?: { sourceUrl: string; altText?: string } } | null = null;
 
-  const product = data?.product;
+  try {
+    const { data } = await getClient().query<{
+      product: {
+        name: string;
+        shortDescription?: string;
+        description?: string;
+        image?: {
+          sourceUrl: string;
+          altText?: string;
+        };
+      };
+    }>({
+      query: gql`
+        query GetProductMeta($slug: ID!) {
+          product(id: $slug, idType: SLUG) {
+            name
+            shortDescription
+            description
+            image {
+              sourceUrl
+              altText
+            }
+          }
+        }
+      `,
+      variables: { slug },
+    });
+
+    product = data?.product || null;
+  } catch {
+    // If GraphQL is down or rate-limiting, use local metadata
+  }
+
+  if (!product && metaFallback) {
+    product = {
+      name: metaFallback.displayName || slug,
+      shortDescription: metaFallback.canonicalDescription || '',
+      description: metaFallback.canonicalDescription || '',
+    };
+  }
 
   if (!product) {
-    return (
-      <div className="min-h-screen bg-white font-geist">
-        <Navbar />
-        <div className="pt-40 text-center text-slate-800">
-          <h1 className="text-2xl font-bold">Product Not Found</h1>
-          <Link href="/products" className="text-cyan-600 underline mt-4 block">
-            Back to Catalog
-          </Link>
-        </div>
-        <Footer />
-      </div>
-    );
+    return {
+      title: "Product Not Found | United Formulas",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const rawTitle = `${product.name} | United Formulas`;
+  const title = rawTitle.length <= 60 ? rawTitle : product.name;
+
+  const rawDesc = product.shortDescription || product.description || '';
+  const cleanDesc = rawDesc.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+
+  let description = `Buy ${product.name} commercial concentrate direct from United Formulas in Montana. High-strength industrial cleaner in drums and 5-gal pails.`;
+  if (cleanDesc && cleanDesc.length >= 40) {
+    description = cleanDesc.length > 155 ? `${cleanDesc.substring(0, 152).trim()}...` : cleanDesc;
+  }
+
+  const canonicalUrl = `https://unitedformulas.com/product/${slug}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "United Formulas",
+      type: "website",
+      locale: "en_US",
+      ...(product.image?.sourceUrl && {
+        images: [
+          {
+            url: product.image.sourceUrl,
+            alt: product.image.altText || product.name,
+          },
+        ],
+      }),
+    },
+  };
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const metaFallback = (productMetadata as unknown as Record<string, { displayName?: string; canonicalDescription?: string; sds?: string }>)[slug];
+
+  let product: DetailedProduct | null = null;
+  try {
+    const { data } = await getClient().query<{ product: DetailedProduct }>({
+      query: GET_PRODUCT,
+      variables: { slug: slug },
+    });
+    product = data?.product || null;
+  } catch (err) {
+    console.error(`Error fetching product [${slug}] from GraphQL:`, err);
+  }
+
+  if (!product && metaFallback) {
+    product = {
+      id: slug,
+      name: metaFallback.displayName || slug,
+      slug: slug,
+      description: metaFallback.canonicalDescription || '',
+      shortDescription: metaFallback.canonicalDescription || '',
+      productData: {
+        sdssheet: metaFallback.sds || null,
+        costPerOunce: null,
+      },
+    };
+  }
+
+  if (!product) {
+    notFound();
   }
 
   return (
-    <div className="bg-white min-h-screen font-geist text-slate-900 selection:bg-cyan-100">
+    <div className="bg-white min-h-screen font-sans text-slate-900 selection:bg-cyan-100">
       <Navbar />
 
       <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">

@@ -23,8 +23,10 @@ export default function ZipCheckModal({ isOpen, onClose }: ZipCheckModalProps) {
         if (isOpen) {
             document.addEventListener('keydown', handleEsc);
             document.body.style.overflow = 'hidden';
-            setStatus('idle');
-            setZipCode('');
+            setTimeout(() => {
+                setStatus('idle');
+                setZipCode('');
+            }, 0);
         }
         return () => {
             document.removeEventListener('keydown', handleEsc);
@@ -102,7 +104,13 @@ export default function ZipCheckModal({ isOpen, onClose }: ZipCheckModalProps) {
             />
 
             {/* Modal Container */}
-            <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 animate-fade-up">
+            <div
+                id="zip-check-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="zip-modal-title"
+                className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200 animate-fade-up"
+            >
                 {/* Header Ribbon */}
                 <div className="h-2 w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500"></div>
 
@@ -113,7 +121,7 @@ export default function ZipCheckModal({ isOpen, onClose }: ZipCheckModalProps) {
                                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
                                 Route Verification
                             </span>
-                            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+                            <h2 id="zip-modal-title" className="text-3xl font-bold tracking-tight text-slate-900">
                                 {status === 'eligible' ? (
                                     <>Welcome <span className="text-emerald-600">Neighbor</span></>
                                 ) : status === 'ineligible' ? (
