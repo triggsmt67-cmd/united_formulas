@@ -8,22 +8,78 @@ interface RecommendedCategoriesProps {
     slugs: string[];
 }
 
-// Local metadata mapping since WPGraphQL might not have these specific custom images and descriptions
-const CATEGORY_META: Record<string, { image: string; description: string }> = {
-    "kitchen-warewash": { image: "/images/categories/kitchen-warewash.jpg", description: "Dish machine soaps, 3-bay sink detergents, and sanitizers built for hard water." },
-    "degreaser": { image: "/images/categories/degreaser.jpg", description: "Heavy-duty degreasers that break down fryer grease, grill grime, and hood buildup." },
-    "floor-care": { image: "/images/categories/floor-care.jpg", description: "No-slip cleaners that lift kitchen grease without leaving a slick film on tile." },
-    "bathroom": { image: "/images/categories/bathroom.jpg", description: "Descalers and restroom cleaners that remove hard water buildup and keep restrooms spotless." },
-    "restroom": { image: "/images/categories/bathroom.jpg", description: "Descalers and restroom cleaners that remove hard water buildup and keep restrooms spotless." },
-    "disinfectants-deodorizers": { image: "/images/categories/disinfectants-deodorizers.jpg", description: "EPA-registered surface sanitizers for food prep tables, bar tops, and dining areas." },
-    "all-purpose": { image: "/images/categories/all-purpose.jpg", description: "Everyday spray cleaners for counters, tables, and stainless steel." },
-    "all-purpose-cleaners": { image: "/images/categories/all-purpose.jpg", description: "Everyday spray cleaners for counters, desks, and stainless steel." },
-    "carpet-care": { image: "/images/categories/carpet-care.jpg", description: "Spot cleaners and shampoo for dining room carpets and entry rugs." },
-    "glass-cleaner": { image: "/images/categories/glass-cleaner.jpg", description: "Fast-drying, streak-free cleaners for front windows, sneeze guards, and mirrors." },
-    "laundry": { image: "/images/categories/laundry.jpg", description: "Commercial laundry detergents that lift food stains and grease from bar towels and aprons." },
-    "automotive": { image: "/images/categories/automotive.jpg", description: "Specialized vehicle washes and fleet cleaners." },
-    "heavy-duty-cleaner": { image: "/images/categories/heavy-duty-cleaner.jpg", description: "Tough cleaners for heavy grease and workshop grime." },
-    "industrial-cleaner-degreaser": { image: "/images/categories/industrial-cleaner-degreaser.jpg", description: "Industrial solvents and degreasers for shop floors and equipment." },
+// Local metadata mapping with rich commercial copywriting tailored to Montana operations
+const CATEGORY_META: Record<string, { image: string; description: string; tag?: string }> = {
+    "kitchen-warewash": { 
+        image: "/images/categories/kitchen-warewash-v2.jpg", 
+        tag: "Hard Water Chemistry",
+        description: "Formulated with active water-conditioning chelants that suspend Montana mineral scale. Keeps commercial dish machines, booster heaters, and glassware spot-free without manual hand-buffing." 
+    },
+    "degreaser": { 
+        image: "/images/categories/degreaser-v2.jpg", 
+        tag: "Carbon & Grease Solvents",
+        description: "Penetrates baked-on carbon and polymerized fryer grease on contact. Liquefies heavy exhaust hood deposits into a free-rinsing emulsion so kitchen steel wipes clean without abrasive scouring." 
+    },
+    "floor-care": { 
+        image: "/images/categories/floor-care-v2.jpg", 
+        tag: "Slip-Resistant Formulas",
+        description: "Deep-cleans commercial quarry tile and concrete grout lines. Emulsifies slick animal fats and tracked winter slush without leaving an oily soap film that risks slip-and-fall incidents." 
+    },
+    "bathroom": { 
+        image: "/images/categories/bathroom-v2.jpg", 
+        tag: "Restroom & Descaling",
+        description: "Targeted organic acid descalers engineered to melt stubborn calcium crust, lime scale, and rust stains from commercial porcelain, flush valves, and chrome fixtures in 60 seconds." 
+    },
+    "restroom": { 
+        image: "/images/categories/bathroom-v2.jpg", 
+        tag: "Restroom & Descaling",
+        description: "Targeted organic acid descalers engineered to melt stubborn calcium crust, lime scale, and rust stains from commercial porcelain, flush valves, and chrome fixtures in 60 seconds." 
+    },
+    "disinfectants-deodorizers": { 
+        image: "/images/categories/disinfectants-deodorizers-v2.jpg", 
+        tag: "EPA Pathogen & Odor Control",
+        description: "EPA-registered hospital-grade disinfectants and molecular odor destroyers. Formulated to neutralize norovirus, bacteria, and kitchen odors on bar tops, prep tables, and shared contact points." 
+    },
+    "all-purpose": { 
+        image: "/images/categories/all-purpose.jpg", 
+        tag: "Multi-Surface Concentrates",
+        description: "High-dilution multi-surface concentrates that lift fingerprints, oil smudges, and dirt from laminate, stainless, and vinyl surfaces at pennies per ready-to-use spray bottle." 
+    },
+    "all-purpose-cleaners": { 
+        image: "/images/categories/all-purpose.jpg", 
+        tag: "Multi-Surface Concentrates",
+        description: "High-dilution multi-surface concentrates that lift fingerprints, oil smudges, and dirt from laminate, stainless, and vinyl surfaces at pennies per ready-to-use spray bottle." 
+    },
+    "carpet-care": { 
+        image: "/images/categories/carpet-care.jpg", 
+        tag: "Commercial Extraction",
+        description: "Low-foaming extraction formulas and targeted spotters that dissolve tracked Montana mud, salt residue, and beverage spills from commercial carpets without leaving re-soiling residues." 
+    },
+    "glass-cleaner": { 
+        image: "/images/categories/glass-cleaner.jpg", 
+        tag: "Streak-Free Evaporation",
+        description: "Ammonia-free, fast-evaporating formulas that dissolve grease film, smoke haze, and fingerprints on storefront windows, display sneeze guards, and mirrors without hazing or streaks." 
+    },
+    "laundry": { 
+        image: "/images/categories/laundry.jpg", 
+        tag: "Commercial Laundry",
+        description: "Commercial detergents and builders engineered to strip food oils, wine, and coffee stains out of bar towels, aprons, and linens in Montana hard water without degrading fiber life." 
+    },
+    "automotive": { 
+        image: "/images/categories/automotive.jpg", 
+        tag: "Fleet & Wash Chemistry",
+        description: "Two-step road film pre-soaks and high-lubricity detergents engineered to dissolve baked-on magnesium chloride and winter grime while protecting commercial vehicle clear coats." 
+    },
+    "heavy-duty-cleaner": { 
+        image: "/images/categories/heavy-duty-cleaner.jpg", 
+        tag: "High-Solvency Alkaline",
+        description: "Fortified alkaline cleaning concentrates engineered to emulsify petroleum slicks, carbon soot, and dried workshop soils across equipment, tools, and industrial floors." 
+    },
+    "industrial-cleaner-degreaser": { 
+        image: "/images/categories/industrial-cleaner-degreaser.jpg", 
+        tag: "DEQ Separator Safe",
+        description: "Quick-breaking, water-based degreasers that strip heavy motor oils, transmission fluid, and chassis grime while releasing oil at the weir to maintain Montana DEQ compliance." 
+    },
 };
 
 const CATEGORIES_QUERY = gql`
@@ -122,13 +178,13 @@ export default async function RecommendedCategories({ slugs }: RecommendedCatego
                         <div className="p-6 flex-1 flex flex-col justify-between">
                             <div className="flex flex-col gap-1 min-w-0">
                                 <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-600 block line-clamp-1">
-                                    Product Line
+                                    {meta.tag || "Product Line"}
                                 </span>
                                 <h3 className="text-xl font-bold text-slate-900 group-hover:text-cyan-700 transition-colors line-clamp-1 leading-snug mb-1">
                                     {category.name}
                                 </h3>
                                 {meta.description && (
-                                    <p className="text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                                    <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
                                         {meta.description}
                                     </p>
                                 )}
