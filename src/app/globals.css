@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f8fafc;
   --foreground: #0f172a;
+  --uf-border-subtle: #d8e0e8;
+  --uf-border-default: #cbd5e1;
+  --uf-border-strong: #94a3b8;
 }
 
 @theme inline {
@@ -89,4 +92,27 @@ body {
 .animate-gradient-border {
   background-size: 200% 200%;
   animation: var(--animate-gradient-border);
+}
+
+/* Keep surface boundaries visible on low-gamut office displays. */
+[class~="border-slate-100"] {
+  border-color: var(--uf-border-subtle);
+}
+
+[class~="border-slate-200"],
+[class~="border-slate-200/60"],
+[class~="border-slate-200/80"],
+[class~="border-slate-200/90"] {
+  border-color: var(--uf-border-default);
+}
+
+[class~="border-white/10"],
+[class~="border-white/15"] {
+  border-color: rgb(255 255 255 / 0.24);
+}
+
+@media (forced-colors: active) {
+  [class*="rounded-"][class*="border"] {
+    border-color: CanvasText;
+  }
 }

@@ -195,7 +195,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const localMetadata = (productMetadata as Record<string, { category?: string; sds?: string }>)[slug];
 
   return (
-    <div className="bg-white min-h-screen font-sans text-slate-900 selection:bg-cyan-100">
+    <div className="bg-slate-50 min-h-screen font-sans text-slate-900 selection:bg-cyan-100">
       <Navbar />
 
       <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">

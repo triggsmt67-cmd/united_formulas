@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function FindASolutionPage() {
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
       <main className="pb-24 pt-32">
         <section className="mx-auto max-w-7xl px-6 lg:px-8">

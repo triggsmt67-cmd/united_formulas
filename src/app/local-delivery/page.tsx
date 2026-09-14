@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function LocalDeliveryPage() {
-  return <div className="min-h-screen bg-white text-slate-900"><Navbar /><main className="pb-24 pt-32">
+  return <div className="min-h-screen bg-slate-50 text-slate-900"><Navbar /><main className="pb-24 pt-32">
     <section className="mx-auto max-w-7xl px-6 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
         <div><p className="text-xs font-bold uppercase tracking-[.22em] text-cyan-700">Local inventory. Planned routes. Direct help.</p><h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-6xl">A supplier close enough to show up.</h1><p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">United Formulas serves regional businesses from Great Falls and Billings. Route planning helps us group service, delivery and follow-up so customers spend less time waiting on distant suppliers.</p></div>

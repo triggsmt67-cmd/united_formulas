@@ -89,7 +89,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
+        <div className="bg-slate-50 min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
             <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
@@ -127,7 +127,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* Right Column: Contact Form */}
-                    <div className="bg-slate-50 border border-slate-200 p-8 md:p-12 rounded-3xl shadow-xl">
+                    <div className="bg-white border border-slate-300 p-8 md:p-12 rounded-3xl shadow-xl">
                         {isSuccess ? (
                             <div className="text-center py-12 animate-fade-up">
                                 <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8">

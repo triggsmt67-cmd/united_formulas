@@ -87,7 +87,7 @@ export default async function ProductsPage() {
   }
 
   return (
-    <div className="bg-white min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
+    <div className="bg-slate-50 min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
       <Navbar />
 
       <main className="pt-24 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
