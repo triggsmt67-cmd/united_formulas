@@ -6,6 +6,7 @@ import SDSList from '@/components/SDSList';
 import { ProductNode } from '@/types';
 import { Metadata } from 'next';
 import Footer from '@/components/Footer';
+import { fallbackProducts } from '@/lib/product-fallback';
 
 export const metadata: Metadata = {
     title: 'Safety Data Sheets (SDS) & Tech Sheets | United Formulas',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     },
 };
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 const GET_SDS_PRODUCTS = gql`
   query GetSDSProducts {
@@ -45,7 +46,7 @@ const GET_SDS_PRODUCTS = gql`
 `;
 
 export default async function SDSPage() {
-    let products: ProductNode[] = [];
+    let products: ProductNode[] = fallbackProducts;
 
     try {
         const { data } = await client.query<{ products: { nodes: any[] } }>({
@@ -55,15 +56,17 @@ export default async function SDSPage() {
         // Fetch all products and normalize the data
         const nodes = data?.products?.nodes || [];
 
-        products = nodes.map((p) => ({
-            id: p.id,
-            name: p.name,
-            slug: p.slug,
-            image: p.image,
-            productData: {
-                sdssheet: p.productData?.sdssheet || null
-            }
-        })) as ProductNode[];
+        if (nodes.length > 0) {
+            products = nodes.map((p) => ({
+                id: p.id,
+                name: p.name,
+                slug: p.slug,
+                image: p.image,
+                productData: {
+                    sdssheet: p.productData?.sdssheet || null
+                }
+            })) as ProductNode[];
+        }
 
     } catch (error) {
         console.error('Error fetching SDS products:', error);

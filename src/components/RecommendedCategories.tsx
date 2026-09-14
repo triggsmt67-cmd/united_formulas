@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
-import { getClient } from "@/lib/apollo-client";
-import { gql } from "@apollo/client";
 
 interface RecommendedCategoriesProps {
     slugs: string[];
@@ -82,67 +79,37 @@ const CATEGORY_META: Record<string, { image: string; description: string; tag?: 
     },
 };
 
-const CATEGORIES_QUERY = gql`
-    query GetCategories {
-        productCategories(first: 100) {
-            nodes {
-                name
-                slug
-            }
-        }
-    }
-`;
+const CATEGORY_ALIASES: Record<string, string> = {
+    "all-purpose-cleaners": "all-purpose",
+    "bathroom-cleaners": "bathroom",
+    restroom: "bathroom",
+    "disinfectants-deodorizers": "disinfectant",
+    sanitizers: "disinfectant",
+};
 
-export default async function RecommendedCategories({ slugs }: RecommendedCategoriesProps) {
-    const client = getClient();
-    let allCategories: any[] = [];
-    
-    try {
-        // Fetch categories dynamically from WPGraphQL
-        const { data } = await client.query({
-            query: CATEGORIES_QUERY,
-        });
-        allCategories = (data as any)?.productCategories?.nodes || [];
-    } catch (error) {
-        console.error("Failed to fetch categories from WPGraphQL:", error);
-        // Fallback mapping so the page doesn't break if WP is down
-        allCategories = slugs.map(slug => ({
-            slug,
-            name: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-        }));
-    }
-    
-    // Filter down to only the requested slugs and maintain order with fallback aliasing
-    const displayCategories = slugs
-        .map(slug => {
-            const exact = allCategories.find((c: any) => c.slug === slug);
-            if (exact) return exact;
-            if (slug === "all-purpose-cleaners") {
-                return allCategories.find((c: any) => c.slug === "all-purpose" || c.slug === "all-purpose-cleaner") || {
-                    slug: "all-purpose",
-                    name: "All Purpose Cleaner"
-                };
-            }
-            if (slug === "restroom" || slug === "bathroom" || slug === "bathroom-cleaners") {
-                return allCategories.find((c: any) => c.slug === "bathroom" || c.slug === "bathroom-cleaner" || c.slug === "restroom") || {
-                    slug: "bathroom",
-                    name: "Bathroom & Restroom Care"
-                };
-            }
-            if (slug === "disinfectants-deodorizers" || slug === "sanitizers") {
-                return allCategories.find((c: any) => c.slug === "disinfectant" || c.slug === "disinfectants-deodorizers") || {
-                    slug: "disinfectant",
-                    name: "Disinfectants & Sanitizers"
-                };
-            }
-            return null;
-        })
-        .filter(Boolean);
+const CATEGORY_NAMES: Record<string, string> = {
+    "all-purpose": "All Purpose Cleaner",
+    bathroom: "Bathroom & Restroom Care",
+    disinfectant: "Disinfectants & Sanitizers",
+    "floor-care": "Floor Care",
+    "kitchen-warewash": "Kitchen & Warewash",
+};
+
+export default function RecommendedCategories({ slugs }: RecommendedCategoriesProps) {
+    const displayCategories = slugs.map((requestedSlug) => {
+        const slug = CATEGORY_ALIASES[requestedSlug] || requestedSlug;
+        const name = CATEGORY_NAMES[slug] || slug
+            .split('-')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+
+        return { slug, name, requestedSlug };
+    });
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayCategories.map((category: any) => {
-                const meta = CATEGORY_META[category.slug] || { 
+            {displayCategories.map((category) => {
+                const meta = CATEGORY_META[category.requestedSlug] || CATEGORY_META[category.slug] || {
                     image: null, 
                     description: "" 
                 };

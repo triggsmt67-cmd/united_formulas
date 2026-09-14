@@ -1,70 +1,112 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { NextRequest } from 'next/server';
 
-// Simple in-memory rate limiter (per-instance)
-// Note: In serverless, this is not global but helps against concurrent bursts
-const rateLimitMap = new Map<string, { count: number, resetAt: number }>();
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+let rateLimitChecks = 0;
 
-export function checkRateLimit(ip: string, limit: number = 5, windowMsValue: number = 60000) {
+export const HONEYPOT_FIELD_NAME = 'website_verify_field';
+export const FORM_STARTED_FIELD_NAME = 'form_started_at';
+
+export function getClientIp(req: NextRequest) {
+    return (req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+        || req.headers.get('x-real-ip')
+        || 'unknown').slice(0, 80);
+}
+
+export function checkRateLimit(ip: string, limit = 5, windowMsValue = 60000) {
     const now = Date.now();
-    const userData = rateLimitMap.get(ip);
+    if (++rateLimitChecks % 100 === 0 || rateLimitMap.size > 5000) {
+        for (const [key, value] of rateLimitMap) {
+            if (now > value.resetAt) rateLimitMap.delete(key);
+        }
+    }
 
+    const userData = rateLimitMap.get(ip);
     if (!userData || now > userData.resetAt) {
         rateLimitMap.set(ip, { count: 1, resetAt: now + windowMsValue });
         return true;
     }
-
-    if (userData.count >= limit) {
-        console.warn(`Rate limit exceeded for IP: ${ip}`);
-        return false;
-    }
-
+    if (userData.count >= limit) return false;
     userData.count += 1;
     return true;
 }
 
-/**
- * Simple anti-spam utility
- */
-
-export const HONEYPOT_FIELD_NAME = 'website_verify_field';
-
-/**
- * Validates the honeypot field.
- * If the field is present and NOT empty, it's likely a bot.
- */
-export function validateHoneypot(body: any) {
-    const honeypot = body[HONEYPOT_FIELD_NAME];
-
-    // If the honeypot field exists and contains any value, it's a bot
-    if (honeypot !== undefined && honeypot !== '') {
-        console.warn('Spam detected via honeypot field.');
+export function validateRequestOrigin(req: NextRequest) {
+    const origin = req.headers.get('origin');
+    if (!origin) return false;
+    try {
+        const originUrl = new URL(origin);
+        const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+        const requestHost = forwardedHost || req.headers.get('host');
+        const isLoopback = originUrl.hostname === 'localhost' || originUrl.hostname === '127.0.0.1';
+        const isProductionHost = originUrl.host === 'unitedformulas.com'
+            || originUrl.host === 'www.unitedformulas.com'
+            || originUrl.hostname.endsWith('.vercel.app');
+        return (originUrl.protocol === 'https:' && isProductionHost)
+            || (originUrl.protocol === 'http:' && isLoopback && originUrl.host === requestHost);
+    } catch {
         return false;
     }
-
-    return true;
 }
 
-/**
- * Simple input validation to catch common bot patterns
- */
-export function validateBasicInputs(inputs: Record<string, any>) {
-    // Check for excessive URLs in message fields (common in spam)
-    const message = inputs.message || '';
-    const urlCount = (message.match(/https?:\/\//g) || []).length;
+export function validateHoneypot(body: Record<string, unknown>) {
+    return Object.prototype.hasOwnProperty.call(body, HONEYPOT_FIELD_NAME)
+        && body[HONEYPOT_FIELD_NAME] === '';
+}
 
-    if (urlCount > 3) {
-        console.warn('Spam detected: excessive URLs in message.');
-        return false;
+export function validateFormTiming(body: Record<string, unknown>) {
+    const startedAt = Number(body[FORM_STARTED_FIELD_NAME]);
+    const elapsed = Date.now() - startedAt;
+    return Number.isFinite(startedAt) && elapsed >= 1200 && elapsed <= 7 * 24 * 60 * 60 * 1000;
+}
+
+export function validateEmail(value: unknown) {
+    return typeof value === 'string'
+        && value.length <= 254
+        && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+export function validateRequiredStrings(body: Record<string, unknown>, fields: string[]) {
+    return fields.every((field) => {
+        const value = body[field];
+        return typeof value === 'string' && value.trim().length > 0 && value.length <= 500;
+    });
+}
+
+export function validateBasicInputs(inputs: Record<string, unknown>) {
+    const strings = collectStrings(inputs);
+    if (strings.some((value) => value.length > 10000)) return false;
+    const combined = strings.join(' ').toLowerCase();
+    if ((combined.match(/https?:\/\//g) || []).length > 3) return false;
+    const spamKeywords = ['viagra', 'seo ranking', 'guest post', 'link building', 'investment opportunity'];
+    return !spamKeywords.some((keyword) => combined.includes(keyword));
+}
+
+export function escapeHtml(value: unknown) {
+    return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+export function sanitizeSubmission<T>(value: T): T {
+    if (typeof value === 'string') return escapeHtml(value) as T;
+    if (Array.isArray(value)) return value.slice(0, 50).map(sanitizeSubmission) as T;
+    if (value && typeof value === 'object') {
+        return Object.fromEntries(
+            Object.entries(value as Record<string, unknown>).map(([key, entry]) => [key, sanitizeSubmission(entry)])
+        ) as T;
     }
+    return value;
+}
 
-    // Check for common spam keywords if necessary
-    const spamKeywords = ['crypto', 'viagra', 'seo ranking', 'bitcoin', 'investment opportunity'];
-    const lowerMessage = message.toLowerCase();
-
-    if (spamKeywords.some(keyword => lowerMessage.includes(keyword))) {
-        console.warn('Spam detected: restricted keywords found.');
-        return false;
+function collectStrings(value: unknown, depth = 0): string[] {
+    if (depth > 4) return [];
+    if (typeof value === 'string') return [value];
+    if (Array.isArray(value)) return value.slice(0, 50).flatMap((entry) => collectStrings(entry, depth + 1));
+    if (value && typeof value === 'object') {
+        return Object.values(value as Record<string, unknown>).flatMap((entry) => collectStrings(entry, depth + 1));
     }
-
-    return true;
+    return [];
 }

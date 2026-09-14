@@ -1,48 +1,16 @@
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 import { ProductNode, ProductCategory } from "@/types";
 import Navbar from "@/components/Navbar";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
+import { cache } from "react";
 
-export async function generateStaticParams() {
-    const defaultCategories = [
-        'automotive',
-        'degreaser',
-        'floor-care',
-        'all-purpose',
-        'laundry',
-        'dish-washing',
-        'sanitizers',
-        'disinfectant',
-        'specialty',
-    ];
-    try {
-        const { data } = await client.query<{
-            productCategories: { nodes: { slug: string }[] };
-        }>({
-            query: gql`
-                query GetCategorySlugs {
-                    productCategories(first: 50) {
-                        nodes {
-                            slug
-                        }
-                    }
-                }
-            `,
-        });
-        if (data?.productCategories?.nodes && data.productCategories.nodes.length > 0) {
-            return data.productCategories.nodes.map((c) => ({ slug: c.slug }));
-        }
-    } catch {
-        // Fall back to default categories
-    }
-    return defaultCategories.map((slug) => ({ slug }));
-}
+type CategoryWithProducts = ProductCategory & { products: { nodes: ProductNode[] } };
 
 export async function generateMetadata({
     params,
@@ -51,24 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { slug } = await params;
     try {
-        const { data } = await client.query<{
-            productCategory: {
-                name: string;
-                description?: string;
-            };
-        }>({
-            query: gql`
-                query GetCategoryMeta($slug: ID!) {
-                    productCategory(id: $slug, idType: SLUG) {
-                        name
-                        description
-                    }
-                }
-            `,
-            variables: { slug },
-        });
-
-        const category = data?.productCategory;
+        const category = await getCategoryBySlug(slug);
         if (!category) {
             return {
                 title: "Category Not Found | United Formulas",
@@ -147,6 +98,15 @@ const GET_CATEGORY_PRODUCTS = gql`
   }
 `;
 
+const getCategoryBySlug = cache(async (slug: string): Promise<CategoryWithProducts | null> => {
+    const { data } = await client.query<{ productCategory: CategoryWithProducts }>({
+        query: GET_CATEGORY_PRODUCTS,
+        variables: { slug },
+    });
+
+    return data?.productCategory ?? null;
+});
+
 import productMetadata from "@/data/product_metadata.json";
 
 export default async function CategoryPage({
@@ -156,13 +116,9 @@ export default async function CategoryPage({
 }) {
     const { slug } = await params;
 
-    let category: (ProductCategory & { products: { nodes: ProductNode[] } }) | null = null;
+    let category: CategoryWithProducts | null = null;
     try {
-        const { data } = await client.query<{ productCategory: (ProductCategory & { products: { nodes: ProductNode[] } }) }>({
-            query: GET_CATEGORY_PRODUCTS,
-            variables: { slug: slug },
-        });
-        category = data?.productCategory ?? null;
+        category = await getCategoryBySlug(slug);
     } catch (error) {
         console.error("Error fetching category products from GraphQL:", error);
     }

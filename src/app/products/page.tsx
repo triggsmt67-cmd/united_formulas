@@ -1,7 +1,7 @@
 import client from "@/lib/apollo-client";
 import type { Metadata } from "next";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: "Commercial Cleaning Chemicals & Concentrates | United Formulas",
@@ -24,6 +24,7 @@ import Navbar from "@/components/Navbar";
 import PromotionGrid from "@/components/PromotionGrid";
 import { ProductNode } from "@/types";
 import Footer from "@/components/Footer";
+import { fallbackProducts } from "@/lib/product-fallback";
 
 const GET_PRODUCTS_DATA = gql`
   query GetProductsData {
@@ -67,8 +68,8 @@ const GET_PRODUCTS_DATA = gql`
 `;
 
 export default async function ProductsPage() {
-  let products: ProductNode[] = [];
-  let featuredProducts: ProductNode[] = [];
+  let products: ProductNode[] = fallbackProducts;
+  let featuredProducts: ProductNode[] = fallbackProducts.slice(0, 6);
   try {
     const { data } = await client.query<{
       allProducts: { nodes: ProductNode[] },
@@ -76,8 +77,10 @@ export default async function ProductsPage() {
     }>({
       query: GET_PRODUCTS_DATA,
     });
-    products = data?.allProducts?.nodes || [];
-    featuredProducts = data?.featuredProducts?.nodes || [];
+    products = data?.allProducts?.nodes?.length ? data.allProducts.nodes : products;
+    featuredProducts = data?.featuredProducts?.nodes?.length
+      ? data.featuredProducts.nodes
+      : featuredProducts;
   } catch (error) {
     console.error("Error fetching products:", error);
   }

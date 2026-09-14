@@ -1,24 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { validateHoneypot, checkRateLimit } from '@/lib/security';
+import {
+  checkRateLimit,
+  getClientIp,
+  sanitizeSubmission,
+  validateBasicInputs,
+  validateEmail,
+  validateFormTiming,
+  validateHoneypot,
+  validateRequestOrigin,
+  validateRequiredStrings
+} from '@/lib/security';
 
 // The user should add RESEND_API_KEY to their .env.local
 export async function POST(req: NextRequest) {
   try {
-    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    if (!validateRequestOrigin(req)) {
+      return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
+    }
 
-    // Rate limit check: 2 POs per minute per IP
-    if (!checkRateLimit(ip, 2)) {
+    const rawBody = await req.json() as Record<string, unknown>;
+
+    // Anti-spam check
+    if (!validateHoneypot(rawBody) || !validateFormTiming(rawBody) || !validateBasicInputs(rawBody)) {
+      return NextResponse.json({ success: true, message: "PO Queued (filtered)" });
+    }
+
+    const ip = getClientIp(req);
+    if (!checkRateLimit(`po:${ip}`, 2)) {
       return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
     }
 
-    const body = await req.json();
-
-    // Anti-spam check
-    if (!validateHoneypot(body)) {
-      return NextResponse.json({ success: true, message: "PO Queued (filtered)" });
+    const rawItems = Array.isArray(rawBody.items) ? rawBody.items : rawBody.lineItems;
+    if (!validateRequiredStrings(rawBody, ['fullName', 'businessName', 'email'])
+      || !validateEmail(rawBody.email)
+      || !Array.isArray(rawItems)
+      || rawItems.length === 0
+      || rawItems.length > 50) {
+      return NextResponse.json({ error: 'Please provide valid order details.' }, { status: 400 });
     }
+
+    const body = sanitizeSubmission(rawBody) as any;
+    const deliveryEmail = rawBody.email as string;
 
     // 1. Server-Side Security & Runtime Check
     const warehouseEmail = process.env.WAREHOUSE_EMAIL;
@@ -33,14 +57,17 @@ export async function POST(req: NextRequest) {
 
     // 2. Resend API Key check & Runtime Initialization
     const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
+    if (!apiKey && process.env.NODE_ENV === 'development') {
       console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
-      console.log('PO Submission Data:', body);
       return NextResponse.json({
         success: true,
         simulated: true,
         message: "Dev Mode: PO logged to console instead of email."
       });
+    }
+    if (!apiKey) {
+      console.error('CRITICAL: RESEND_API_KEY is missing in production.');
+      return NextResponse.json({ error: 'Email service is not configured.' }, { status: 500 });
     }
 
     const resend = new Resend(apiKey);
@@ -65,8 +92,8 @@ export async function POST(req: NextRequest) {
     const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
 
     const recipients = warehouseEmail.split(',').map(email => email.trim());
-    if (actualEmail && actualEmail !== 'N/A' && !recipients.includes(actualEmail)) {
-      recipients.push(actualEmail);
+    if (!recipients.includes(deliveryEmail)) {
+      recipients.push(deliveryEmail);
     }
 
     const { data, error } = await resend.emails.send({

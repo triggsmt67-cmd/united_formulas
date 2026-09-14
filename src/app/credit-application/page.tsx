@@ -7,6 +7,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 
 export default function CreditApplicationPage() {
+    const [formStartedAt] = useState(() => Date.now());
     const [directors, setDirectors] = useState([{ id: 1, name: "", title: "", address: "", ss: "" }]);
     const [references, setReferences] = useState([{ id: 1, name: "", address: "", email: "", contact: "" }]);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -46,6 +47,7 @@ export default function CreditApplicationPage() {
             apContact: formData.get("apContact"),
             apPhoneEmail: formData.get("apPhoneEmail"),
             poRequired: formData.get("poRequired"),
+            form_started_at: formStartedAt,
             website_verify_field: formData.get("website_verify_field"), // Honeypot field
             directors: directors.map((d, i) => ({
                 name: formData.get(`directorName_${i}`),
@@ -420,4 +422,3 @@ function RadioButton({ label, name, value, defaultChecked = false }: { label: st
         </label>
     );
 }
-

@@ -495,28 +495,10 @@
         ],
         "sds": "https://ufbackend.com/wp-content/uploads/2026/01/Pazzaz-09242025.pdf"
     },
-    "r&r-degreaser": {
+    "rr-degreaser": {
         "displayName": "R&R Degreaser",
         "canonicalDescription": "R&R Degreaser is a powerful cleaning solution with foaming and clinging properties, perfect for vertical surfaces. It effectively tackles tough jobs like degreasing engines, cleaning ovens and grills, and removing smoke and diesel buildup. Ideal for pressure wash and steam systems.",
         "category": "All Purpose Degreaser, Cleaner, Degreaser, Multi-Purpose Degreaser",
-        "variants": []
-    },
-    "r&amp;r-degreaser-12x1-gal": {
-        "displayName": "R&R Degreaser - 12x1 Quart",
-        "canonicalDescription": "' \\n\\n",
-        "category": "",
-        "variants": []
-    },
-    "r&amp;r-degreaser-4x1-gal": {
-        "displayName": "R&R Degreaser - 4x1 Gallon",
-        "canonicalDescription": "' \\n\\n",
-        "category": "",
-        "variants": []
-    },
-    "r&amp;r-degreaser-5-gal": {
-        "displayName": "R&R Degreaser - 5 Gallon",
-        "canonicalDescription": "' \\n\\n",
-        "category": "",
         "variants": []
     },
     "tornado": {
@@ -867,7 +849,7 @@
         ],
         "sds": "https://ufbackend.com/wp-content/uploads/2026/01/StrikeOut-09252025.pdf"
     },
-    "Delta Green": {
+    "delta-green": {
         "displayName": "Delta Green Non-Slip Floor Cleaner",
         "canonicalDescription": "DeltaGreen® Non-Slip Floor Cleaner delivers dependable cleaning power with an emphasis on safety, simplicity, and everyday usability—making it a practical choice for facilities that prioritize clean floors and confident footing.",
         "category": "Floor Care",

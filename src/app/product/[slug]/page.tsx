@@ -8,6 +8,7 @@ import PurchaseOptions from '@/components/PurchaseOptions';
 import POSubmitButton from '@/components/POSubmitButton';
 import RelatedProducts from '@/components/RelatedProducts';
 import { ProductNode, ProductImage } from '@/types';
+import { cache } from 'react';
 
 type DetailedProduct = ProductNode & {
   galleryImages?: {
@@ -82,14 +83,19 @@ const GET_PRODUCT = gql`
   }
 `;
 
+const getProductBySlug = cache(async (slug: string): Promise<DetailedProduct | null> => {
+  const { data } = await getClient().query<{ product: DetailedProduct }>({
+    query: GET_PRODUCT,
+    variables: { slug },
+  });
+
+  return data?.product || null;
+});
+
 import { notFound } from 'next/navigation';
-import productMetadata from '@/data/product_metadata.json';
+import { getFallbackProduct } from '@/lib/product-fallback';
 
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return Object.keys(productMetadata as Record<string, unknown>).map((slug) => ({ slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
@@ -97,48 +103,20 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const metaFallback = (productMetadata as unknown as Record<string, { displayName?: string; canonicalDescription?: string; sds?: string }>)[slug];
+  const fallbackProduct = getFallbackProduct(slug);
 
-  let product: { name: string; shortDescription?: string; description?: string; image?: { sourceUrl: string; altText?: string } } | null = null;
+  let product: DetailedProduct | null = null;
 
   try {
-    const { data } = await getClient().query<{
-      product: {
-        name: string;
-        shortDescription?: string;
-        description?: string;
-        image?: {
-          sourceUrl: string;
-          altText?: string;
-        };
-      };
-    }>({
-      query: gql`
-        query GetProductMeta($slug: ID!) {
-          product(id: $slug, idType: SLUG) {
-            name
-            shortDescription
-            description
-            image {
-              sourceUrl
-              altText
-            }
-          }
-        }
-      `,
-      variables: { slug },
-    });
-
-    product = data?.product || null;
+    product = await getProductBySlug(slug);
   } catch {
     // If GraphQL is down or rate-limiting, use local metadata
   }
 
-  if (!product && metaFallback) {
+  if (!product && fallbackProduct) {
     product = {
-      name: metaFallback.displayName || slug,
-      shortDescription: metaFallback.canonicalDescription || '',
-      description: metaFallback.canonicalDescription || '',
+      ...fallbackProduct,
+      description: fallbackProduct.shortDescription || '',
     };
   }
 
@@ -192,30 +170,19 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const metaFallback = (productMetadata as unknown as Record<string, { displayName?: string; canonicalDescription?: string; sds?: string }>)[slug];
+  const fallbackProduct = getFallbackProduct(slug);
 
   let product: DetailedProduct | null = null;
   try {
-    const { data } = await getClient().query<{ product: DetailedProduct }>({
-      query: GET_PRODUCT,
-      variables: { slug: slug },
-    });
-    product = data?.product || null;
+    product = await getProductBySlug(slug);
   } catch (err) {
     console.error(`Error fetching product [${slug}] from GraphQL:`, err);
   }
 
-  if (!product && metaFallback) {
+  if (!product && fallbackProduct) {
     product = {
-      id: slug,
-      name: metaFallback.displayName || slug,
-      slug: slug,
-      description: metaFallback.canonicalDescription || '',
-      shortDescription: metaFallback.canonicalDescription || '',
-      productData: {
-        sdssheet: metaFallback.sds || null,
-        costPerOunce: null,
-      },
+      ...fallbackProduct,
+      description: fallbackProduct.shortDescription || '',
     };
   }
 

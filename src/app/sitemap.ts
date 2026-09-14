@@ -5,7 +5,7 @@ import { INDUSTRIES } from '@/config/industries';
 
 import productMetadata from '@/data/product_metadata.json';
 
-export const revalidate = 86400; // Regenerate sitemap daily
+export const dynamic = 'force-dynamic';
 
 const FALLBACK_CATEGORIES = [
   'automotive',
@@ -19,7 +19,9 @@ const FALLBACK_CATEGORIES = [
   'specialty',
 ];
 
-const KNOWN_PRODUCT_SLUGS = Object.keys(productMetadata as Record<string, unknown>);
+const VALID_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const KNOWN_PRODUCT_SLUGS = Object.keys(productMetadata as Record<string, unknown>)
+  .filter((slug) => VALID_SLUG.test(slug));
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://unitedformulas.com';

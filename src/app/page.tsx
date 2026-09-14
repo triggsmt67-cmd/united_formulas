@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Industrial Cleaning Chemicals & Wholesale Supplies | Montana",
@@ -26,6 +26,7 @@ import CategoryCard from "@/components/CategoryCard";
 import Navbar from "@/components/Navbar";
 import ZipCheckCTA from "@/components/ZipCheckCTA";
 import Footer from "@/components/Footer";
+import { fallbackProducts } from "@/lib/product-fallback";
 
 const GET_HOME_DATA = gql`
   query GetHomeData {
@@ -121,13 +122,13 @@ const HOMEPAGE_INDUSTRIES = [
 ];
 
 export default async function Home() {
-  let products: ProductNode[] = [];
+  let products: ProductNode[] = fallbackProducts.slice(0, 3);
   try {
     const { data } = await client.query<HomeData>({
       query: GET_HOME_DATA,
     });
 
-    products = data?.products?.nodes || [];
+    products = data?.products?.nodes?.length ? data.products.nodes : products;
   } catch (error) {
     console.error("Error fetching home data:", error);
   }

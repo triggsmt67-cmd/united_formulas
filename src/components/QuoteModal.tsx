@@ -22,6 +22,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [refNumber, setRefNumber] = useState('');
+    const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
     const resetForm = () => {
         setFormState({
@@ -35,6 +36,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         });
         setIsSuccess(false);
         setIsSubmitting(false);
+        setFormStartedAt(Date.now());
     };
 
     // Handle escape key to close
@@ -50,6 +52,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 // Avoid synchronous state updates in effect
                 setTimeout(() => {
                     setRefNumber(`UF-DISPATCH-${Math.floor(1000 + Math.random() * 9000)}`);
+                    setFormStartedAt(Date.now());
                 }, 0);
             }
         }
@@ -73,7 +76,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     ...formState,
                     items: poDraft,
                     refNumber,
-                    formName: 'Stock & Price Check'
+                    formName: 'Stock & Price Check',
+                    form_started_at: formStartedAt
                 })
             });
 
@@ -271,7 +275,7 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
                         <div className="pt-4">
                             <button
-                                id="submit-po-btn"
+                                id="submit-quote-btn"
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="w-full bg-[#EA580C] hover:bg-[#C2410C] text-white font-black py-5 rounded-xl transition-all shadow-lg shadow-orange-900/20 active:scale-[0.98] uppercase tracking-[0.2em] text-sm font-sans [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] disabled:opacity-50"

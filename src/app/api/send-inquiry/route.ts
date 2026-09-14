@@ -1,25 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { validateHoneypot, validateBasicInputs, checkRateLimit } from '@/lib/security';
+import {
+    checkRateLimit,
+    getClientIp,
+    sanitizeSubmission,
+    validateBasicInputs,
+    validateEmail,
+    validateFormTiming,
+    validateHoneypot,
+    validateRequestOrigin,
+    validateRequiredStrings
+} from '@/lib/security';
 
 export async function POST(req: NextRequest) {
     try {
-        const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
-
-        // Rate limit check: 3 inquiries per minute per IP
-        if (!checkRateLimit(ip, 3)) {
-            return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+        if (!validateRequestOrigin(req)) {
+            return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
         }
 
-        const body = await req.json();
+        const rawBody = await req.json() as Record<string, unknown>;
 
         // Anti-spam check: Honeypot & Basic Validation
-        if (!validateHoneypot(body) || !validateBasicInputs(body)) {
+        if (!validateHoneypot(rawBody) || !validateFormTiming(rawBody) || !validateBasicInputs(rawBody)) {
             // We return a fake success or a generic error to not tip off the bot
             return NextResponse.json({ success: true, message: "Submission received (filtered)" });
         }
 
+        const ip = getClientIp(req);
+        if (!checkRateLimit(`inquiry:${ip}`, 3)) {
+            return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+        }
+
+        if (!validateRequiredStrings(rawBody, ['fullName', 'email', 'interest', 'formName']) || !validateEmail(rawBody.email)) {
+            return NextResponse.json({ error: 'Please provide valid required fields.' }, { status: 400 });
+        }
+
+        if (rawBody.items !== undefined && (!Array.isArray(rawBody.items) || rawBody.items.length > 25)) {
+            return NextResponse.json({ error: 'Invalid item list.' }, { status: 400 });
+        }
+
+        const body = sanitizeSubmission(rawBody) as any;
         const { fullName, company, email, phone, interest, message, items, formName } = body;
         const origin = formName || 'General Inquiry';
 
@@ -34,13 +55,17 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        if (!apiKey) {
+        if (!apiKey && process.env.NODE_ENV === 'development') {
             console.warn('RESEND_API_KEY is missing. Simulating success for local development.');
             return NextResponse.json({
                 success: true,
                 simulated: true,
                 message: "Dev Mode: Email captured but not sent (API Key missing)."
             });
+        }
+        if (!apiKey) {
+            console.error('CRITICAL: RESEND_API_KEY is missing in production.');
+            return NextResponse.json({ error: 'Email service is not configured.' }, { status: 500 });
         }
 
         const resend = new Resend(apiKey);

@@ -26,6 +26,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [finalOrder, setFinalOrder] = useState<{ items: POItem[], total: number } | null>(null);
+    const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
     // Search state
     const [searchQuery, setSearchQuery] = useState('');
@@ -53,6 +54,12 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const timer = window.setTimeout(() => setFormStartedAt(Date.now()), 0);
+        return () => window.clearTimeout(timer);
+    }, [isOpen]);
 
     const handleAddFromSearch = (item: typeof searchDataList[0]) => {
         addToPO({
@@ -158,7 +165,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 <div class="value">
                     <div style="margin-bottom: 4px;"><strong>P.O. Number:</strong> ${formData.poNumber || 'WEB-QUEUED'}</div>
                     <div style="margin-bottom: 4px;"><strong>Date:</strong> ${new Date().toLocaleDateString()}</div>
-                    <!-- <div style="margin-bottom: 4px;"><strong>Time Window:</strong> ${formData.deliveryWindow}</div> -->
+                    <div style="margin-bottom: 4px;"><strong>Time Window:</strong> ${formData.deliveryWindow}</div>
                     <div><strong>Expected Invoice:</strong> ${nextDay}</div>
                 </div>
             </div>
@@ -230,10 +237,8 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
             total: subtotal
         };
 
-        const formDataToSubmit = { ...formData };
-        delete (formDataToSubmit as Record<string, unknown>).deliveryWindow;
         const payload = {
-            ...formDataToSubmit,
+            ...formData,
             items: poDraft.map(item => ({
                 product: `${item.productName} (${item.variantName})`,
                 sku: item.sku,
@@ -242,6 +247,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 total: `$${(parsePrice(item.price) * (item.quantity || 1)).toFixed(2)}`
             })),
             grandTotal: `$${subtotal.toFixed(2)}`,
+            form_started_at: formStartedAt,
             website_verify_field: formData.website_verify_field // Send honeypot field
         };
 
@@ -509,7 +515,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                     onChange={e => setFormData({ ...formData, poNumber: e.target.value })}
                                 />
 
-                                {/* <div className="space-y-2">
+                                <div className="space-y-2">
                                     <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-1">Preferred Time Window (Mountain Time)</label>
                                     <div className="grid grid-cols-2 gap-2">
                                         <button
@@ -527,7 +533,7 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                                             Afternoon (1-5 PM MT)
                                         </button>
                                     </div>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>

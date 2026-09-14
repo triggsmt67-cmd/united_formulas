@@ -1,10 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const REQUEST_SUBJECTS: Record<string, string> = {
+    sample: 'Free Sample Kit',
+    audit: 'On-Site Facility Audit',
+    'school-audit': 'School Facility Audit',
+    'janitorial-audit': 'Janitorial Facility Audit',
+};
+
 export default function ContactPage() {
+    const [formStartedAt] = useState(() => Date.now());
     const [formState, setFormState] = useState({
         firstName: '',
         lastName: '',
@@ -15,6 +23,19 @@ export default function ContactPage() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        const request = new URLSearchParams(window.location.search).get('request');
+        const subject = request ? REQUEST_SUBJECTS[request] : undefined;
+
+        if (subject) {
+            const updateTimer = window.setTimeout(() => {
+                setFormState((current) => ({ ...current, subject }));
+            }, 0);
+
+            return () => window.clearTimeout(updateTimer);
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,6 +54,7 @@ export default function ContactPage() {
                     phone: 'N/A',
                     items: [],
                     formName: 'Contact Form',
+                    form_started_at: formStartedAt,
                     website_verify_field: formState.website_verify_field // Send honeypot field
                 })
             });
@@ -170,6 +192,10 @@ export default function ContactPage() {
                                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all bg-white"
                                     >
                                         <option>Product Inquiries</option>
+                                        <option>Free Sample Kit</option>
+                                        <option>On-Site Facility Audit</option>
+                                        <option>School Facility Audit</option>
+                                        <option>Janitorial Facility Audit</option>
                                         <option>Custom Formulation</option>
                                         <option>Bulk Quote Request</option>
                                         <option>Technical Support</option>
