@@ -1259,6 +1259,92 @@ export const INDUSTRIES: IndustryConfig[] = [
             ],
         },
     },
+    {
+        slug: "healthcare-senior-care",
+        seoTitle: "Healthcare & Senior Care Cleaning Programs in Montana | United Formulas",
+        seoDescription: "Local commercial cleaning support for clinics, senior care communities and healthcare facilities across the Great Falls region.",
+        geoTarget: "Great Falls, MT",
+        hero: {
+            badge: "HEALTHCARE & SENIOR CARE FACILITY SUPPORT",
+            h1: "A cleaning program your team can use consistently.",
+            subhead: "Build a simpler facility program around documented products, repeatable dilution, staff training and responsive local service.",
+            primaryCtaText: "Request a Healthcare Facility Audit",
+            trustBar: ["Local product support", "SDS access", "On-site usage review"],
+        },
+        challengesSection: { heading: "Where healthcare cleaning programs lose consistency", items: [
+            { title: "Too many products and unclear procedures", description: "Overlapping products make training harder and create uncertainty about where each formula belongs.", solutionText: "Map each task to a defined product, dilution and procedure your team can repeat." },
+            { title: "High-touch areas need dependable routines", description: "Busy facilities need clear responsibilities and accessible documentation across shifts.", solutionText: "Create a practical product and documentation plan around the facility's own protocols." },
+            { title: "Supply or equipment problems interrupt work", description: "A distant supplier can leave a facility waiting when dispensers, dosage or inventory need attention.", solutionText: "Use local review and planned replenishment to address issues before they disrupt the cleaning schedule." },
+        ]},
+        recommendedProductsHeading: "Facility-care categories to review",
+        recommendedCategorySlugs: ["disinfectants-deodorizers", "floor-care", "bathroom", "laundry", "all-purpose"],
+        valuePropSection: { heading: "Local support for a repeatable program", points: [
+            { title: "Document the system", description: "Connect products, SDS documents and use instructions to the tasks your team performs." },
+            { title: "Train around real work", description: "Review dilution and application where employees actually use each product." },
+            { title: "Respond locally", description: "Work with a regional team when product, dispenser or supply questions arise." },
+        ]},
+        ctaSection: { heading: "Start with a facility review", lead: "We will review applications, product overlap, documentation and usage before recommending a trial.", buttonText: "Request a Healthcare Audit", phone: "(406) 727-4144", auditPoints: ["Product and task inventory", "Dilution and usage review", "Structured seven-day trial"] },
+    },
+    {
+        slug: "industrial-manufacturing",
+        seoTitle: "Industrial & Manufacturing Cleaning Chemicals in Montana | United Formulas",
+        seoDescription: "Concentrated cleaning programs and local service for manufacturing, maintenance and industrial facilities in Montana.",
+        geoTarget: "Great Falls, MT",
+        hero: { badge: "INDUSTRIAL & MANUFACTURING", h1: "Match the chemistry to the soil, surface and process.", subhead: "Reduce product overlap and avoid one-strength-fits-all cleaning with an on-site review of soil load, handling, dosage and labor.", primaryCtaText: "Request an Industrial Audit", trustBar: ["Concentrated formulas", "Regional route service", "On-site product testing"] },
+        challengesSection: { heading: "Start with the operational cost", items: [
+            { title: "Heavy soil drives repeat labor", description: "A low container price loses its advantage when employees must apply, scrub and repeat.", solutionText: "Test performance at a defined dilution and measure labor alongside chemical usage." },
+            { title: "Product overlap creates waste", description: "Facilities often accumulate multiple cleaners for similar jobs without a clear system.", solutionText: "Inventory tasks and consolidate only where one formula can do the work safely." },
+            { title: "Downtime costs more than chemistry", description: "Waiting for supply or support can interrupt maintenance and production work.", solutionText: "Tie local inventory and planned follow-up to the facility's critical cleaning tasks." },
+        ]},
+        recommendedProductsHeading: "Heavy-duty categories to evaluate",
+        recommendedCategorySlugs: ["degreaser", "industrial-cleaner-degreaser", "floor-care", "all-purpose", "automotive"],
+        valuePropSection: { heading: "A practical industrial trial", points: [
+            { title: "Choose one difficult job", description: "Define the soil, surface, current method and expected result before testing." },
+            { title: "Control the dilution", description: "Record the working dilution so performance and cost can be compared fairly." },
+            { title: "Review after seven days", description: "Measure usage, labor and operator feedback before expanding the program." },
+        ]},
+        ctaSection: { heading: "Put one difficult cleaning job under review", lead: "We will help define the baseline, test location and success measure before placing a sample.", buttonText: "Request an Industrial Audit", phone: "(406) 727-4144", auditPoints: ["Soil and surface assessment", "Dilution test", "Seven-day follow-up plan"] },
+    },
+    {
+        slug: "agribusiness-food-processing",
+        seoTitle: "Agribusiness & Food Processing Cleaning Support | Montana",
+        seoDescription: "Regional cleaning-product support for agribusiness, production and food-processing operations in Montana.",
+        geoTarget: "Great Falls, MT",
+        hero: { badge: "GOLDEN TRIANGLE AGRIBUSINESS ROUTE", h1: "Reliable cleaning support for regional production.", subhead: "Review the real cost of cleaning across production soils, equipment, floors, warewashing and employee-use areas.", primaryCtaText: "Request an Operations Audit", trustBar: ["Golden Triangle route planning", "Concentrate trials", "Local follow-up"] },
+        challengesSection: { heading: "Problems worth measuring before switching", items: [
+            { title: "Variable soil and seasonal demand", description: "Cleaning demands can change with production, weather and material handling.", solutionText: "Define product strength and replenishment around the actual operating cycle." },
+            { title: "Large sites magnify small waste", description: "Overuse at each station becomes a meaningful annual cost across a facility.", solutionText: "Review dispensing, dilution and consumption by task rather than by container." },
+            { title: "Rural supply needs planning", description: "Long replenishment gaps create risk when essential products run low.", solutionText: "Group service and delivery around a planned regional route and follow-up schedule." },
+        ]},
+        recommendedProductsHeading: "Production and facility categories",
+        recommendedCategorySlugs: ["degreaser", "floor-care", "kitchen-warewash", "all-purpose", "laundry"],
+        valuePropSection: { heading: "Built around the route and the operation", points: [
+            { title: "Plan the call", description: "Group audits, trials and follow-ups across the Golden Triangle route." },
+            { title: "Define the trial", description: "Identify the product, location, problem and success measure before leaving a sample." },
+            { title: "Schedule the return", description: "Set the 72-hour contact and seven-day review while the trial is placed." },
+        ]},
+        ctaSection: { heading: "Review one process before changing the program", lead: "Tell us the facility, application and current problem. We will plan the right route and test.", buttonText: "Request an Agribusiness Audit", phone: "(406) 727-4144", auditPoints: ["Application review", "Usage baseline", "Scheduled trial follow-up"] },
+    },
+    {
+        slug: "government-public-facilities",
+        seoTitle: "Government & Public Facility Cleaning Programs | Montana",
+        seoDescription: "Commercial cleaning support, documentation and local supply for government and public facilities in Montana.",
+        geoTarget: "Great Falls, MT",
+        hero: { badge: "GOVERNMENT & PUBLIC FACILITIES", h1: "Clear products, clear documentation, dependable supply.", subhead: "Give facility teams a practical path from product review to controlled trial, purchasing documentation and regional service.", primaryCtaText: "Request a Public Facility Audit", trustBar: ["SDS database", "Commercial credit application", "Regional delivery planning"] },
+        challengesSection: { heading: "Make the program easier to manage", items: [
+            { title: "Documentation is separated from daily work", description: "Purchasing and facility teams need quick access to product and safety information.", solutionText: "Connect recommended products directly to their SDS and application details." },
+            { title: "Multiple buildings create inconsistent use", description: "Different locations and crews may use different products for the same task.", solutionText: "Review common tasks and build a repeatable core program with defined exceptions." },
+            { title: "Purchasing needs a defensible comparison", description: "Container price alone does not show usable yield, labor or delivery impact.", solutionText: "Compare cost per usable gallon and document trial results before expanding." },
+        ]},
+        recommendedProductsHeading: "Core public-facility categories",
+        recommendedCategorySlugs: ["floor-care", "bathroom", "disinfectants-deodorizers", "all-purpose", "laundry"],
+        valuePropSection: { heading: "From field test to purchasing review", points: [
+            { title: "Audit", description: "Document current products, tasks, usage and service problems." },
+            { title: "Trial", description: "Test one product in one location against a clear success measure." },
+            { title: "Report", description: "Summarize performance, consumption and the recommended next action." },
+        ]},
+        ctaSection: { heading: "Build a documented facility review", lead: "Start with one building or cleaning task and expand only after the trial produces a useful result.", buttonText: "Request a Public Facility Audit", phone: "(406) 727-4144", auditPoints: ["Product inventory", "SDS and usage review", "Trial result summary"] },
+    },
 ];
 
 export function getIndustryBySlug(slug: string): IndustryConfig | undefined {
@@ -1268,13 +1354,9 @@ export function getIndustryBySlug(slug: string): IndustryConfig | undefined {
     if (slug === "schools-education") {
         return INDUSTRIES.find((ind) => ind.slug === "schools-educational-facilities");
     }
-    if (slug === "industrial-manufacturing") {
-        return INDUSTRIES.find((ind) => ind.slug === "auto-repair-service-bays");
-    }
     return INDUSTRIES.find((ind) => ind.slug === slug);
 }
 
 export function getAllIndustrySlugs(): string[] {
     return INDUSTRIES.map((ind) => ind.slug);
 }
-

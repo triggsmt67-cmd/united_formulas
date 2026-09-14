@@ -58,6 +58,12 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/industries/healthcare-senior-care" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Healthcare & Senior Care</Link>
+                            </li>
+                            <li>
+                                <Link href="/industries/industrial-manufacturing" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Industrial & Manufacturing</Link>
+                            </li>
+                            <li>
                                 <Link href="/industries/property-management-hospitality" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">
                                     Property & Hospitality
                                 </Link>
@@ -85,6 +91,8 @@ export default function Footer() {
                             <li>
                                 <Link href="/products" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">All Products</Link>
                             </li>
+                            <li><Link href="/find-a-solution" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Find a Solution</Link></li>
+                            <li><Link href="/cost-calculator" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Total Cost Calculator</Link></li>
                             <li>
                                 <Link href="/sds-sheets" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">SDS Sheets Database</Link>
                             </li>
@@ -107,6 +115,8 @@ export default function Footer() {
                             <li>
                                 <Link href="/contact?request=audit" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Free On-Site Facility Audit</Link>
                             </li>
+                            <li><Link href="/local-delivery" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Local Delivery & Routes</Link></li>
+                            <li><Link href="/sales-toolkit" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Field Sales Toolkit</Link></li>
                             <li>
                                 <a href="https://quickquote.firstwesternef.com/Credit/Apply/fwef" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Distributor Equipment Leasing</a>
                             </li>

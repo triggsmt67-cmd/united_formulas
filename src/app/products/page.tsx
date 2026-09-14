@@ -24,6 +24,7 @@ import Navbar from "@/components/Navbar";
 import PromotionGrid from "@/components/PromotionGrid";
 import { ProductNode } from "@/types";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 import { fallbackProducts } from "@/lib/product-fallback";
 
 const GET_PRODUCTS_DATA = gql`
@@ -97,8 +98,9 @@ export default async function ProductsPage() {
         <div className="mb-12">
           <div className="max-w-3xl mb-12">
             <p className="text-lg text-slate-600 leading-relaxed font-medium">
-              We formulate and stock industrial concentrates in <span className="text-slate-900 font-bold">Great Falls and Billings</span> for local route delivery. Every order includes audit-ready compliance, live local support, and an unconditional refund guarantee.
+              We formulate and stock industrial concentrates in <span className="text-slate-900 font-bold">Great Falls and Billings</span> for local route delivery. Start with the application filters below or use our guided finder when you know the problem but not the product name.
             </p>
+            <Link href="/find-a-solution" className="mt-5 inline-flex rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white hover:bg-cyan-700">I know the problem, not the product →</Link>
           </div>
 
           <h1 className="text-3xl font-black uppercase tracking-tighter text-slate-900 mb-2">
@@ -115,20 +117,20 @@ export default async function ProductsPage() {
           <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-12">United Formulas Quality Guarantee</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold text-slate-900 mb-1">100%</span>
-              <span className="text-xs text-slate-500 uppercase font-semibold">Concentrated</span>
+              <span className="text-2xl font-bold text-slate-900 mb-1">LOCAL</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Montana Support</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold text-slate-900 mb-1">0%</span>
-              <span className="text-xs text-slate-500 uppercase font-semibold">Residue</span>
+              <span className="text-2xl font-bold text-slate-900 mb-1">SDS</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Documentation</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold text-slate-900 mb-1">USA</span>
-              <span className="text-xs text-slate-500 uppercase font-semibold">Formulated</span>
+              <span className="text-2xl font-bold text-slate-900 mb-1">7 DAY</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Structured Trials</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold text-slate-900 mb-1">PRO</span>
-              <span className="text-xs text-slate-500 uppercase font-semibold">Support</span>
+              <span className="text-2xl font-bold text-slate-900 mb-1">DIRECT</span>
+              <span className="text-xs text-slate-500 uppercase font-semibold">Phone Support</span>
             </div>
           </div>
         </div>

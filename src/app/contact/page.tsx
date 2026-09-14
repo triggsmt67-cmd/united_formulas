@@ -9,6 +9,11 @@ const REQUEST_SUBJECTS: Record<string, string> = {
     audit: 'On-Site Facility Audit',
     'school-audit': 'School Facility Audit',
     'janitorial-audit': 'Janitorial Facility Audit',
+    delivery: 'Route Delivery Check',
+};
+
+const CHALLENGE_LABELS: Record<string, string> = {
+    grease: 'Grease, oil or baked-on soil', floors: 'Slippery, dull or difficult floors', warewash: 'Cloudy glassware or dish-machine scale', odor: 'Persistent odor, drains or organic stains', laundry: 'Laundry stains, rewashes or high chemical use', surfaces: 'Streaks, residue or too many products'
 };
 
 export default function ContactPage() {
@@ -17,6 +22,11 @@ export default function ContactPage() {
         firstName: '',
         lastName: '',
         email: '',
+        company: '',
+        phone: '',
+        location: '',
+        industry: '',
+        preferredContact: 'Phone',
         subject: 'Product Inquiries',
         message: '',
         website_verify_field: '' // Honeypot field
@@ -27,10 +37,12 @@ export default function ContactPage() {
     useEffect(() => {
         const request = new URLSearchParams(window.location.search).get('request');
         const subject = request ? REQUEST_SUBJECTS[request] : undefined;
+        const challenge = new URLSearchParams(window.location.search).get('challenge');
+        const product = new URLSearchParams(window.location.search).get('product');
 
         if (subject) {
             const updateTimer = window.setTimeout(() => {
-                setFormState((current) => ({ ...current, subject }));
+                setFormState((current) => ({ ...current, subject, message: product ? `Product to test: ${product}\nTest location: \nProblem it should solve: \nWhat success looks like: ` : challenge && CHALLENGE_LABELS[challenge] ? `Primary challenge: ${CHALLENGE_LABELS[challenge]}\n\nWhere it happens and what you use today: ` : current.message }));
             }, 0);
 
             return () => window.clearTimeout(updateTimer);
@@ -50,8 +62,11 @@ export default function ContactPage() {
                     email: formState.email,
                     interest: formState.subject,
                     message: formState.message,
-                    company: 'General Inquiry',
-                    phone: 'N/A',
+                    company: formState.company,
+                    phone: formState.phone,
+                    location: formState.location,
+                    industry: formState.industry,
+                    preferredContact: formState.preferredContact,
                     items: [],
                     formName: 'Contact Form',
                     form_started_at: formStartedAt,
@@ -61,7 +76,7 @@ export default function ContactPage() {
 
             if (res.ok) {
                 setIsSuccess(true);
-                setFormState({ firstName: '', lastName: '', email: '', subject: 'Product Inquiries', message: '', website_verify_field: '' });
+                setFormState({ firstName: '', lastName: '', email: '', company: '', phone: '', location: '', industry: '', preferredContact: 'Phone', subject: 'Product Inquiries', message: '', website_verify_field: '' });
             } else {
                 alert('Failed to send message. Please try again or call us directly.');
             }
@@ -84,10 +99,7 @@ export default function ContactPage() {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-100 text-cyan-700 text-xs font-semibold mb-8 uppercase tracking-wider">
                             Get in Touch
                         </div>
-                        <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight mb-6">
-                            How can we <br />
-                            <span className="text-slate-400">help you?</span>
-                        </h1>
+                        <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight mb-6">{formState.subject.includes('Audit') ? <>Plan a useful <span className="text-slate-400">facility audit.</span></> : formState.subject.includes('Sample') ? <>Build a structured <span className="text-slate-400">seven-day trial.</span></> : <>How can we <span className="text-slate-400">help you?</span></>}</h1>
                         <p className="text-lg text-slate-600 leading-relaxed mb-12 max-w-md">
                             Whether you need a custom formulation, a product quote, or technical advice, our Montana-based experts are ready to assist.
                         </p>
@@ -102,7 +114,7 @@ export default function ContactPage() {
                             <ContactMethod
                                 icon={<><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></>}
                                 title="Email Us"
-                                detail={<a href="mailto:crystalm@unitedformulas.com,triggsmt67@gmail.com" className="hover:text-cyan-600 transition-colors text-base md:text-lg">sales@unitedformulas.com</a>}
+                                detail={<a href="mailto:sales@unitedformulas.com" className="hover:text-cyan-600 transition-colors text-base md:text-lg">sales@unitedformulas.com</a>}
                                 description="We respond within 24 hours"
                             />
                             <ContactMethod
@@ -183,6 +195,18 @@ export default function ContactPage() {
                                     />
                                 </div>
 
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                  <div className="space-y-2"><label htmlFor="company" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Company</label><input required id="company" value={formState.company} onChange={(e)=>setFormState({...formState,company:e.target.value})} placeholder="Business or facility" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white" /></div>
+                                  <div className="space-y-2"><label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Phone</label><input required type="tel" id="phone" value={formState.phone} onChange={(e)=>setFormState({...formState,phone:e.target.value})} placeholder="406.000.0000" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white" /></div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                  <div className="space-y-2"><label htmlFor="location" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">City or ZIP</label><input required id="location" value={formState.location} onChange={(e)=>setFormState({...formState,location:e.target.value})} placeholder="Great Falls, MT" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white" /></div>
+                                  <div className="space-y-2"><label htmlFor="industry" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Facility type</label><select required id="industry" value={formState.industry} onChange={(e)=>setFormState({...formState,industry:e.target.value})} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white"><option value="">Choose one</option><option>Restaurant / Food Service</option><option>Healthcare / Senior Care</option><option>Industrial / Manufacturing</option><option>Agribusiness / Food Processing</option><option>School / Education</option><option>Government / Public Facility</option><option>Janitorial Contractor</option><option>Hospitality / Property</option><option>Automotive / Fleet</option><option>Other</option></select></div>
+                                </div>
+
+                                <div className="space-y-2"><label htmlFor="preferred-contact" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Preferred follow-up</label><select id="preferred-contact" value={formState.preferredContact} onChange={(e)=>setFormState({...formState,preferredContact:e.target.value})} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white"><option>Phone</option><option>Email</option><option>Text message</option></select></div>
+
                                 <div className="space-y-2">
                                     <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1">Subject</label>
                                     <select
@@ -200,6 +224,7 @@ export default function ContactPage() {
                                         <option>Bulk Quote Request</option>
                                         <option>Technical Support</option>
                                         <option>Other</option>
+                                        <option>Route Delivery Check</option>
                                     </select>
                                 </div>
 

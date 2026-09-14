@@ -26,6 +26,8 @@ import CategoryCard from "@/components/CategoryCard";
 import Navbar from "@/components/Navbar";
 import ZipCheckCTA from "@/components/ZipCheckCTA";
 import Footer from "@/components/Footer";
+import JourneyChooser from "@/components/JourneyChooser";
+import OperationalProof from "@/components/OperationalProof";
 import { fallbackProducts } from "@/lib/product-fallback";
 
 const GET_HOME_DATA = gql`
@@ -333,6 +335,9 @@ export default async function Home() {
         </div>
       </section>
 
+      <JourneyChooser />
+      <OperationalProof />
+
       {/* Who We Serve - Industry Solutions */}
       <section id="industries" className="py-20 lg:py-24 bg-[#1E3A8A] relative overflow-hidden font-sans">
         {/* Solid grounded background */}
@@ -371,6 +376,15 @@ export default async function Home() {
                 />
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Healthcare & Senior Care", "/industries/healthcare-senior-care"],
+              ["Industrial & Manufacturing", "/industries/industrial-manufacturing"],
+              ["Agribusiness & Food Processing", "/industries/agribusiness-food-processing"],
+              ["Government & Public Facilities", "/industries/government-public-facilities"],
+            ].map(([title, href]) => <Link key={href} href={href} className="rounded-xl border border-white/15 bg-white/10 px-4 py-4 text-center text-sm font-bold text-white transition hover:border-cyan-300 hover:bg-white/15">{title} →</Link>)}
           </div>
 
           {/* Product-browsing link */}

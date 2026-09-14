@@ -9,6 +9,8 @@ import POSubmitButton from '@/components/POSubmitButton';
 import RelatedProducts from '@/components/RelatedProducts';
 import { ProductNode, ProductImage } from '@/types';
 import { cache } from 'react';
+import Link from 'next/link';
+import productMetadata from '@/data/product_metadata.json';
 
 type DetailedProduct = ProductNode & {
   galleryImages?: {
@@ -190,6 +192,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
+  const localMetadata = (productMetadata as Record<string, { category?: string; sds?: string }>)[slug];
+
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900 selection:bg-cyan-100">
       <Navbar />
@@ -233,8 +237,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
 
+            <div className="grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:grid-cols-2">
+              <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Best starting point</p><p className="mt-1 text-sm font-semibold text-slate-800">{localMetadata?.category || 'Commercial cleaning application'}</p></div>
+              <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Local availability</p><p className="mt-1 text-sm font-semibold text-slate-800">Confirm stock and route timing with our Montana team</p></div>
+              <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Before you switch</p><p className="mt-1 text-sm font-semibold text-slate-800">Test one application for seven days</p></div>
+              <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Documentation</p><p className="mt-1 text-sm font-semibold text-slate-800">SDS and product guidance available</p></div>
+            </div>
+
             <div className="mt-4 flex flex-col gap-4">
               <POSubmitButton />
+              <Link href={`/contact?request=sample&product=${encodeURIComponent(product.name)}`} className="w-full bg-cyan-600 text-white font-semibold py-4 px-8 rounded-xl hover:bg-cyan-500 transition-all flex items-center justify-center text-center">Build a 7-Day Product Trial</Link>
               {product.productData?.sdssheet && (
                 <a
                   href={product.productData.sdssheet}
@@ -245,6 +257,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   Download SDS Sheet
                 </a>
               )}
+              {!product.productData?.sdssheet && localMetadata?.sds && <a href={localMetadata.sds} target="_blank" rel="noopener noreferrer" className="w-full bg-white border-2 border-slate-200 text-slate-900 font-semibold py-4 px-8 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center">Download SDS Sheet</a>}
             </div>
           </div>
         </div>

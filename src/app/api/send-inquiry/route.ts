@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
         }
 
-        if (!validateRequiredStrings(rawBody, ['fullName', 'email', 'interest', 'formName']) || !validateEmail(rawBody.email)) {
+        if (!validateRequiredStrings(rawBody, ['fullName', 'email', 'interest', 'formName', 'company']) || !validateEmail(rawBody.email)) {
             return NextResponse.json({ error: 'Please provide valid required fields.' }, { status: 400 });
         }
 
@@ -41,8 +41,11 @@ export async function POST(req: NextRequest) {
         }
 
         const body = sanitizeSubmission(rawBody) as any;
-        const { fullName, company, email, phone, interest, message, items, formName } = body;
+        const { fullName, company, email, phone, interest, message, items, formName, location, industry, preferredContact } = body;
         const origin = formName || 'General Inquiry';
+        const followUpDate = new Date();
+        followUpDate.setDate(followUpDate.getDate() + (String(interest).includes('Sample') ? 3 : 1));
+        const recommendedFollowUp = followUpDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
         const warehouseEmail = process.env.WAREHOUSE_EMAIL;
         const apiKey = process.env.RESEND_API_KEY;
@@ -101,6 +104,10 @@ export async function POST(req: NextRequest) {
                     <td style="padding: 12px; border: 1px solid #e2e8f0; font-bold;">Interest</td>
                     <td style="padding: 12px; border: 1px solid #e2e8f0;">${interest}</td>
                 </tr>
+                <tr><td style="padding: 12px; border: 1px solid #e2e8f0;">Facility / Industry</td><td style="padding: 12px; border: 1px solid #e2e8f0;">${industry || 'Not provided'}</td></tr>
+                <tr><td style="padding: 12px; border: 1px solid #e2e8f0;">City / ZIP</td><td style="padding: 12px; border: 1px solid #e2e8f0;">${location || 'Not provided'}</td></tr>
+                <tr><td style="padding: 12px; border: 1px solid #e2e8f0;">Preferred Follow-Up</td><td style="padding: 12px; border: 1px solid #e2e8f0;">${preferredContact || 'Not provided'}</td></tr>
+                <tr><td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold;">Recommended Follow-Up Date</td><td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #0e7490;">${recommendedFollowUp}</td></tr>
             </table>
         `;
 

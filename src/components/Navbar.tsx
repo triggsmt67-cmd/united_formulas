@@ -61,6 +61,10 @@ export default function Navbar() {
             desc: "Quick-break floor degreasers & aqueous parts wash",
             href: "/industries/auto-repair-service-bays",
         },
+        { title: "Healthcare & Senior Care", desc: "Consistent protocols, training and local support", href: "/industries/healthcare-senior-care" },
+        { title: "Industrial & Manufacturing", desc: "Heavy soil, process cleaning and downtime control", href: "/industries/industrial-manufacturing" },
+        { title: "Agribusiness & Food Processing", desc: "Reliable programs for regional production facilities", href: "/industries/agribusiness-food-processing" },
+        { title: "Government & Public Facilities", desc: "Documentation, consistency and dependable supply", href: "/industries/government-public-facilities" },
     ];
 
     return (
@@ -81,10 +85,10 @@ export default function Navbar() {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-7 lg:gap-8">
                         <Link
-                            href="/"
+                            href="/find-a-solution"
                             className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
                         >
-                            Home
+                            Find a Solution
                         </Link>
                         <Link
                             href="/products"
@@ -92,13 +96,6 @@ export default function Navbar() {
                         >
                             Products
                         </Link>
-                        <Link
-                            href="/sds-sheets"
-                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
-                        >
-                            SDS Sheets
-                        </Link>
-
                         {/* Industries Dropdown */}
                         <div
                             className="relative"
@@ -182,16 +179,16 @@ export default function Navbar() {
                         </div>
 
                         <Link
+                            href="/local-delivery"
+                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            Local Delivery
+                        </Link>
+                        <Link
                             href="/about"
                             className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
                         >
                             About Us
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
-                        >
-                            Contact Us
                         </Link>
                     </div>
 
@@ -241,11 +238,11 @@ export default function Navbar() {
                 <div className="flex flex-col h-full pt-28 px-8 pb-12 overflow-y-auto">
                     <div className="flex flex-col gap-5">
                         <Link
-                            href="/"
+                            href="/find-a-solution"
                             onClick={() => setIsMenuOpen(false)}
                             className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
                         >
-                            Home
+                            Find a Solution
                         </Link>
                         <Link
                             href="/products"
@@ -261,6 +258,8 @@ export default function Navbar() {
                         >
                             SDS Sheets
                         </Link>
+                        <Link href="/local-delivery" onClick={() => setIsMenuOpen(false)} className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors">Local Delivery</Link>
+                        <Link href="/sales-toolkit" onClick={() => setIsMenuOpen(false)} className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors">Sales Toolkit</Link>
 
                         {/* Mobile Industries Accordion */}
                         <div>

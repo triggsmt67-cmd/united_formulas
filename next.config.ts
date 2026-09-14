@@ -14,11 +14,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/industries/industrial-manufacturing',
-        destination: '/industries/auto-repair-service-bays',
-        permanent: true,
-      },
-      {
         source: '/category/disinfectants-deodorizers',
         destination: '/category/disinfectant',
         permanent: true,
