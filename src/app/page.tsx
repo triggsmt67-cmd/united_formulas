@@ -391,14 +391,16 @@ export default async function Home() {
               <div className="relative w-full max-w-sm">
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-white relative group shadow-lg border border-slate-200">
                   <Image
-                    src="https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=80"
-                    alt="Fast moving mountain stream"
+                    // Free Pexels photo by Mohan Nannapaneni: pexels.com/photo/farm-in-summer-12356263
+                    src="/images/montana-working-landscape.jpg"
+                    alt="Montana farmland and agricultural buildings beneath a wide blue sky"
                     fill
-                    className="group-hover:grayscale-0 transition-all duration-700 ease-in-out object-cover grayscale"
+                    sizes="(min-width: 1024px) 384px, 100vw"
+                    className="group-hover:scale-[1.03] transition-transform duration-700 ease-out object-cover"
                   />
-                  <div className="absolute inset-0 bg-slate-900/10 mix-blend-multiply pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none"></div>
                   <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded text-xs font-semibold text-slate-900 border border-white/20">
-                    Made in Montana
+                    Built for Montana work
                   </div>
                 </div>
               </div>
