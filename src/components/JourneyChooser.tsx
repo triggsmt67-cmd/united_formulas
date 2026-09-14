@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const journeys = [
-  { title: "Solve a cleaning problem", detail: "Start with the surface, soil or result that is costing you time.", href: "/find-a-solution", icon: "01" },
-  { title: "Reduce chemical costs", detail: "Compare dilution, usage, freight, labor and cost per usable gallon.", href: "/cost-calculator", icon: "02" },
-  { title: "Find a product or SDS", detail: "Search the catalog by product, task or application.", href: "/products", icon: "03" },
-  { title: "Plan a facility audit", detail: "Give our local team enough context to make the visit useful.", href: "/contact?request=audit", icon: "04" },
+  { title: "Solve a cleaning problem", detail: "Start with the surface, soil, or result that is costing you time.", href: "/find-a-solution", icon: "01" },
+  { title: "Compare your real costs", detail: "Calculate dilution, product use, freight, labor, and cost per usable gallon.", href: "/cost-calculator", icon: "02" },
+  { title: "Find a product or SDS", detail: "Search by product name, cleaning task, or application.", href: "/products", icon: "03" },
+  { title: "Plan a facility audit", detail: "Tell our local team what is happening so the visit starts with the right questions.", href: "/contact?request=audit", icon: "04" },
 ];
 
 export default function JourneyChooser() {
@@ -21,7 +21,7 @@ export default function JourneyChooser() {
               <span className="text-xs font-black tracking-widest text-cyan-600">{journey.icon}</span>
               <h3 className="mt-5 text-lg font-bold text-slate-950 group-hover:text-cyan-700">{journey.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{journey.detail}</p>
-              <span className="mt-5 inline-block font-bold text-slate-900">Continue →</span>
+              <span className="mt-5 inline-block font-bold text-slate-900">Get started →</span>
             </Link>
           ))}
         </div>

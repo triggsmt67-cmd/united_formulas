@@ -159,13 +159,13 @@ export default async function Home() {
               </div>
 
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
-                Specialized Formulas Tailored to Your Exact Needs
+                Cleaning systems for the work you actually do
               </h2>
 
               <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-[0_0_20px_rgba(34,211,238,0.3)]" aria-hidden="true" style={{ animationDelay: '300ms' }}></div>
 
               <p className="text-xl text-blue-100 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
-                Find concentrated cleaning products selected for the surfaces, soil loads, and everyday cleaning demands common to your business.
+                Start with your industry to find products for the surfaces, soil, equipment, and daily demands your team handles.
               </p>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default async function Home() {
               href="/products"
               className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-cyan-300 hover:text-white transition-colors group/link py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg"
             >
-              <span>Looking for a specific product? Browse all cleaning products by application</span>
+              <span>Know what you need? Browse the complete product catalog</span>
               <span className="group-hover/link:translate-x-1 transition-transform" aria-hidden="true">→</span>
             </Link>
           </div>
@@ -216,18 +216,18 @@ export default async function Home() {
               <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-[0.25em]">
                   <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" aria-hidden="true"></span>
-                  Proprietary Formulation
+                  Commercial Concentrates
                 </span>
               </div>
 
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight opacity-0 animate-fade-up" style={{ animationDelay: '200ms' }}>
-                Featured <span className="text-cyan-600">Solutions</span>
+                A practical place to start
               </h2>
 
               <div className="h-1.5 w-32 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 rounded-full opacity-0 animate-fade-up shadow-sm" aria-hidden="true" style={{ animationDelay: '300ms' }}></div>
 
               <p className="text-xl text-slate-600 leading-relaxed font-light opacity-0 animate-fade-up" style={{ animationDelay: '400ms' }}>
-                No watered-down consumer chemicals. Just highly-concentrated, commercial-grade formulas that work on contact.
+                Explore concentrated formulas for common commercial cleaning problems, then ask us about the right dilution and test for your facility.
               </p>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default async function Home() {
               href="/products"
               className="inline-flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-all duration-300 group/all font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg py-1 px-3"
             >
-              <span className="text-sm font-bold uppercase tracking-[0.3em]">Examine Full Inventory</span>
+              <span className="text-sm font-bold uppercase tracking-[0.3em]">Browse Full Catalog</span>
               <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center group-hover/all:border-cyan-500/50 group-hover/all:bg-cyan-50 group-hover/all:text-cyan-600 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover/all:translate-x-1 transition-transform">
                   <path d="M5 12h14m-7-7l7 7l-7 7" />
@@ -277,15 +277,15 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="mb-16">
             <h2 className="text-3xl md:text-5xl tracking-tight mb-6 font-semibold">
-              Your janitorial closet is{" "}
-              <span className="text-cyan-600">leaking money.</span>
+              The container price is only{" "}
+              <span className="text-cyan-600">part of the cost.</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             <ProblemCard
-              title='The "Cheap" Product Trap'
-              description="You saved $5 on a drum of cleaner, but it’s 90% water. Now your crew spends double the time scrubbing."
-              highlight="You didn't save money. You just moved the cost to your payroll."
+              title="Cost per usable gallon"
+              description="A lower container price can still cost more when the dilution, freight, storage, and amount used are included."
+              highlight="Compare the cost of the working solution—not just the price on the container."
               icon={
                 <g
                   fill="none"
@@ -301,9 +301,9 @@ export default async function Home() {
               iconColor="green"
             />
             <ProblemCard
-              title='The "Eco" Compromise'
-              description="You bought the green product to stay compliant, but it’s too weak to cut industrial grease."
-              highlight="You use three times as much product to get the same result."
+              title="Labor and repeat cleaning"
+              description="If a product needs extra passes, more scrubbing, or frequent rework, the added labor can outweigh a small chemical savings."
+              highlight="Measure the time and result along with the amount of product used."
               icon={
                 <g
                   fill="none"
@@ -328,17 +328,14 @@ export default async function Home() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 order-2 lg:order-1">
               <h2 className="text-3xl md:text-4xl tracking-tight text-slate-900 mb-6 font-semibold">
-                We don&apos;t sell water. We sell results.
+                Concentration matters when the result holds up.
               </h2>
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
-                  At <span className="font-semibold text-slate-900">United Formulas</span>,
-                  we believe that if a product says it cleans, it should clean.
-                  Period.
+                  At <span className="font-semibold text-slate-900">United Formulas</span>, we match the formula and dilution to the job your team needs to complete.
                 </p>
                 <p>
-                  We are a Montana-based team of chemists and problem solvers.
-                  We don&apos;t focus on marketing fluff; we focus on{" "}
+                  Our goal is a working solution that performs consistently without using more product or labor than the job requires. That is why we focus on{" "}
                   <span className="text-slate-900 font-medium border-b-2 border-cyan-200">
                     yield
                   </span>
@@ -347,8 +344,8 @@ export default async function Home() {
               </div>
               <div className="mt-10 space-y-8">
                 <FeatureItem
-                  title="Concentrated Power"
-                  description="We pack maximum active ingredients into every gallon. One pail of our concentrate often replaces 12 drums of a competitor's pre-mix."
+                  title="Dilution That Fits the Job"
+                  description="Concentrates let you prepare the working strength the task requires instead of shipping and storing ready-to-use water."
                   icon={
                     <path
                       fill="none"
@@ -361,8 +358,8 @@ export default async function Home() {
                   }
                 />
                 <FeatureItem
-                  title="Smart Safety"
-                  description="We proved that you don't need harsh toxins to get heavy-duty results. Our biodegradable formulas are designed to perform better than anything on the market."
+                  title="Clear Product Guidance"
+                  description="We help your team choose the product, dilution, and process for the surface and soil involved."
                   icon={
                     <path
                       fill="none"
@@ -375,8 +372,8 @@ export default async function Home() {
                   }
                 />
                 <FeatureItem
-                  title="Honest Performance"
-                  description="We test everything. If it doesn't exceed expectations, it doesn't leave our dock."
+                  title="Results You Can Compare"
+                  description="A defined trial gives your operators time to evaluate cleaning performance, usage, and the day-to-day experience."
                   icon={
                     <path
                       fill="none"
@@ -415,15 +412,15 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl tracking-tight text-slate-900 font-semibold">
-              Three steps to a more efficient operation
+              A practical way to test before you switch
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-12 relative">
             <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-px bg-slate-100 z-0"></div>
             <StepItem
               number="1"
-              title="Diagnose"
-              description="Call 406.727.4144. Tell a live Montana expert what you’re trying to clean (and what’s failing)."
+              title="Assess"
+              description="Show us the surface, soil, current process, and result your team is getting."
               icon={
                 <path
                   fill="none"
@@ -437,8 +434,8 @@ export default async function Home() {
             />
             <StepItem
               number="2"
-              title="Prescribe"
-              description="We recommend a specific, concentrated formula that targets that exact soil load."
+              title="Test"
+              description="Try one recommended product in one defined area with the right dilution and a clear goal."
               icon={
                 <g
                   fill="none"
@@ -454,8 +451,8 @@ export default async function Home() {
             />
             <StepItem
               number="3"
-              title="Solve"
-              description="You switch. Your freight bills drop. Your labor hours go down. Your business gets cleaner."
+              title="Compare"
+              description="Review performance, usage, and operator feedback before deciding on the next step."
               icon={
                 <g
                   fill="none"
@@ -479,15 +476,14 @@ export default async function Home() {
           <div className="bg-[#1E3A8A] rounded-3xl p-10 md:p-16 text-center md:text-left flex flex-col md:flex-row gap-12 items-center shadow-2xl">
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl tracking-tight text-white mb-6 font-semibold">
-                A partner, not just a vendor.
+                Local support after the delivery.
               </h2>
               <p className="text-slate-400 mb-8 leading-relaxed">
-                We know that switching suppliers is a hassle. That’s why we make
-                it worth your while.
+                Product performance depends on what happens in the facility. Our local team stays involved when you need help with dilution, application, or equipment.
               </p>
               <div className="space-y-4 text-left">
                 <CommitmentItem
-                  text="No robots. No scripts. Just friendly, personal service from people who know your name."
+                  text="Call and speak with a local team that knows the products and the region."
                   icon={
                     <g
                       fill="none"
@@ -502,7 +498,7 @@ export default async function Home() {
                   }
                 />
                 <CommitmentItem
-                  text="If a product doesn't meet your needs, we exchange it or refund your money. Whichever you prefer."
+                  text="If a product does not meet your needs, we will exchange it or refund your money."
                   icon={
                     <g
                       fill="none"

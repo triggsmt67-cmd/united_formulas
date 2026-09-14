@@ -9,7 +9,7 @@ export default function Footer() {
                 {/* Upper Footer: CTA & Tagline */}
                 <div className="text-center mb-20 animate-fade-up">
                     <h2 className="text-4xl md:text-5xl tracking-tighter text-slate-900 mb-8 font-semibold">
-                        Clean it once. Clean it right.
+                        Need a product now? Check local stock and pricing.
                     </h2>
                     <RequestQuoteCTA />
                 </div>
@@ -28,7 +28,7 @@ export default function Footer() {
                             />
                         </Link>
                         <p className="text-slate-500 text-sm leading-relaxed">
-                            Weak chemicals inflate your labor costs and kill your efficiency. We formulate industrial-strength concentrates that work on contact.
+                            Commercial cleaning concentrates, local delivery, and hands-on product support from Great Falls and Billings.
                         </p>
                         <div className="pt-2">
                             <span className="text-slate-900 text-xs font-bold uppercase tracking-[0.2em] relative flex items-center gap-2">
