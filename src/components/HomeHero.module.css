@@ -8,6 +8,7 @@
 .copy h1 em { font-family: Georgia, serif; font-weight: 400; color: var(--accent); }
 .description { font-size: 19px; line-height: 1.55; margin-top: 26px; max-width: 520px; }
 .approach { font-size: 15px; line-height: 1.65; margin-top: 16px; max-width: 490px; color: #465b63; }
+.caption { font-size: 13px; line-height: 1.55; margin-top: 12px; max-width: 490px; color: #465b63; font-variant-numeric: tabular-nums; }
 .actions { display: flex; align-items: flex-start; flex-direction: column; gap: 19px; margin-top: 28px; }
 .primary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 22px; background: var(--accent); color: #fff; font-size: 15px; font-weight: 600; border: 2px solid var(--accent); transition: background .18s, border-color .18s; }
 .primary:hover { background: #104553; border-color: #104553; }
@@ -22,6 +23,7 @@
 .label { text-transform: uppercase; letter-spacing: .15em; font-size: 10px; font-weight: 600; color: #87deeb; }
 .panelIntro h2 { font-size: clamp(25px, 2.2vw, 32px); line-height: 1.12; letter-spacing: -.025em; font-weight: 500; margin: 10px 0 12px; }
 .panelIntro p { font-size: 13px; line-height: 1.6; color: #c4d3d8; }
+.auditIntro { font-size: 12px; line-height: 1.65; color: #a0bcc3; margin-top: 10px; border-top: 1px solid #1e3a47; padding-top: 12px; }
 .measurements { padding: 0 26px; list-style: none; }
 .measurements li { display: flex; align-items: center; gap: 17px; border-top: 1px solid #62777f; padding: 13px 0; }
 .number { font-family: monospace; font-size: 11px; color: #87deeb; }

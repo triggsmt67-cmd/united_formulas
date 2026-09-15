@@ -28,6 +28,7 @@ import HomeHero from "@/components/HomeHero";
 import Footer from "@/components/Footer";
 import JourneyChooser from "@/components/JourneyChooser";
 import OperationalProof from "@/components/OperationalProof";
+import CostComparisonWidget from "@/components/CostComparisonWidget";
 import { fallbackProducts } from "@/lib/product-fallback";
 
 const GET_HOME_DATA = gql`
@@ -140,6 +141,30 @@ export default async function Home() {
       <Navbar />
 
       <HomeHero />
+
+      {/* The Problem — moved to position 2, directly under hero */}
+      <section className="py-24 bg-white text-slate-900 relative overflow-hidden font-sans">
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        ></div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="mb-10">
+            <h2 className="text-3xl md:text-5xl tracking-tight mb-6 font-semibold">
+              The container price is only{" "}
+              <span className="text-cyan-600">part of the cost.</span>
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed max-w-2xl mb-8">
+              A jug that costs less can easily cost more. What matters is what you pay for a gallon of finished cleaning solution — not what you pay for the container it came in.
+            </p>
+            <CostComparisonWidget />
+          </div>
+        </div>
+      </section>
 
       <JourneyChooser />
       <OperationalProof />
@@ -264,63 +289,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* The Problem */}
-      <section className="py-24 bg-white text-slate-900 relative overflow-hidden font-sans">
-        <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        ></div>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="mb-16">
-            <h2 className="text-3xl md:text-5xl tracking-tight mb-6 font-semibold">
-              The container price is only{" "}
-              <span className="text-cyan-600">part of the cost.</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <ProblemCard
-              title="Cost per usable gallon"
-              description="A lower container price can still cost more when the dilution, freight, storage, and amount used are included."
-              highlight="Compare the cost of the working solution—not just the price on the container."
-              icon={
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                >
-                  <path d="M16 17h6v-6" />
-                  <path d="m22 17l-8.5-8.5l-5 5L2 7" />
-                </g>
-              }
-              iconColor="green"
-            />
-            <ProblemCard
-              title="Labor and repeat cleaning"
-              description="If a product needs extra passes, more scrubbing, or frequent rework, the added labor can outweigh a small chemical savings."
-              highlight="Measure the time and result along with the amount of product used."
-              icon={
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                >
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8c0 5.5-4.78 10-10 10" />
-                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                </g>
-              }
-              iconColor="cyan"
-            />
-          </div>
-        </div>
-      </section>
+
 
       {/* The Guide */}
       <section className="overflow-hidden bg-slate-50 border-y border-slate-200 pt-24 pb-24 font-sans">
@@ -328,18 +297,14 @@ export default async function Home() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 order-2 lg:order-1">
               <h2 className="text-3xl md:text-4xl tracking-tight text-slate-900 mb-6 font-semibold">
-                Concentration matters when the result holds up.
+                Dilution only holds if the dose is controlled.
               </h2>
               <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
                 <p>
                   At <span className="font-semibold text-slate-900">United Formulas</span>, we match the formula and dilution to the job your team needs to complete.
                 </p>
                 <p>
-                  Our goal is a working solution that performs consistently without using more product or labor than the job requires. That is why we focus on{" "}
-                  <span className="text-slate-900 font-medium border-b-2 border-cyan-200">
-                    yield
-                  </span>
-                  .
+                  We set the dispenser so the number on the page is the number you actually get.
                 </p>
               </div>
               <div className="mt-10 space-y-8">

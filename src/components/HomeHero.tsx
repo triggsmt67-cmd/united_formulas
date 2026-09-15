@@ -19,8 +19,8 @@ export default function HomeHero() {
         <div className={styles.copy}>
           <p className={styles.eyebrow}>Commercial cleaning. Montana know-how.</p>
           <h1 id="hero-heading">Lower the <em>real cost</em> of cleaning your facility.</h1>
-          <p className={styles.description}>Concentrated commercial cleaners, local delivery, and hands-on support for Montana businesses and public facilities.</p>
-          <p className={styles.approach}>We measure product usage, dilution, labor, and cleaning results before recommending a change.</p>
+          <p className={styles.description}>Made in Montana, delivered on our own trucks, and priced by the gallon you actually use — not the gallon in the jug.</p>
+          <p className={styles.caption}>One 5-gallon pail of Delta Green Professional makes 325 usable gallons. That&#39;s about 37¢ each.</p>
           <div className={styles.actions}>
             <Link className={styles.primary} href="/contact?request=audit">Request a Free On-Site Cleaning Audit <span aria-hidden="true">↗</span></Link>
             <Link className={styles.secondary} href="/find-a-solution">Find the Right Product <span aria-hidden="true">→</span></Link>
@@ -33,6 +33,7 @@ export default function HomeHero() {
             <span className={styles.label}>The cleaning cost audit</span>
             <h2>Better results start<br />with better questions.</h2>
             <p>We come to your facility.<br />We look at the whole operation.</p>
+            <p className={styles.auditIntro}>We measure product usage, dilution, labor, and cleaning results before recommending a change.</p>
           </div>
           <ol className={styles.measurements}>
             {measurements.map(([title, detail], index) => (
