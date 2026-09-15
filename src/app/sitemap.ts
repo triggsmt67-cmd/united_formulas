@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import client from '@/lib/apollo-client';
 import { gql } from '@apollo/client';
 import { INDUSTRIES } from '@/config/industries';
+import { getAllResources } from '@/lib/resources';
 
 import productMetadata from '@/data/product_metadata.json';
 
@@ -48,6 +49,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      url: `${baseUrl}/resources`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/about`,
       lastModified: now,
       changeFrequency: 'monthly',
@@ -82,7 +89,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 2. Industry landing pages (from config)
+  // 2. Technical Resource Guides (Markdown Articles)
+  const resourceArticles = getAllResources();
+  const resourceRoutes: MetadataRoute.Sitemap = resourceArticles.map((art) => ({
+    url: `${baseUrl}/resources/${art.slug}`,
+    lastModified: new Date(art.date),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  // 3. Industry landing pages (from config)
   const industryRoutes: MetadataRoute.Sitemap = INDUSTRIES.map((ind) => ({
     url: `${baseUrl}/industries/${ind.slug}`,
     lastModified: now,
@@ -90,7 +106,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
-  // 3. Dynamic Products and Categories
+  // 4. Dynamic Products and Categories
   let productSlugs = KNOWN_PRODUCT_SLUGS;
   let categorySlugs = FALLBACK_CATEGORIES;
 
@@ -139,5 +155,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...industryRoutes, ...categoryRoutes, ...productRoutes];
+  return [...staticRoutes, ...resourceRoutes, ...industryRoutes, ...categoryRoutes, ...productRoutes];
 }

@@ -185,6 +185,12 @@ export default function Navbar() {
                             Local Delivery
                         </Link>
                         <Link
+                            href="/resources"
+                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            Resources
+                        </Link>
+                        <Link
                             href="/about"
                             className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
                         >
@@ -259,7 +265,6 @@ export default function Navbar() {
                             SDS Sheets
                         </Link>
                         <Link href="/local-delivery" onClick={() => setIsMenuOpen(false)} className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors">Local Delivery</Link>
-                        <Link href="/sales-toolkit" onClick={() => setIsMenuOpen(false)} className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors">Sales Toolkit</Link>
 
                         {/* Mobile Industries Accordion */}
                         <div>
@@ -302,6 +307,13 @@ export default function Navbar() {
                             )}
                         </div>
 
+                        <Link
+                            href="/resources"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            Resources
+                        </Link>
                         <Link
                             href="/about"
                             onClick={() => setIsMenuOpen(false)}

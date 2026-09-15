@@ -63,7 +63,7 @@ export default function HospitalityTurnoverCalculator({
     const annualTurnovers = units * weeklyTurns * 52;
 
     // 2. Housekeeping labor savings:
-    // Commercial acid descaling dissolves 9.4 GPG hard water scale and soap scum in <2 min dwell time,
+    // Commercial acid descaling dissolves 7.4–9.8 GPG hard water scale and soap scum in <2 min dwell time,
     // eliminating 6 minutes (0.1 hours) of manual scrubbing per bathroom turn.
     const hoursSavedPerTurn = 0.1; // 6 minutes
     const annualHousekeepingHoursSaved = Math.round(annualTurnovers * hoursSavedPerTurn);
@@ -363,7 +363,7 @@ export default function HospitalityTurnoverCalculator({
                                             <p className="text-[11px] font-semibold text-cyan-800">
                                                 +30% Linen Life Extension
                                             </p>
-                                            <p className="text-[10px] text-slate-400">Locks out 9.4 GPG calcium</p>
+                                            <p className="text-[10px] text-slate-400">Locks out 7.4–9.8 GPG calcium</p>
                                         </>
                                     ) : (
                                         <>

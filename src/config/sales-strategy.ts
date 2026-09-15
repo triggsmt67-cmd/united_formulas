@@ -36,10 +36,10 @@ export const SOLUTION_PATHS: SolutionPath[] = [
     description: "Hard-water film, mineral buildup, spotting and inconsistent warewashing results.",
     industries: ["Restaurants", "Healthcare", "Schools", "Hospitality"],
     products: [
-      { name: "All Temp Detergent", slug: "all-temp-detergent", reason: "Concentrated automatic dishwashing detergent for varied water and temperature conditions." },
-      { name: "DeLime", slug: "delime", reason: "Targeted mineral-scale removal for equipment and hard surfaces." },
+      { name: "All Temp Detergent", slug: "all-temp-detergent", reason: "Concentrated automatic dishwashing detergent with built-in sequestrants calibrated for 7.4–9.8 GPG local water." },
+      { name: "DeLime", slug: "delime", reason: "Targeted mineral-scale removal for booster coils, rinse arms, and dish machine tanks." },
     ],
-    auditPrompt: "We will check water conditions, machine type, dosage, scale and rinse performance before recommending a system.",
+    auditPrompt: "We test water hardness on-site (2-minute strip), inspect booster coils against Hobart specs (≤3.5 GPG), and calibrate dispenser dosage so working-gallon costs hold.",
   },
   {
     id: "odor",
@@ -77,9 +77,9 @@ export const SOLUTION_PATHS: SolutionPath[] = [
 ];
 
 export const SALES_ROUTES = [
-  { name: "10th Avenue South", focus: "Restaurants, hotels, retail and commercial kitchens", cadence: "High-density weekly prospecting", cue: "Lead with warewash, grease, floors and delivery reliability." },
+  { name: "10th Avenue South", focus: "Restaurants, hotels, retail and commercial kitchens", cadence: "High-density weekly prospecting", cue: "Lead with the 2-minute water test, Hobart dish machine spec (3.5 GPG optimal vs 7.4–9.8 GPG city tap), and honest working-gallon dilution." },
   { name: "East Industrial & AgriTech", focus: "Manufacturing, food processing, trucking and agricultural operations", cadence: "Planned industrial route day", cue: "Lead with soil load, safety, downtime and concentrate handling." },
   { name: "Airport & I-15 Logistics", focus: "Fleet, transport, warehouses, lodging and service operations", cadence: "Cluster visits around delivery runs", cue: "Lead with road film, floors, wash-bay performance and emergency support." },
   { name: "Downtown & Healthcare", focus: "Clinics, senior care, offices, hospitality and public facilities", cadence: "Appointment-led route", cue: "Lead with consistency, training, documentation and responsive service." },
-  { name: "Golden Triangle Rural", focus: "Schools, municipalities, agribusiness and rural facilities", cadence: "Pre-booked route with grouped follow-ups", cue: "Lead with supply reliability, fewer deliveries and a structured trial." },
+  { name: "Golden Triangle Rural", focus: "Schools, municipalities, agribusiness and rural facilities", cadence: "Pre-booked route with grouped follow-ups", cue: "Lead with rural well water hardness testing (often 15–25+ GPG vs city water), uncalibrated national chemical failure, and scheduled 7-day trials." },
 ];

@@ -97,6 +97,9 @@ export default function Footer() {
                                 <Link href="/sds-sheets" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">SDS Sheets Database</Link>
                             </li>
                             <li>
+                                <Link href="/resources" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Technical Resources & Guides</Link>
+                            </li>
+                            <li>
                                 <Link href="/about" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">About United Formulas</Link>
                             </li>
                             <li>
@@ -116,7 +119,6 @@ export default function Footer() {
                                 <Link href="/contact?request=audit" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Free On-Site Facility Audit</Link>
                             </li>
                             <li><Link href="/local-delivery" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Local Delivery & Routes</Link></li>
-                            <li><Link href="/sales-toolkit" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Field Sales Toolkit</Link></li>
                             <li>
                                 <a href="https://quickquote.firstwesternef.com/Credit/Apply/fwef" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-cyan-600 text-sm transition-colors block">Distributor Equipment Leasing</a>
                             </li>

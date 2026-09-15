@@ -688,7 +688,7 @@ export default function IndustryPage({ industry }: IndustryPageProps) {
                                 const auditChecklist = (industry.ctaSection.auditPoints && industry.ctaSection.auditPoints.length > 0)
                                     ? industry.ctaSection.auditPoints
                                     : [
-                                        "On-Site Water Hardness Test (GPG)",
+                                        "On-Site Water Hardness Test (2-Minute Strip)",
                                         "Dispenser Calibration & Leak Check",
                                         "Custom Chemical Sample Kit",
                                     ];

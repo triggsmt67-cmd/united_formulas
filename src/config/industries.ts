@@ -128,14 +128,14 @@ export const INDUSTRIES: IndustryConfig[] = [
             heading: "3 Kitchen Headaches in Cascade County (And Why Generic Soap Fails)",
             items: [
                 {
-                    title: "Cloudy Glasses and White Crust on Dishwashers",
-                    problemStat: "9.4 Grains Hardness (160 ppm)",
+                    title: "Cloudy Glassware & Heating Element Burnout (7.4–9.8 GPG Tap)",
+                    problemStat: "7.4–9.8 GPG (127–167 ppm) vs. Hobart 3.5 GPG Spec",
                     description:
-                        "Great Falls tap water carries high dissolved minerals. When water heats inside your commercial dish machine, minerals bake onto heating coils and spray arms. This crust acts like an insulator, driving up electric bills, burning out heating elements, and leaving cloudy film on glassware.",
+                        "Hobart—the commercial dish machine manufacturer—recommends water hardness of 3.5 grains per gallon (gpg) or less for optimal machine performance, and classifies anything above 7 gpg as hard. Great Falls municipal tap water runs 7.4–9.8 gpg (127–167 ppm) from the Missouri River, meaning every commercial dish machine in town operates at 2x to nearly 3x the manufacturer's recommended limit. At 150°F to 180°F wash and rinse temperatures, dissolved calcium carbonate drops out of solution and bakes directly onto heating coils, spray arms, and rinse nozzles. This lime scale blankets heating elements until they burn out, clogs spray arms, consumes detergent surfactants before cleaning starts, and leaves cloudy mineral film on glassware.",
                     solutionText:
-                        "UF commercial detergents feature built-in water conditioners that keep minerals suspended in the water so they never stick to your coils or glasses.",
-                    citation: "Source: City of Great Falls Drinking Water Quality Report",
-                    citationUrl: "https://greatfallsmt.gov/1033/Water-Quality---Consumer-Confidence-Repo",
+                        "UF commercial warewash formulas contain high-performance chelating sequestrants that lock minerals in suspension through 180°F rinse cycles—preventing scale, protecting heating elements, and delivering spot-free glassware without overdosing detergent.",
+                    citation: "Field Guide: Your Dish Machine Was Built for Softer Water Than Great Falls Has (10-Minute Audit)",
+                    citationUrl: "/resources/hard-water-dish-machine-great-falls",
                 },
                 {
                     title: "Failing Surprise Health Inspections on Sanitizer Levels",
@@ -169,30 +169,30 @@ export const INDUSTRIES: IndustryConfig[] = [
         recommendedProductsHeading: "Concentrated Formulas Stocked at Our Great Falls Warehouse",
         warewashingComparison: {
             heading: "High-Temp vs. Low-Temp: Which Chemistry Fits Your Dish Machine?",
-            subhead: "Not sure which machine fits your kitchen? Here is how both systems handle Great Falls water, health inspections, and monthly operating costs.",
+            subhead: "Not sure which machine fits your kitchen? Here is how both systems handle Great Falls 7.4–9.8 GPG water, health inspections, and monthly operating costs.",
             features: [
                 "How It Sanitizes Dishes",
-                "Biggest Risk in Great Falls",
-                "What Happens with Cheap Soap",
+                "Water Hardness & Scale Risk (Hobart: ≤3.5 GPG)",
+                "What Happens with Unconditioned Soap",
                 "The Right Chemical Setup",
             ],
             systems: [
                 {
                     name: "High-Temp (180°F Rinse)",
                     values: [
-                        "Hot water rinse at 180°F kills bacteria with heat—no chlorine bleach smell.",
-                        "Very High: Hot water bakes hard water minerals onto coils, causing heavy lime scale and element burnout.",
-                        "Heater elements burn out early, power bills spike, and cloudy glasses have to be hand-dried.",
-                        "Hard-water machine detergent + commercial rinse aid to sheet water off clean.",
+                        "Hot water rinse at 180°F sanitizes with thermal heat—no chlorine bleach odor.",
+                        "Critical Risk: 180°F rinse heat bakes 7.4–9.8 GPG minerals into rock-hard scale on booster elements and rinse arms (Hobart recommends ≤3.5 GPG).",
+                        "Heater elements burn out prematurely, recovery times slow down, and cloudy glasses require hand-polishing or re-washing.",
+                        "Chelated machine detergent + high-sheeting commercial rinse aid calibrated to local mineral hardness.",
                     ],
                 },
                 {
                     name: "Low-Temp (Chemical Sanitizer)",
                     values: [
-                        "Sanitizes at lower temps (around 120°F) using chemical chlorine sanitizer.",
-                        "Medium: Hard water minerals can clog spray nozzles, but heating coils don't bake as fast.",
-                        "Grease doesn't dissolve at lower water temps, leaving an oily film on plates and silverware.",
-                        "Low-temp machine detergent + chlorinated sanitizer + quick-drying rinse aid.",
+                        "Sanitizes at lower temperatures (~120°F) using chemical chlorine sanitizer (50–100 ppm target).",
+                        "Moderate Risk: Lower heat reduces scale baking on tanks, but 7.4–9.8 GPG minerals still clog spray nozzles and leave water spots.",
+                        "Grease emulsification slows at 120°F, leaving oily residue on plates and unrinsed detergent film on glassware.",
+                        "Low-temp liquid detergent with soil suspenders + EPA chlorine sanitizer + flash-drying rinse aid.",
                     ],
                 },
             ],
@@ -222,11 +222,15 @@ export const INDUSTRIES: IndustryConfig[] = [
         faqs: [
             {
                 question: "Why do our glasses come out cloudy and dish machine heating elements burn out so fast?",
-                answer: "Great Falls tap water has high mineral content (about 9.4 grains of hardness). When water heats up to wash dishes, those minerals bake onto the heating coils and form a thick white crust (lime scale). This crust acts like a blanket, trapping heat inside the element until it burns out. It also leaves white chalky film on glassware. Using a detergent made with built-in water conditioners dissolves those minerals in the wash cycle before they can stick.",
+                answer: "Hobart—the commercial dish machine manufacturer—recommends water hardness of 3.5 grains per gallon (gpg) or less for optimal machine life, and classifies anything over 7 gpg as hard. Great Falls municipal tap water runs between 7.4 and 9.8 gpg (127–167 ppm, shifting seasonally with the Missouri River). Every commercial dish machine in town operates at two to three times the manufacturer's recommended limit. At commercial sanitizing temperatures (150°F–180°F), dissolved calcium carbonate precipitates onto heating coils. This lime crust insulates the element, forcing it to run hotter and longer until it burns out, while mineral scale on spray jets leaves a cloudy chalky film on glassware. Detergent with built-in sequestrants keeps those minerals bound in solution so they rinse cleanly down the drain.",
             },
             {
                 question: "What sanitizer strength do Cascade County health inspectors check for?",
-                answer: "During health inspections, inspectors dip test paper into your red sanitizer buckets and sink compartments. If you use a standard Quat sanitizer (the most common type for kitchen buckets), it must test between 200 and 400 parts per million (ppm). If you use chlorine bleach, it must test between 50 and 100 ppm. Using wall-mounted dispensers makes sure every bucket tests in the safe passing zone with zero guesswork.",
+                answer: "Inspectors test chemical sanitizer levels during every inspection. Quat sanitizers must test between 200 and 400 ppm in your red buckets, while chlorine must test between 50 and 100 ppm. A common misconception is that Great Falls water inactivates Quat sanitizers; in reality, Quats are rated for water hardness up to 500 mg/L (ppm), well above Great Falls city tap (127–167 ppm). Sanitizer test failures in town almost always stem from manual 'splash and guess' mixing or uncalibrated dispensers, which our wall-mounted proportioners eliminate with push-button accuracy.",
+            },
+            {
+                question: "How does your on-site water test work, and why does it decide my true chemical cost?",
+                answer: "Water hardness is the single building-specific variable that decides whether your dilution ratios hold true. A theoretical 1:64 dilution ratio fails if unconditioned hard water eats up surfactants before cleaning starts. Our reps carry 2-minute on-site test strips that measure your exact GPG and sanitizer ppm right at your dish machine. For complex accounts, rural well water (which often exceeds 15–25 GPG), or persistent filming, we pull a comprehensive lab sample to test total hardness, alkalinity, TDS, iron, and silica, returning with a calibrated dosage recommendation that prevents overdosing.",
             },
             {
                 question: "How does switching to concentrates cut my restaurant's monthly chemical bill?",
@@ -239,7 +243,15 @@ export const INDUSTRIES: IndustryConfig[] = [
         ],
         references: [
             {
-                text: "City of Great Falls Annual Drinking Water Quality Report (Missouri River Water Treatment Plant: Hardness ~160 mg/L / 9.4 grains per gallon).",
+                text: "United Formulas Field Technical Guide: Your Dish Machine Was Built for Softer Water Than Great Falls Has (Step-by-Step Diagnostic Protocol & Chemical Dosing).",
+                url: "/resources/hard-water-dish-machine-great-falls",
+            },
+            {
+                text: "Hobart Commercial Dishwasher Installation & Water Quality Specifications (Recommending ≤3.5 GPG; >7 GPG classified as hard water).",
+                url: "https://www.hobartcorp.com/",
+            },
+            {
+                text: "City of Great Falls Annual Drinking Water Quality Report (Missouri River Water Treatment Plant: Seasonal Hardness 127–167 mg/L / 7.4–9.8 GPG, Average ~160 mg/L / 9.4 GPG).",
                 url: "https://greatfallsmt.gov/1033/Water-Quality---Consumer-Confidence-Repo",
             },
             {
@@ -251,7 +263,7 @@ export const INDUSTRIES: IndustryConfig[] = [
                 url: "https://rules.mt.gov/gateway/ChapterHome.asp?Chapter=37%2E110",
             },
             {
-                text: "U.S. Environmental Protection Agency (EPA) Standards for Food Contact Surface Sanitizers (40 CFR § 180.940).",
+                text: "U.S. Environmental Protection Agency (EPA) Standards for Food Contact Surface Sanitizers & Quat Hard Water Tolerance (40 CFR § 180.940).",
                 url: "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-E/part-180/subpart-D/section-180.940",
             },
             {
@@ -261,9 +273,14 @@ export const INDUSTRIES: IndustryConfig[] = [
         ],
         ctaSection: {
             heading: "Cut Your Kitchen Chemical Costs and Never Fail an Inspection.",
-            lead: "Call our local Great Falls team or request a free on-site kitchen audit. We'll test your water, check your dispensers, and give you a free sample kit formulated for your kitchen.",
+            lead: "Call our local Great Falls team or request a free on-site kitchen audit. We'll test your water hardness in 2 minutes, check your dish machine against Hobart specs, and calibrate your dispensers for exact working-gallon savings.",
             buttonText: "Schedule a Free On-Site Audit",
             phone: "406-727-4144",
+            auditPoints: [
+                "On-Site Water Hardness Test (2-Minute Strip)",
+                "Hobart Dish Machine Spec Inspection (≤3.5 GPG Benchmark)",
+                "Dispenser Calibration & Working-Gallon Audit",
+            ],
         },
     },
     // Commercial Janitorial Industry Configuration
@@ -320,10 +337,10 @@ export const INDUSTRIES: IndustryConfig[] = [
                     citationUrl: "https://www.mdt.mt.gov/maintenance/",
                 },
                 {
-                    title: "The 9.4 GPG Restroom Scale Lockup",
-                    problemStat: "9.4 Grains Hardness (160 ppm)",
+                    title: "The 7.4–9.8 GPG Restroom Scale Lockup",
+                    problemStat: "7.4–9.8 GPG (127–167 ppm, ~9.4 Avg)",
                     description:
-                        "Great Falls municipal water averages 160 ppm (9.4 grains per gallon) of hardness. In high-traffic office and school restrooms, hard water combines with uric salts to form rock-hard encrustations in urinals and toilet bowls that neutral cleaners can't touch.",
+                        "Great Falls municipal water averages 160 ppm (9.4 grains per gallon), with seasonal Missouri River fluctuations between 127 and 167 ppm (7.4–9.8 GPG). In high-traffic office and commercial restrooms, hard water calcium combines with uric salts to form rock-hard encrustations in urinals and toilet bowls that neutral cleaners cannot touch.",
                     solutionText:
                         "Concentrated organic acid descalers dissolve thick mineral rings and eliminate odor-causing uric salts in seconds without etching chrome fixtures or damaging plumbing seals.",
                     citation: "Source: City of Great Falls Drinking Water Quality Report",
@@ -437,7 +454,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             },
             {
                 sourceName: "City of Great Falls Drinking Water Quality Report",
-                text: "Missouri River Water Treatment Plant: Hardness ~160 mg/L (9.4 GPG).",
+                text: "Missouri River Water Treatment Plant: Hardness 127–167 mg/L (7.4–9.8 GPG, Average ~160 mg/L / 9.4 GPG).",
                 url: "https://greatfallsmt.net/publicworks/water-treatment-plant-annual-water-quality-report",
             },
             {
@@ -459,7 +476,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             buttonText: "Request a Job-Site Audit & Free Sample Kit",
             phone: "(406) 727-4144",
             auditPoints: [
-                "On-Site Water Hardness Test (GPG)",
+                "On-Site Water Hardness Test (2-Minute Strip)",
                 "Dispenser Calibration & Leak Check",
                 "Custom Chemical Sample Kit",
             ],
@@ -685,7 +702,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             ],
             highlightMetrics: [
                 {
-                    value: "9.4 GPG",
+                    value: "7.4–9.8 GPG",
                     title: "Hard Water Descaling",
                     description: "Zero-scratch mineral dissolving",
                     color: "cyan",
@@ -709,10 +726,10 @@ export const INDUSTRIES: IndustryConfig[] = [
             heading: "3 Turnover Headaches That Slow Down Housekeeping Crews",
             items: [
                 {
-                    title: "9.4 GPG Hard Water Etching & Shower Glass Scale",
-                    problemStat: "9.4 GPG Hardness Target",
+                    title: "7.4–9.8 GPG Hard Water Etching & Shower Glass Scale",
+                    problemStat: "7.4–9.8 GPG (127–167 ppm, ~9.4 Avg)",
                     description:
-                        "Great Falls tap water carries 160 ppm (9.4 grains per gallon) of dissolved minerals. In hotel and rental bathrooms, hot shower mist evaporates, bonding calcium carbonate and body oils directly to glass enclosures, fiberglass pans, and chrome fixtures. Housekeepers waste 10 to 15 minutes manually scrubbing a single shower, blowing turnover schedules and leaving dull surfaces that trigger guest complaints.",
+                        "Great Falls tap water carries 127–167 ppm (7.4–9.8 grains per gallon) of dissolved minerals from the Missouri River. In hotel and vacation rental bathrooms, hot shower mist evaporates, bonding calcium carbonate and soap scum directly to glass enclosures, fiberglass pans, and chrome fixtures. Housekeepers waste 10 to 15 minutes manually scrubbing a single shower, blowing turnover schedules and leaving dull surfaces that trigger guest complaints.",
                     solutionText:
                         "Fast-acting phosphoric and organic acid descalers that dissolve mineral crusts and soap scum in a single wipe-and-rinse pass without scratching glass or corroding plumbing seals.",
                     citation: "Source: City of Great Falls Drinking Water Quality Report",
@@ -722,7 +739,7 @@ export const INDUSTRIES: IndustryConfig[] = [
                     title: "Linen Graying & Early Sheet Replacement (On-Premise Laundry)",
                     problemStat: "+40% Linen Life Extension",
                     description:
-                        "When commercial hotel washing machines use standard detergents with hard Missouri River surface water, calcium binds to cotton and poly-blend fibers. This traps unrinsed soil and minerals inside the weave, causing premium white towels and bedsheets to turn stiff, scratchy, and gray within 30 to 45 wash cycles.",
+                        "When commercial hotel washing machines use unconditioned detergents with hard Missouri River water (7.4–9.8 GPG), dissolved calcium binds directly to cotton and poly-blend fibers. This soap-scum reaction traps unrinsed soil and detergent residue inside the weave, causing premium white towels and bedsheets to turn stiff, scratchy, and gray within 30 to 45 wash cycles.",
                     solutionText:
                         "Commercial laundry builders, high-sequestrant liquid detergents, and neutralizing sour/softeners that bind mineral hardness and rinse linens bright, extending linen life by up to 40%.",
                     citation: "Source: American Hotel & Lodging Association (AHLA) Textile Care Standards",
@@ -815,7 +832,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             {
                 question: "Why do our white hotel towels turn gray and feel scratchy so quickly?",
                 answer:
-                    "Great Falls municipal water has 9.4 grains of hardness. When unconditioned detergent mixes with hard water, dissolved calcium bonds to towel fibers, trapping dirt and detergent residue. Our commercial laundry program injects specialized sequestrants and sours that lock out minerals, keeping linens soft and bright.",
+                    "Great Falls municipal water carries 7.4 to 9.8 grains of hardness (127–167 ppm). When unconditioned detergent mixes with hard water, dissolved calcium bonds to towel fibers, trapping dirt and detergent residue. Our commercial laundry program injects specialized sequestrants and sours that lock out minerals, keeping linens soft and bright.",
             },
             {
                 question: "How do your bathroom descalers cut turnover times on shower glass?",
@@ -831,7 +848,7 @@ export const INDUSTRIES: IndustryConfig[] = [
         citations: [
             {
                 sourceName: "City of Great Falls Drinking Water Quality Report",
-                text: "Missouri River Surface Water Hardness Data (~160 mg/L / 9.4 GPG).",
+                text: "Missouri River Surface Water Hardness Data (127–167 mg/L / 7.4–9.8 GPG, Average ~160 mg/L / 9.4 GPG).",
                 url: "https://greatfallsmt.net/publicworks/water-treatment-plant-annual-water-quality-report",
             },
             {
@@ -858,7 +875,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             buttonText: "Schedule a Free On-Site Shower & Laundry Demo",
             phone: "(406) 727-4144",
             auditPoints: [
-                "On-Site Water Hardness Test (GPG)",
+                "On-Site Water Hardness Test (2-Minute Strip)",
                 "Shower Glass Descaling Live Demo",
                 "Laundry Wash Wheel & Dosing Inspection",
             ],
@@ -918,10 +935,10 @@ export const INDUSTRIES: IndustryConfig[] = [
                     citationUrl: "https://www.mdt.mt.gov/maintenance/",
                 },
                 {
-                    title: "Hard Water Mineral Spotting & Clogged Rinse Nozzles (9.4 GPG Great Falls Tap)",
-                    problemStat: "9.4 Grains Hardness (160 ppm)",
+                    title: "Hard Water Mineral Spotting & Clogged Rinse Nozzles (7.4–9.8 GPG Tap)",
+                    problemStat: "7.4–9.8 GPG (127–167 ppm, ~9.4 Avg)",
                     description:
-                        "Great Falls tap water carries 160 ppm of dissolved limestone and minerals. When high-pressure rinse arches spray untreated hard water, minerals bake under tunnel dryers, leaving white water spots on dark vehicle paint and glass. Inside equipment rooms, unconditioned hard water scales up proportioning tips, solenoid valves, and high-pressure ceramic nozzles.",
+                        "Great Falls tap water carries 127–167 ppm (7.4–9.8 GPG) of dissolved limestone and minerals from the Missouri River. When high-pressure rinse arches spray unconditioned hard water, minerals bake under tunnel dryers, leaving white water spots on dark vehicle paint and glass. Inside equipment rooms, unconditioned hard water scales up proportioning tips, solenoid valves, and high-pressure ceramic nozzles.",
                     solutionText:
                         "Built-in water conditioning sequestrants and rapid-sheeting drying agents cause rinse water to bead and slide off vehicle surfaces in seconds before mineral scale can deposit.",
                     citation: "Source: City of Great Falls Water Treatment Facility Annual Report",
@@ -968,7 +985,7 @@ export const INDUSTRIES: IndustryConfig[] = [
                     values: [
                         "Leaves persistent chalky grey haze; requires customer re-washes or manual brush friction.",
                         "High friction runs risk of micro-scratches and swirl marks on dark clear coats.",
-                        "Water beads slowly; leaves white mineral spots under blowers with 9.4 GPG hard water.",
+                        "Water beads slowly; leaves white mineral spots under blowers with 7.4–9.8 GPG hard water.",
                         "$0.54 per vehicle average delivered cost with out-of-state freight (1.75 oz draw).",
                         "Common-carrier freight delays when winter storms close mountain passes.",
                     ],
@@ -1018,7 +1035,7 @@ export const INDUSTRIES: IndustryConfig[] = [
                     "Montana highway de-icers (magnesium chloride and road slag) form an electrostatic bond with vehicle paint that standard friction soaps cannot break. In our two-step program, Step 1 applies a low-pH acid pre-soak that neutralizes the chemical bond of the salts. Step 2 immediately applies a high-pH alkaline wash that encapsulates road oils and lifts the loosened grime away completely touch-free.",
             },
             {
-                question: "Will your wash chemicals cause white spotting with Great Falls 9.4 GPG hard water?",
+                question: "Will your wash chemicals cause white spotting with Great Falls 7.4–9.8 GPG hard water?",
                 answer:
                     "No. Our formulations are blended specifically for Central Montana water with built-in chelating agents and water conditioners. Our flash-drying waxes and drying agents cause rinse water to sheet off vehicles in seconds, leaving glass and clear coats streak-free under tunnel blowers.",
             },
@@ -1041,7 +1058,7 @@ export const INDUSTRIES: IndustryConfig[] = [
             },
             {
                 sourceName: "City of Great Falls Drinking Water Quality Report",
-                text: "Municipal Water Mineral Hardness Data (~160 mg/L / 9.4 GPG).",
+                text: "Municipal Water Mineral Hardness Data (127–167 mg/L / 7.4–9.8 GPG, Average ~160 mg/L / 9.4 GPG).",
                 url: "https://greatfallsmt.net/publicworks/water-treatment-plant-annual-water-quality-report",
             },
             {
@@ -1058,9 +1075,9 @@ export const INDUSTRIES: IndustryConfig[] = [
             buttonText: "Request a Wash Tunnel Chemical Audit & Sample Kit",
             phone: "(406) 727-4144",
             auditPoints: [
+                "On-Site Water Hardness Test (2-Minute Strip)",
                 "Two-Step Mag-Chloride Road Film Test",
-                "Injector & Hydrominder Ratio Check",
-                "Free Commercial Chemical Sample Drum",
+                "Injector & Hydrominder Calibration Check",
             ],
         },
     },

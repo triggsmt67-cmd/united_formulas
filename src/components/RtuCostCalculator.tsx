@@ -33,7 +33,7 @@ export const JOB_PROFILES: JobProfile[] = [
         id: "restroom",
         name: "Restroom & Acid Descaler",
         categoryLabel: "Fixtures, Tile & Mineral Scale",
-        description: "Dissolves 9.4 GPG hard water rings and uric salts.",
+        description: "Dissolves 7.4–9.8 GPG hard water rings and uric salts.",
         ratio: 32,
         ozPerGalText: "4 oz / gal (1:32)",
         defaultConcentratePrice: 38.00,
@@ -286,6 +286,14 @@ export default function RtuCostCalculator() {
                             <span className="text-cyan-800 bg-cyan-100/70 px-2.5 py-1 rounded-md font-bold">
                                 {rtuGallonsYield} Gallons ({rtuBottlesYield} Spray Bottles)
                             </span>
+                        </div>
+
+                        {/* Water Hardness Calibration Callout */}
+                        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] leading-relaxed text-slate-600">
+                            <strong className="text-slate-800 font-bold block mb-1">
+                                💧 Why Water Hardness Decides Your Real Cost per Gallon:
+                            </strong>
+                            A dilution ratio like 1:64 only delivers on paper if water conditioners neutralize dissolved minerals. In Great Falls (7.4–9.8 GPG municipal tap) and surrounding Golden Triangle well water, unconditioned cleaners lose active surfactants to the calcium &quot;soap-scum reaction&quot; before cleaning begins, forcing crews to overdose. United Formulas formulates concentrates with active chelating sequestrants so your dilution ratio and cost-per-bottle hold true in real Montana water.
                         </div>
                     </div>
 
