@@ -90,13 +90,13 @@ export default async function ProductsPage() {
     <div className="bg-slate-50 min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
       <Navbar />
 
-      <main className="pt-24 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
+      <main className="pt-20 pb-16 max-w-7xl mx-auto px-6 lg:px-8">
         {/* High Impact Promotion Grid */}
         <PromotionGrid featuredProducts={featuredProducts} />
 
         {/* Main Content */}
         <div className="mb-12">
-          <div className="max-w-3xl mb-12">
+          <div className="max-w-3xl mb-8">
             <p className="text-lg text-slate-600 leading-relaxed font-medium">
               We formulate and stock industrial concentrates in <span className="text-slate-900 font-bold">Great Falls and Billings</span> for local route delivery. Start with the application filters below or use our guided finder when you know the problem but not the product name.
             </p>
@@ -112,7 +112,7 @@ export default async function ProductsPage() {
       </main>
 
       {/* Footer Trust Signal */}
-      <section className="py-20 border-t border-slate-100 bg-slate-50/50">
+      <section className="py-12 border-t border-slate-100 bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-12">United Formulas Quality Guarantee</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

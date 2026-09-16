@@ -6,9 +6,13 @@ import { ProductNode } from "@/types";
 interface ProductCardProps {
     product: ProductNode;
     delay: number;
+    categorySlug?: string;
 }
 
-export default function ProductCard({ product, delay }: ProductCardProps) {
+export default function ProductCard({ product, delay, categorySlug }: ProductCardProps) {
+    const href = categorySlug
+        ? `/product/${product.slug}?from=category&cat=${categorySlug}`
+        : `/product/${product.slug}`;
     return (
         <div className="group relative rounded-2xl p-[1px] h-full">
             <div
@@ -16,7 +20,7 @@ export default function ProductCard({ product, delay }: ProductCardProps) {
                 style={{ animationDelay: `${-delay}s` }}
             ></div>
             <Link
-                href={`/product/${product.slug}`}
+                href={href}
                 className="relative h-full bg-slate-900/50 backdrop-blur-sm bg-gradient-to-br from-slate-900 to-[#1e293b] rounded-2xl p-6 flex flex-col z-10 border border-white/5 group-hover:border-cyan-500/30 transition-all duration-500 shadow-2xl cursor-pointer"
             >
                 <div className="aspect-[4/3] w-full overflow-hidden rounded-xl bg-white/[0.03] border border-white/5 mb-6 relative group/img shadow-inner">

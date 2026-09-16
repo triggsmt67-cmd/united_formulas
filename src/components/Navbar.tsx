@@ -191,6 +191,12 @@ export default function Navbar() {
                             Resources
                         </Link>
                         <Link
+                            href="/cost-calculator"
+                            className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            Cost Calculator
+                        </Link>
+                        <Link
                             href="/about"
                             className="text-sm font-medium text-slate-900 hover:text-cyan-600 transition-colors"
                         >
@@ -263,6 +269,13 @@ export default function Navbar() {
                             className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
                         >
                             SDS Sheets
+                        </Link>
+                        <Link
+                            href="/cost-calculator"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors"
+                        >
+                            Cost Calculator
                         </Link>
                         <Link href="/local-delivery" onClick={() => setIsMenuOpen(false)} className="text-2xl sm:text-3xl font-bold text-slate-900 hover:text-cyan-600 transition-colors">Local Delivery</Link>
 

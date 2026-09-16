@@ -166,9 +166,20 @@ export default async function CategoryPage({
         <div className="bg-slate-50 min-h-screen text-slate-900 font-sans antialiased selection:bg-cyan-100">
             <Navbar />
 
-            <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
+            <main className="pt-28 pb-16 max-w-7xl mx-auto px-6 lg:px-8">
+                {/* Breadcrumb / Back link */}
+                <div className="mb-6">
+                    <Link
+                        href="/products"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-cyan-600 transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                        Back to Products
+                    </Link>
+                </div>
+
                 {/* Header Section */}
-                <div className="mb-24">
+                <div className="mb-12">
                     <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-6">
                         <div className="opacity-0 animate-fade-up" style={{ animationDelay: '100ms' }}>
                             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-[0.25em]">
@@ -203,7 +214,7 @@ export default async function CategoryPage({
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {products.map((product: ProductNode, idx: number) => (
                                 <div key={product.id} className="opacity-0 animate-fade-up" style={{ animationDelay: `${500 + (idx * 100)}ms` }}>
-                                    <ProductCard product={product} delay={idx * 0.1} />
+                                    <ProductCard product={product} delay={idx * 0.1} categorySlug={slug} />
                                 </div>
                             ))}
                         </div>

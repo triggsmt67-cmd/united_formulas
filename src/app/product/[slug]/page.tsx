@@ -8,9 +8,10 @@ import PurchaseOptions from '@/components/PurchaseOptions';
 import POSubmitButton from '@/components/POSubmitButton';
 import RelatedProducts from '@/components/RelatedProducts';
 import { ProductNode, ProductImage } from '@/types';
-import { cache } from 'react';
+import { cache, Suspense } from 'react';
 import Link from 'next/link';
 import productMetadata from '@/data/product_metadata.json';
+import ProductBreadcrumb from '@/components/ProductBreadcrumb';
 
 type DetailedProduct = ProductNode & {
   galleryImages?: {
@@ -198,7 +199,18 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     <div className="bg-slate-50 min-h-screen font-sans text-slate-900 selection:bg-cyan-100">
       <Navbar />
 
-      <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 lg:px-8">
+      <main className="pt-28 pb-16 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Breadcrumb / Back link */}
+        <Suspense fallback={
+          <div className="mb-6">
+            <Link href="/products" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-cyan-600 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+              Back to Products
+            </Link>
+          </div>
+        }>
+          <ProductBreadcrumb />
+        </Suspense>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
 
           {/* Left: Product Gallery */}
