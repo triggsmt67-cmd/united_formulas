@@ -1,41 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import {
-  checkRateLimit,
-  getClientIp,
-  sanitizeSubmission,
-  validateBasicInputs,
-  validateEmail,
-  validateFormTiming,
-  validateHoneypot,
-  validateRequestOrigin,
-  validateRequiredStrings
-} from '@/lib/security';
+import { sanitizeSubmission, validateEmail, validateRequiredStrings } from '@/lib/security';
+import { isRecord, protectForm } from '@/lib/form-security';
 
 export async function POST(req: NextRequest) {
   try {
-    if (!validateRequestOrigin(req)) {
-      return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
-    }
+    const guarded = await protectForm(req, 'credit');
+    if (guarded.response) return guarded.response;
+    const rawBody = guarded.body;
 
-    const rawBody = await req.json() as Record<string, unknown>;
-
-    // Anti-spam check
-    if (!validateHoneypot(rawBody) || !validateFormTiming(rawBody) || !validateBasicInputs(rawBody)) {
-      return NextResponse.json({ success: true, message: "Application received (filtered)" });
-    }
-
-    const ip = getClientIp(req);
-    if (!checkRateLimit(`credit:${ip}`, 2)) {
-      return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
-    }
     if (!validateRequiredStrings(rawBody, ['companyName', 'email', 'address', 'taxId', 'authSig', 'authPrintedName'])
       || !validateEmail(rawBody.email)
       || !Array.isArray(rawBody.directors)
       || !Array.isArray(rawBody.references)
       || rawBody.directors.length > 10
-      || rawBody.references.length > 10) {
+      || rawBody.references.length > 10
+      || !rawBody.directors.every(isRecord)
+      || !rawBody.references.every(isRecord)) {
       return NextResponse.json({ error: 'Please provide valid required fields.' }, { status: 400 });
     }
 
@@ -351,10 +333,10 @@ export async function POST(req: NextRequest) {
     console.log('Credit App Dispatch Response Data:', data);
     if (error) {
       console.error('Credit App Dispatch Error:', error);
-      return NextResponse.json({ error: "Email dispatch failed.", details: error }, { status: 500 });
+      return NextResponse.json({ error: "Email dispatch failed." }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error('Credit App Route Exception:', err);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

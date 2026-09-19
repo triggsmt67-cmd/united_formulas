@@ -78,7 +78,8 @@ export default function ContactPage() {
                 setIsSuccess(true);
                 setFormState({ firstName: '', lastName: '', email: '', company: '', phone: '', location: '', industry: '', preferredContact: 'Phone', subject: 'Product Inquiries', message: '', website_verify_field: '' });
             } else {
-                alert('Failed to send message. Please try again or call us directly.');
+                const result = await res.json().catch(() => ({}));
+                alert(result.error || 'Submission failed. Please try again or call 406.727.4144.');
             }
         } catch (error) {
             console.error('Contact error:', error);

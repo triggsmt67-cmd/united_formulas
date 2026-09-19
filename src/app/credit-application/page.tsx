@@ -86,7 +86,8 @@ export default function CreditApplicationPage() {
                 setIsSubmitted(true);
                 window.scrollTo({ top: 0, behavior: "smooth" });
             } else {
-                alert("There was an error submitting your application. Please try again or contact us.");
+                const result = await response.json().catch(() => ({}));
+                alert(result.error || 'Submission failed. Please try again or call 406.727.4144.');
             }
         } catch (error) {
             console.error("Submission error:", error);

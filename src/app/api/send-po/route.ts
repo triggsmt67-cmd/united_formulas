@@ -1,48 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import {
-  checkRateLimit,
-  getClientIp,
-  sanitizeSubmission,
-  validateBasicInputs,
-  validateEmail,
-  validateFormTiming,
-  validateHoneypot,
-  validateRequestOrigin,
-  validateRequiredStrings
-} from '@/lib/security';
+import { sanitizeSubmission, validateEmail, validateRequiredStrings } from '@/lib/security';
+import { isRecord, protectForm } from '@/lib/form-security';
 
 // The user should add RESEND_API_KEY to their .env.local
 export async function POST(req: NextRequest) {
   try {
-    if (!validateRequestOrigin(req)) {
-      return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
-    }
-
-    const rawBody = await req.json() as Record<string, unknown>;
-
-    // Anti-spam check
-    if (!validateHoneypot(rawBody) || !validateFormTiming(rawBody) || !validateBasicInputs(rawBody)) {
-      return NextResponse.json({ success: true, message: "PO Queued (filtered)" });
-    }
-
-    const ip = getClientIp(req);
-    if (!checkRateLimit(`po:${ip}`, 2)) {
-      return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
-    }
+    const guarded = await protectForm(req, 'po');
+    if (guarded.response) return guarded.response;
+    const rawBody = guarded.body;
 
     const rawItems = Array.isArray(rawBody.items) ? rawBody.items : rawBody.lineItems;
     if (!validateRequiredStrings(rawBody, ['fullName', 'businessName', 'email'])
       || !validateEmail(rawBody.email)
       || !Array.isArray(rawItems)
       || rawItems.length === 0
-      || rawItems.length > 50) {
+      || rawItems.length > 50
+      || !rawItems.every(isRecord)) {
       return NextResponse.json({ error: 'Please provide valid order details.' }, { status: 400 });
     }
 
     const body = sanitizeSubmission(rawBody) as any;
-    const deliveryEmail = rawBody.email as string;
 
     // 1. Server-Side Security & Runtime Check
     const warehouseEmail = process.env.WAREHOUSE_EMAIL;
@@ -92,9 +71,7 @@ export async function POST(req: NextRequest) {
     const actualItems = Array.isArray(items) ? items : (Array.isArray(lineItems) ? lineItems : []);
 
     const recipients = warehouseEmail.split(',').map(email => email.trim());
-    if (!recipients.includes(deliveryEmail)) {
-      recipients.push(deliveryEmail);
-    }
+    // Only configured recipients receive email; customer addresses are unverified.
 
     const { data, error } = await resend.emails.send({
       from: 'UF Orders <notifications@unitedformulas.com>', // Production-ready sender address
@@ -158,18 +135,13 @@ export async function POST(req: NextRequest) {
     if (error) {
       console.error('Resend Dispatch Error:', error);
       return NextResponse.json({
-        error: error.message || "Resend Dispatch Failed",
-        details: error
+        error: "Email dispatch failed."
       }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error('API Route Exception:', err);
-    return NextResponse.json({
-      error: 'Internal Server Error',
-      message: err.message || "Unknown error occurred",
-      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-    }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

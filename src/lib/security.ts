@@ -1,8 +1,5 @@
 import type { NextRequest } from 'next/server';
 
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-let rateLimitChecks = 0;
-
 export const HONEYPOT_FIELD_NAME = 'website_verify_field';
 export const FORM_STARTED_FIELD_NAME = 'form_started_at';
 
@@ -12,37 +9,26 @@ export function getClientIp(req: NextRequest) {
         || 'unknown').slice(0, 80);
 }
 
-export function checkRateLimit(ip: string, limit = 5, windowMsValue = 60000) {
-    const now = Date.now();
-    if (++rateLimitChecks % 100 === 0 || rateLimitMap.size > 5000) {
-        for (const [key, value] of rateLimitMap) {
-            if (now > value.resetAt) rateLimitMap.delete(key);
-        }
-    }
-
-    const userData = rateLimitMap.get(ip);
-    if (!userData || now > userData.resetAt) {
-        rateLimitMap.set(ip, { count: 1, resetAt: now + windowMsValue });
-        return true;
-    }
-    if (userData.count >= limit) return false;
-    userData.count += 1;
-    return true;
-}
-
 export function validateRequestOrigin(req: NextRequest) {
     const origin = req.headers.get('origin');
     if (!origin) return false;
     try {
         const originUrl = new URL(origin);
-        const forwardedHost = req.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
-        const requestHost = forwardedHost || req.headers.get('host');
+        if (originUrl.origin !== origin) return false;
+        const allowedOrigins = new Set([
+            'https://unitedformulas.com',
+            'https://www.unitedformulas.com',
+            ...(process.env.FORM_ALLOWED_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean),
+        ]);
+        // Only this deployment's preview URL is trusted, never all *.vercel.app sites.
+        if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL) {
+            allowedOrigins.add(`https://${process.env.VERCEL_URL}`);
+        }
         const isLoopback = originUrl.hostname === 'localhost' || originUrl.hostname === '127.0.0.1';
-        const isProductionHost = originUrl.host === 'unitedformulas.com'
-            || originUrl.host === 'www.unitedformulas.com'
-            || originUrl.hostname.endsWith('.vercel.app');
-        return (originUrl.protocol === 'https:' && isProductionHost)
-            || (originUrl.protocol === 'http:' && isLoopback && originUrl.host === requestHost);
+        return (originUrl.protocol === 'https:' && allowedOrigins.has(origin))
+            || (process.env.NODE_ENV === 'development' && originUrl.protocol === 'http:'
+                && isLoopback && originUrl.host === req.headers.get('host'));
+
     } catch {
         return false;
     }

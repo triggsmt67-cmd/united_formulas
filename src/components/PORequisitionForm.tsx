@@ -272,7 +272,8 @@ export default function PORequisitionForm({ isOpen, onClose }: PORequisitionForm
                 setSuccessMessage(`Order Received. Dispatched to Great Falls Queue. We will email your official Invoice by ${nextDay}.`);
                 clearPO();
             } else {
-                alert('Failed to submit PO. Please try again.');
+                const result = await res.json().catch(() => ({}));
+                alert(result.error || 'Submission failed. Please try again or call 406.727.4144.');
             }
         } catch (error) {
             console.error('Submission error:', error);

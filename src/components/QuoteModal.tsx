@@ -85,7 +85,8 @@ export default function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 setIsSuccess(true);
                 clearPO();
             } else {
-                alert('Dispatch failed. Please check your connection and try again.');
+                const result = await res.json().catch(() => ({}));
+                alert(result.error || 'Submission failed. Please try again or call 406.727.4144.');
             }
         } catch (error) {
             console.error('Inquiry error:', error);

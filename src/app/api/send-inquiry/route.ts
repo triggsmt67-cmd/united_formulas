@@ -1,42 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import {
-    checkRateLimit,
-    getClientIp,
-    sanitizeSubmission,
-    validateBasicInputs,
-    validateEmail,
-    validateFormTiming,
-    validateHoneypot,
-    validateRequestOrigin,
-    validateRequiredStrings
-} from '@/lib/security';
+import { sanitizeSubmission, validateEmail, validateRequiredStrings } from '@/lib/security';
+import { isRecord, protectForm } from '@/lib/form-security';
 
 export async function POST(req: NextRequest) {
     try {
-        if (!validateRequestOrigin(req)) {
-            return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
-        }
-
-        const rawBody = await req.json() as Record<string, unknown>;
-
-        // Anti-spam check: Honeypot & Basic Validation
-        if (!validateHoneypot(rawBody) || !validateFormTiming(rawBody) || !validateBasicInputs(rawBody)) {
-            // We return a fake success or a generic error to not tip off the bot
-            return NextResponse.json({ success: true, message: "Submission received (filtered)" });
-        }
-
-        const ip = getClientIp(req);
-        if (!checkRateLimit(`inquiry:${ip}`, 3)) {
-            return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
-        }
+        const guarded = await protectForm(req, 'inquiry');
+        if (guarded.response) return guarded.response;
+        const rawBody = guarded.body;
 
         if (!validateRequiredStrings(rawBody, ['fullName', 'email', 'interest', 'formName', 'company']) || !validateEmail(rawBody.email)) {
             return NextResponse.json({ error: 'Please provide valid required fields.' }, { status: 400 });
         }
 
-        if (rawBody.items !== undefined && (!Array.isArray(rawBody.items) || rawBody.items.length > 25)) {
+        if (rawBody.items !== undefined && (!Array.isArray(rawBody.items) || rawBody.items.length > 25 || !rawBody.items.every(isRecord))) {
             return NextResponse.json({ error: 'Invalid item list.' }, { status: 400 });
         }
 
@@ -164,10 +142,10 @@ export async function POST(req: NextRequest) {
         console.log('Inquiry Dispatch Response Data:', data);
         if (error) {
             console.error('Inquiry Dispatch Error:', error);
-            return NextResponse.json({ error: "Email dispatch failed.", details: error }, { status: 500 });
+            return NextResponse.json({ error: "Email dispatch failed." }, { status: 500 });
         }
 
-        return NextResponse.json({ success: true, data });
+        return NextResponse.json({ success: true });
     } catch (err: any) {
         console.error('Inquiry Route Exception:', err);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
